@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [windows, linux, macos]
+        platform: [Windows Desktop, Linux, macOS]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
