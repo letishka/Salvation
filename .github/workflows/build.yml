@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [Windows Desktop, Linux, macOS]
+        platform: ["Windows Desktop", "Linux", "macOS"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,17 +19,14 @@ jobs:
           lfs: true
 
       - name: Export game
-        uses: firebelley/godot-export@v4.2.1  # ← заменили v5 на v4.2.1
+        uses: duhow/action-godot-export@v1.0.1
         with:
-          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.6.1/Godot_v4.6.1-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.6.1/Godot_v4.6.1-stable_export_templates.tpz
-          relative_project_path: .
+          godot_version: 4.6.1
+          export_preset: ${{ matrix.platform }}
           archive_output: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: game-${{ matrix.platform }}
-          path: ${{ github.workspace }}/dist/*.zip
+          path: "*.zip"
