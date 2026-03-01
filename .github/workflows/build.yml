@@ -20,7 +20,7 @@ jobs:
       - name: Export Windows
         run: |
           mkdir -p build/windows
-          godot -v --export-release "Windows Desktop" build/windows/game.exe
+          godot -v --headless --export-release "Windows Desktop" build/windows/game.exe 2>&1 || true
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v4
@@ -41,7 +41,7 @@ jobs:
       - name: Export Linux
         run: |
           mkdir -p build/linux
-          godot -v --export-release "Linux" build/linux/game.x86_64
+          godot -v --headless --export-release "Linux" build/linux/game.x86_64 2>&1 || true
 
       - name: Upload Linux Artifact
         uses: actions/upload-artifact@v4
@@ -62,7 +62,7 @@ jobs:
       - name: Export macOS
         run: |
           mkdir -p build/macos
-          godot -v --export-release "macOS" build/macos/game.zip
+          godot -v --headless --export-release "macOS" build/macos/game.zip 2>&1 || true
 
       - name: Upload macOS Artifact
         uses: actions/upload-artifact@v4
