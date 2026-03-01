@@ -7,26 +7,65 @@ on:
     branches: [ "main" ]
 
 jobs:
-  export_game:
+  export_windows:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform: ["Windows Desktop", "Linux", "macOS"]
+    container:
+      image: barichello/godot-ci:4.2.1
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           lfs: true
 
-      - name: Export game
-        uses: ceiga/godot-export-action@v1
-        with:
-          version: 4.6.1
-          preset: ${{ matrix.platform }}
-          output_name: game-${{ matrix.platform }}
+      - name: Export Windows
+        run: |
+          mkdir -p build/windows
+          godot -v --export-release "Windows Desktop" build/windows/game.exe
 
-      - name: Upload Artifact
+      - name: Upload Windows Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: game-${{ matrix.platform }}
-          path: "*.zip"
+          name: game-windows
+          path: build/windows/*
+
+  export_linux:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.2.1
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Export Linux
+        run: |
+          mkdir -p build/linux
+          godot -v --export-release "Linux" build/linux/game.x86_64
+
+      - name: Upload Linux Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-linux
+          path: build/linux/*
+
+  export_macos:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.2.1
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Export macOS
+        run: |
+          mkdir -p build/macos
+          godot -v --export-release "macOS" build/macos/game.zip
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-macos
+          path: build/macos/*
