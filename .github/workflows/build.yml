@@ -19,13 +19,14 @@ jobs:
           lfs: true
 
       - name: Export game
-        uses: BaranovMykola/action-godot-export@v1.02
+        uses: godotengine/godot-export@v4.3.0
         with:
-          version: 4.6.1
-          preset: ${{ matrix.platform }}
+          godot_version: 4.6.1
+          export_preset: ${{ matrix.platform }}
+          archive_output: true
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: game-${{ matrix.platform }}
-          path: "build/*.zip"
+          path: "*.zip"
