@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://c4lnfcmmxlyr5"]
+
+[ext_resource type="PackedScene" uid="uid://cfj3vqeqlc18y" path="res://scenes/characters/player.tscn" id="1_errlg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bl13t"]
+size = Vector2(468.5, 21.5)
+
+[sub_resource type="Gradient" id="Gradient_iyx0m"]
+offsets = PackedFloat32Array(0, 0.37037036, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.29259259, 0.29259259, 0.29259259, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_74lek"]
+gradient = SubResource("Gradient_iyx0m")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j5jx5"]
+size = Vector2(483, 8)
+
+[node name="Test" type="Node2D" unique_id=1336545234]
+
+[node name="Player" parent="." unique_id=228254197 instance=ExtResource("1_errlg")]
+position = Vector2(270, 99)
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=1882139060]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1148710809]
+position = Vector2(286, 228)
+shape = SubResource("RectangleShape2D_bl13t")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor" unique_id=1401217832]
+position = Vector2(288.49997, 1.0000153)
+scale = Vector2(1.9179686, 12.374975)
+texture = SubResource("GradientTexture1D_74lek")
+
+[node name="Wall" type="StaticBody2D" parent="." unique_id=384012773]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall" unique_id=401175162]
+position = Vector2(293, 0)
+shape = SubResource("RectangleShape2D_j5jx5")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall" unique_id=1422848113]
