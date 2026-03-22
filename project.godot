@@ -11,13 +11,24 @@ config_version=5
 [application]
 
 config/name="Salavation"
+run/main_scene="uid://cryk4m62lbawq"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/mode=3
+window/size/borderless=true
+window/stretch/mode="viewport"
 
 [editor]
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[gui]
+
+theme/custom="uid://b1xkp3i1kbd0n"
 
 [input]
 
