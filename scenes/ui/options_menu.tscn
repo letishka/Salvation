@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://dqcim31v1u3dg"]
+
+[node name="OptionsMenu" type="CanvasLayer" unique_id=2114518181]
+
+[node name="ЛобиЧистилища" type="Sprite2D" parent="." unique_id=639470116]
+position = Vector2(576.0002, 323.5001)
+scale = Vector2(0.8984377, 0.8908841)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=817147960]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0016758, 1.001169)
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=331604709]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=1384783241]
+custom_minimum_size = Vector2(500, 400)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=439637719]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "
+Options"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=320536882]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SFXContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2" unique_id=320194766]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 5
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2/SFXContainer" unique_id=1453066136]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "SFX Volume"
+
+[node name="SFXSlider" type="HSlider" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2/SFXContainer" unique_id=1612690846]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MusicContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2" unique_id=617000201]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 5
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2/MusicContainer" unique_id=1543040056]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2/MusicContainer" unique_id=1228331480]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="WindowModeContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2" unique_id=561444152]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=459475003]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[connection signal="ready" from="." to="." method="_on_ready"]
+[connection signal="value_changed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2/SFXContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2/MusicContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]

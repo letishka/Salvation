@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://b3h0x2ygvi4xy"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hpfg3"]
+streams_count = 5
+
+[node name="SoundButton" type="Button" unique_id=808805161]
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 16
+text = "SoundButton"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1980150651]
+stream = SubResource("AudioStreamRandomizer_hpfg3")
+bus = &"SFX"
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
