@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://bn66ciyv5m521"]
 
-[ext_resource type="PackedScene" uid="uid://cmggf021uxnuo" path="res://scenes/characters/player.tscn" id="1_52kye"]
-[ext_resource type="Texture2D" uid="uid://cooa7ny68ep7h" path="res://assets/graphics/dungeontileset-extended.png" id="2_yp2xm"]
+[ext_resource type="PackedScene" uid="uid://cmggf021uxnuo" path="res://scenes/characters/player/player.tscn" id="1_52kye"]
+[ext_resource type="Texture2D" uid="uid://cooa7ny68ep7h" path="res://assets/graphics/tilesets/dungeontileset-extended.png" id="2_yp2xm"]
+[ext_resource type="PackedScene" uid="uid://diyfqbor4n64x" path="res://scenes/objects/lever.tscn" id="3_yp2xm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uyl1e"]
 texture = ExtResource("2_yp2xm")
@@ -38,3 +39,6 @@ layer_0/tile_data = PackedInt32Array(1048594, 65536, 17, 1114130, 65536, 18, 117
 
 [node name="Player" parent="." unique_id=1090551706 instance=ExtResource("1_52kye")]
 position = Vector2(575, 323)
+
+[node name="Sprite2D" parent="." unique_id=1118262626 instance=ExtResource("3_yp2xm")]
+position = Vector2(502, 306)
