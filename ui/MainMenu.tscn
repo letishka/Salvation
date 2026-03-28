@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ghuwfsm0dqfq" path="res://ui/SoundButton.tscn" id="1_b00nv"]
 [ext_resource type="Script" uid="uid://cdd4gi7swjvb2" path="res://ui/main_menu.gd" id="1_nmrkx"]
-[ext_resource type="Texture2D" uid="uid://calixeuop42ap" path="res://ui/resources/лоби_чистилища.jpg" id="1_rn8js"]
+[ext_resource type="Texture2D" uid="uid://calixeuop42ap" path="res://ui/resources/lobby.jpg" id="1_rn8js"]
 [ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://ui/BackgroundMusic.tscn" id="2_8v85u"]
 
 [node name="MainMenu" type="CanvasLayer" unique_id=2114518181]

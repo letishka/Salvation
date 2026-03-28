@@ -2,7 +2,7 @@
 
 [node name="OptionsMenu" type="CanvasLayer" unique_id=2114518181]
 
-[node name="ЛобиЧистилища" type="Sprite2D" parent="." unique_id=639470116]
+[node name="Lobby" type="Sprite2D" parent="." unique_id=639470116]
 position = Vector2(576.0002, 323.5001)
 scale = Vector2(0.8984377, 0.8908841)
 

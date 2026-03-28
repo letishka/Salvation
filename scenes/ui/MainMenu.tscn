@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cryk4m62lbawq"]
 
-[ext_resource type="PackedScene" uid="uid://ghuwfsm0dqfq" path="res://scenes/audio/SoundButton.tscn" id="1_b00nv"]
-[ext_resource type="Script" uid="uid://cdd4gi7swjvb2" path="res://scripts/ui/main_menu.gd" id="1_nmrkx"]
-[ext_resource type="Texture2D" uid="uid://calixeuop42ap" path="res://assets/ui/лоби_чистилища.jpg" id="1_rn8js"]
-[ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://scenes/audio/BackgroundMusic.tscn" id="2_8v85u"]
+[ext_resource type="PackedScene" uid="uid://ghuwfsm0dqfq" path="res://ui/SoundButton.tscn" id="1_b00nv"]
+[ext_resource type="Script" uid="uid://cdd4gi7swjvb2" path="res://ui/main_menu.gd" id="1_nmrkx"]
+[ext_resource type="Texture2D" uid="uid://calixeuop42ap" path="res://ui/resources/lobby.jpg" id="1_rn8js"]
+[ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://ui/BackgroundMusic.tscn" id="2_8v85u"]
 
 [node name="MainMenu" type="CanvasLayer" unique_id=2114518181]
 script = ExtResource("1_nmrkx")
@@ -11,7 +11,7 @@ script = ExtResource("1_nmrkx")
 [node name="BackgroundMusic" parent="." unique_id=489571506 instance=ExtResource("2_8v85u")]
 autoplay = true
 
-[node name="ЛобиЧистилища" type="Sprite2D" parent="." unique_id=639470116]
+[node name="Lobby" type="Sprite2D" parent="." unique_id=639470116]
 position = Vector2(576, 323.5)
 scale = Vector2(0.8984375, 0.8908839)
 texture = ExtResource("1_rn8js")

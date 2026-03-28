@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dhuo75x7vtotr"]
+
+[ext_resource type="Texture2D" uid="uid://jlieu4e3yuy1" path="res://assets/graphics/objects/torch.png" id="1_8m07j"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ypd75"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_8m07j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xbo42"]
+size = Vector2(29, 50)
+
+[node name="Torch" type="StaticBody2D" unique_id=1336749232]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=501520528]
+position = Vector2(2.0000076, -5.9999924)
+scale = Vector2(0.26805553, 0.2611111)
+sprite_frames = SubResource("SpriteFrames_ypd75")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1094766161]
+position = Vector2(2.5, 7)
+shape = SubResource("RectangleShape2D_xbo42")

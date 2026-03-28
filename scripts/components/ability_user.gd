@@ -29,7 +29,6 @@ func _get_ability(id: String) -> AbilityResource:
 			return a
 	return null
 
-# Обновление таймеров (вызывать в _process владельца)
 func update(delta: float):
 	for id in _cooldowns.keys():
 		if _cooldowns[id] > 0:

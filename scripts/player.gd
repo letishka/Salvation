@@ -15,6 +15,9 @@ class_name Player
 var current_interactable: Node = null
 var is_dodging: bool = false
 
+var has_torch: bool = false
+var torch_lit: bool = false
+
 func _ready():
 	add_to_group("player")
 	LevelManager.register_player(self)
@@ -22,6 +25,7 @@ func _ready():
 	ability_user.ability_used.connect(_on_ability_used)
 	interact_area.area_entered.connect(_on_interactable_entered)
 	interact_area.area_exited.connect(_on_interactable_exited)
+	$TorchSprite.hide()
 
 func _process(delta):
 	ability_user.update(delta)

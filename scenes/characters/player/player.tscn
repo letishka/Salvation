@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://cqhfs84ewg3oy" path="res://scripts/states/player_states/ability.gd" id="11_tebod"]
 [ext_resource type="Script" uid="uid://cc8ptk1cymfgm" path="res://scripts/states/player_states/hit.gd" id="12_6nfx3"]
 [ext_resource type="Script" uid="uid://d0e0bke0qvk1" path="res://scripts/states/player_states/dead.gd" id="13_3hnlq"]
+[ext_resource type="Texture2D" uid="uid://b84ogw48tcq3i" path="res://assets/graphics/objects/torch.png" id="14_hv5x3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yewv4"]
 animations = [{
@@ -37,6 +38,9 @@ height = 64.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yewv4"]
 radius = 25.0
 height = 86.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ykrpk"]
+radius = 41.01219
 
 [node name="Player" type="CharacterBody2D" unique_id=1090551706]
 script = ExtResource("1_yewv4")
@@ -70,6 +74,10 @@ script = ExtResource("3_blysn")
 [node name="AttackComponent" type="Area2D" parent="." unique_id=306884812]
 script = ExtResource("4_hv5x3")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackComponent" unique_id=972042852]
+position = Vector2(0, -32)
+shape = SubResource("CircleShape2D_ykrpk")
+
 [node name="AbilityUser" type="Node" parent="." unique_id=877696919]
 script = ExtResource("5_ykrpk")
 
@@ -97,6 +105,11 @@ script = ExtResource("12_6nfx3")
 
 [node name="Dead" type="Node" parent="StateMachine" unique_id=302398519]
 script = ExtResource("13_3hnlq")
+
+[node name="TorchSprite" type="Sprite2D" parent="." unique_id=903838198]
+position = Vector2(11, -24)
+scale = Vector2(0.09756946, 0.08645833)
+texture = ExtResource("14_hv5x3")
 
 [connection signal="area_entered" from="InteractArea" to="." method="_on_interactable_area_entered"]
 [connection signal="area_exited" from="InteractArea" to="." method="_on_interactable_area_exited"]

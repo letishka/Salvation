@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://be84a1qlq0yly"]
 
 [ext_resource type="Script" uid="uid://7qel5jbrfhe1" path="res://ui/options_menu.gd" id="1_fqj3q"]
-[ext_resource type="Texture2D" uid="uid://calixeuop42ap" path="res://ui/resources/лоби_чистилища.jpg" id="2_5k8le"]
+[ext_resource type="Texture2D" uid="uid://calixeuop42ap" path="res://ui/resources/lobby.jpg" id="2_5k8le"]
 [ext_resource type="PackedScene" uid="uid://ghuwfsm0dqfq" path="res://ui/SoundButton.tscn" id="3_qwewx"]
 
 [node name="OptionsMenu" type="CanvasLayer" unique_id=2114518181]

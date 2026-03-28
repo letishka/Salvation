@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://calixeuop42ap"
-path="res://.godot/imported/лоби_чистилища.jpg-176aa935edf24b54e85a1c6802ced83a.ctex"
+path="res://.godot/imported/lobby.jpg-5cc6e65e1f1754eadd037e4eb09fac56.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/resources/лоби_чистилища.jpg"
-dest_files=["res://.godot/imported/лоби_чистилища.jpg-176aa935edf24b54e85a1c6802ced83a.ctex"]
+source_file="res://ui/resources/lobby.jpg"
+dest_files=["res://.godot/imported/lobby.jpg-5cc6e65e1f1754eadd037e4eb09fac56.ctex"]
 
 [params]
 

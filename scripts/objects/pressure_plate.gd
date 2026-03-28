@@ -21,7 +21,6 @@ func _on_body_entered(body):
 
 func _on_body_exited(body):
 	if not stay_pressed and _activated and (body.is_in_group("player") or body.is_in_group("movable")):
-		# Проверяем, остались ли ещё объекты на плите
 		var bodies = get_overlapping_bodies()
 		var still_pressed = false
 		for b in bodies:

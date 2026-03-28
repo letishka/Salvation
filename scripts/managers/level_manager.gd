@@ -20,6 +20,5 @@ func respawn():
 			player.reset_health()
 		player.set_physics_process(true)
 		player.set_process_input(true)
-		# Предполагаем, что у игрока есть StateMachine и состояние Idle
 		if player.has_node("StateMachine"):
 			player.get_node("StateMachine").change_to("Idle")

@@ -6,7 +6,6 @@ signal show_dialogue(speaker: String, text: String)
 signal hide_dialogue
 signal show_memory(text: String, image: Texture)
 
-# Используем Node вместо Player, чтобы избежать ошибки компиляции
 var player: Node = null
 
 func _ready():
