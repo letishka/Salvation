@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://bdfcda3lnlc04"]
+
+[ext_resource type="PackedScene" uid="uid://beqmc7jwammvm" path="res://scenes/abilities/attack_ability.tscn" id="2_2fgcl"]
+
+[sub_resource type="GDScript" id="GDScript_r234c"]
+script/source = "extends Node
+
+@export var attack_ability: PackedScene
+
+@onready var timer = $Timer
+
+var sword_damage = 50
+
+
+func _ready():
+	pass
+	
+func _process(delta):
+	pass
+
+func _on_timer_timeout():
+	var player = get_tree().get_first_node_in_group(\"player\") as Node2D
+	if player == null:
+		return
+		
+	var attack_instance = attack_ability.instantiate() as AttackAbillity
+	var mouse_pos = player.get_global_mouse_position()
+	var direction_to_mouse = mouse_pos - player.global_position
+
+	player.add_child(attack_instance)
+	attack_instance.hit_box_component.damage = sword_damage
+	
+	if direction_to_mouse.x > 0:
+		attack_instance.position = Vector2(30,-10)
+	else:
+		attack_instance.position = Vector2(-30,-10)
+		attack_instance.scale = Vector2(-1,1)
+"
+
+[node name="AttackController" type="Node" unique_id=1897193487]
+script = SubResource("GDScript_r234c")
+attack_ability = ExtResource("2_2fgcl")
+
+[node name="Timer" type="Timer" parent="." unique_id=325348948]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

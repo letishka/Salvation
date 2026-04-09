@@ -64,6 +64,13 @@ interact={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="world"
+2d_physics/layer_2="player"
+2d_physics/layer_3="enemy"
+2d_physics/layer_5="enemy_hit_box"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
@@ -72,3 +79,6 @@ interact={
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+2d/layer_3="enemy"
+2d/layer_2="player"
+2d/layer_1="world"

@@ -54,7 +54,15 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 36
-text = " Play "
+text = "Play"
+icon_alignment = 1
+
+[node name="ContinueButton" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer" unique_id=1531885285 instance=ExtResource("1_b00nv")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 36
+text = "Continue"
 icon_alignment = 1
 
 [node name="OptionsButton" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer" unique_id=259380395 instance=ExtResource("1_b00nv")]
@@ -62,7 +70,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 36
-text = " Options "
+text = "Options"
 icon_alignment = 1
 
 [node name="QuitButton" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer" unique_id=1144573504 instance=ExtResource("1_b00nv")]
@@ -70,9 +78,11 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 36
-text = " Quit "
+text = "Quit"
 icon_alignment = 1
 
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/ContinueButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

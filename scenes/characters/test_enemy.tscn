@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://ijii36s5huog"]
+
+[ext_resource type="PackedScene" uid="uid://d3kx57jnjx3mc" path="res://scenes/components/health_component.tscn" id="1_dfwrw"]
+[ext_resource type="Texture2D" uid="uid://b1kfjogc7b8ek" path="res://assets/graphics/test_enemy.png" id="1_uvd4k"]
+[ext_resource type="PackedScene" uid="uid://qfuqvnv5yfq2" path="res://scenes/components/hurt_box_component.tscn" id="2_dfwrw"]
+
+[sub_resource type="GDScript" id="GDScript_uvd4k"]
+script/source = "extends CharacterBody2D
+
+@onready var helth_component = $HelthComponent
+const SPEED = 300.0
+var max_speed = 80
+const JUMP_VELOCITY = -400.0
+
+func _process(delta):
+	var direction = get_direction_to_player()
+	velocity = max_speed * direction
+	move_and_slide()
+
+func get_direction_to_player():
+	var player = get_tree().get_first_node_in_group(\"player\") as Node2D
+	if player != null:
+		return (player.global_position - self.global_position).normalized()
+	return Vector2.ZERO
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dfwrw"]
+radius = 43.104523
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fs4m4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_uvd4k")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6x6pk"]
+radius = 16.0
+
+[node name="TestEnemy" type="CharacterBody2D" unique_id=1886436151]
+collision_layer = 0
+script = SubResource("GDScript_uvd4k")
+
+[node name="HelthComponent" parent="." unique_id=1336488682 instance=ExtResource("1_dfwrw")]
+max_health = 100
+
+[node name="HurtBoxComponent" parent="." unique_id=686741254 node_paths=PackedStringArray("health_component") instance=ExtResource("2_dfwrw")]
+health_component = NodePath("../HelthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent" unique_id=1949589252]
+position = Vector2(0, -36)
+shape = SubResource("CircleShape2D_dfwrw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=689220880]
+position = Vector2(1.9073486e-06, -33)
+scale = Vector2(2.9166667, 3.2114363)
+sprite_frames = SubResource("SpriteFrames_fs4m4")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.693359
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1428487279]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_6x6pk")

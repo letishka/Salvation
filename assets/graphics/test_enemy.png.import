@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://calixeuop42ap"
-path="res://.godot/imported/лоби_чистилища.jpg-176aa935edf24b54e85a1c6802ced83a.ctex"
+uid="uid://b1kfjogc7b8ek"
+path="res://.godot/imported/test_enemy.png-6f911aa9c09bbdc7c6c115415aea9536.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/resources/лоби_чистилища.jpg"
-dest_files=["res://.godot/imported/лоби_чистилища.jpg-176aa935edf24b54e85a1c6802ced83a.ctex"]
+source_file="res://assets/graphics/test_enemy.png"
+dest_files=["res://.godot/imported/test_enemy.png-6f911aa9c09bbdc7c6c115415aea9536.ctex"]
 
 [params]
 

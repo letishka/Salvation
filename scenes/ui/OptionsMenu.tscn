@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://be84a1qlq0yly"]
 
-[ext_resource type="Script" uid="uid://7qel5jbrfhe1" path="res://ui/options_menu.gd" id="1_fqj3q"]
-[ext_resource type="Texture2D" uid="uid://calixeuop42ap" path="res://ui/resources/лоби_чистилища.jpg" id="2_5k8le"]
-[ext_resource type="PackedScene" uid="uid://ghuwfsm0dqfq" path="res://ui/SoundButton.tscn" id="3_qwewx"]
+[ext_resource type="Script" uid="uid://7qel5jbrfhe1" path="res://scripts/ui/options_menu.gd" id="1_fqj3q"]
+[ext_resource type="Texture2D" uid="uid://calixeuop42ap" path="res://assets/ui/лоби_чистилища.jpg" id="2_5k8le"]
+[ext_resource type="PackedScene" uid="uid://ghuwfsm0dqfq" path="res://scenes/audio/SoundButton.tscn" id="3_qwewx"]
 
 [node name="OptionsMenu" type="CanvasLayer" unique_id=2114518181]
 script = ExtResource("1_fqj3q")
@@ -112,5 +112,5 @@ icon_alignment = 1
 [connection signal="value_changed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2/SFXContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="value_changed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2/MusicContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer2/WindowModeContainer/WindowModeButton" to="." method="_on_window_mode_button_pressed"]
-[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/BackButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/BackButton" to="." method="_on_quit_button_pressed"]

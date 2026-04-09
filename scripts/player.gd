@@ -1,8 +1,13 @@
 extends CharacterBody2D
 
+@onready var health_component = $HealthComponent
+@onready var grace_period = $GracePeriod
+
+var enemies_collasing = 0
 @export var speed : float = 200.0
 @export var sprint_speed : float = 350.0
 var current_speed : float
+var acceleration = 0.15
 
 var hp : int = 100
 var max_hp : int = 100
@@ -22,13 +27,14 @@ func _physics_process(_delta):
 	else:
 		current_speed = speed
 	
-	velocity = direction * current_speed
+	var target_velocity = direction * current_speed
+	velocity = velocity.lerp(target_velocity, acceleration)
 	move_and_slide()
 
-func take_damage(amount: int):
-	hp -= amount
-	if hp <= 0:
-		die()
+#func take_damage(amount: int):
+	#hp -= amount
+	#if hp <= 0:
+		#die()
 	# Обновление полоски здоровья позже
 
 func heal(amount: int):
@@ -49,3 +55,10 @@ func _input(event):
 	if event.is_action_pressed("interact") and current_interactable:
 		if current_interactable.has_method("interact"):
 			current_interactable.interact()
+
+func check_if_damaged():
+	if enemies_collasing == 0 || !grace_period.is_stopped():
+		return
+	health_component.take_damage(1)
+	grace_period.start()
+	print(health_component.current_helth)
