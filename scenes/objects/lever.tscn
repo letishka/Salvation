@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" uid="uid://th1na7bvdwql" path="res://scripts/objects/lever.gd" id="1_donkj"]
 [ext_resource type="Texture2D" uid="uid://ff2ihbgsquja" path="res://assets/graphics/objects/lever.png" id="2_1gg2o"]
+[ext_resource type="Texture2D" uid="uid://muthgcytwq0r" path="res://assets/graphics/objects/lever_2.png" id="3_1gg2o"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ru7jp"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_1gg2o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1gg2o")
 }],
 "loop": true,
 "name": &"default",
@@ -15,15 +19,26 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q11tp"]
-radius = 16.27882
+radius = 16.03122
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1gg2o"]
+size = Vector2(11, 4)
 
 [node name="Lever" type="StaticBody2D" unique_id=693276462]
+collision_layer = 2
 script = ExtResource("1_donkj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=354392336]
-position = Vector2(3.8146973e-06, -1.000001)
-scale = Vector2(0.050292976, 0.046386737)
+position = Vector2(0, 1.4305115e-06)
+scale = Vector2(0.027343752, 0.025146494)
 sprite_frames = SubResource("SpriteFrames_ru7jp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1813324505]
+[node name="Area2D" type="Area2D" parent="." unique_id=669431699]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1813324505]
 shape = SubResource("CircleShape2D_q11tp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1476716902]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_1gg2o")

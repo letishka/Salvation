@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://c7vvs6j87r7sk"]
+
+[ext_resource type="Script" uid="uid://wru628c6fpvk" path="res://scripts/objects/bonfire.gd" id="1_av1pb"]
+[ext_resource type="Texture2D" uid="uid://b5fql5s25wxtd" path="res://assets/graphics/objects/bonfire.png" id="2_yjuxu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5150a"]
+radius = 15.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ehkru"]
+size = Vector2(12, 6.5)
+
+[node name="Bonfire" type="StaticBody2D" unique_id=183457378]
+collision_layer = 2
+script = ExtResource("1_av1pb")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1923142935]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1271554435]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_5150a")
+
+[node name="Bonfire" type="Sprite2D" parent="." unique_id=690169491]
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("2_yjuxu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=185303988]
+position = Vector2(0, 3.75)
+shape = SubResource("RectangleShape2D_ehkru")

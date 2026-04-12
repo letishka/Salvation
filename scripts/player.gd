@@ -25,6 +25,7 @@ func _ready():
 	ability_user.ability_used.connect(_on_ability_used)
 	interact_area.area_entered.connect(_on_interactable_entered)
 	interact_area.area_exited.connect(_on_interactable_exited)
+	print("InteractArea signals connected")
 	$TorchSprite.hide()
 
 func _process(delta):
@@ -39,6 +40,7 @@ func _input(event):
 		# В будущем выбирать активную способность, пока просто вода
 		ability_user.use("water")
 	elif event.is_action_pressed("interact") and current_interactable:
+		print("Interact pressed, current_interactable = ", current_interactable)
 		current_interactable.interact()
 
 func _on_ability_used(ability_id: String):
@@ -69,6 +71,7 @@ func _on_death():
 	state_machine.change_to("Dead")
 
 func _on_interactable_entered(area):
+	print("Area entered: ", area.name, " parent: ", area.get_parent().name)
 	var parent = area.get_parent()
 	if parent == self:
 		return

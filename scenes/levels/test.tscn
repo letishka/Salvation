@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://cmggf021uxnuo" path="res://scenes/characters/player/player.tscn" id="1_52kye"]
 [ext_resource type="Texture2D" uid="uid://cooa7ny68ep7h" path="res://assets/graphics/tilesets/dungeontileset-extended.png" id="2_yp2xm"]
 [ext_resource type="PackedScene" uid="uid://diyfqbor4n64x" path="res://scenes/objects/lever.tscn" id="3_yp2xm"]
+[ext_resource type="PackedScene" uid="uid://dpn0ri1h1ujip" path="res://scenes/objects/bridge.tscn" id="4_uyl1e"]
+[ext_resource type="PackedScene" uid="uid://c7vvs6j87r7sk" path="res://scenes/objects/bonfire.tscn" id="5_koekj"]
+[ext_resource type="PackedScene" uid="uid://dhuo75x7vtotr" path="res://scenes/objects/torch.tscn" id="6_kw13u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uyl1e"]
 texture = ExtResource("2_yp2xm")
@@ -40,5 +43,17 @@ layer_0/tile_data = PackedInt32Array(1048594, 65536, 17, 1114130, 65536, 18, 117
 [node name="Player" parent="." unique_id=1090551706 instance=ExtResource("1_52kye")]
 position = Vector2(575, 323)
 
-[node name="Sprite2D" parent="." unique_id=1118262626 instance=ExtResource("3_yp2xm")]
-position = Vector2(502, 306)
+[node name="Lever" parent="." unique_id=1118262626 instance=ExtResource("3_yp2xm")]
+position = Vector2(755, 291)
+target_node_path = NodePath("../Bridge")
+
+[node name="Bridge" parent="." unique_id=217268844 instance=ExtResource("4_uyl1e")]
+position = Vector2(928, 320)
+up_position = Vector2(0, -32)
+up_collision_disabled = false
+
+[node name="Bonfire" parent="." unique_id=183457378 instance=ExtResource("5_koekj")]
+position = Vector2(643, 283)
+
+[node name="TorchPickup" parent="." unique_id=1336749232 instance=ExtResource("6_kw13u")]
+position = Vector2(651, 341)

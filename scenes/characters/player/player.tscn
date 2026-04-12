@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://cpxfnqi8juc63" path="res://assets/graphics/characters/player/player.png" id="1_rp718"]
 [ext_resource type="Script" uid="uid://dmcnmyd414rip" path="res://scripts/player.gd" id="1_yewv4"]
 [ext_resource type="Script" uid="uid://mvtpleebmafi" path="res://scripts/components/health_component.gd" id="3_blysn"]
-[ext_resource type="Script" uid="uid://nnh48s5ema8v" path="res://scripts/components/attack_component.gd" id="4_hv5x3"]
 [ext_resource type="Script" uid="uid://dtx2a46thr57d" path="res://scripts/components/ability_user.gd" id="5_ykrpk"]
 [ext_resource type="Script" uid="uid://c716unr4jabkx" path="res://scripts/states/state_machine.gd" id="6_i1nod"]
 [ext_resource type="Script" uid="uid://b3rd3hf8adjx5" path="res://scripts/states/player_states/idle.gd" id="7_4kqyw"]
@@ -13,7 +12,7 @@
 [ext_resource type="Script" uid="uid://cqhfs84ewg3oy" path="res://scripts/states/player_states/ability.gd" id="11_tebod"]
 [ext_resource type="Script" uid="uid://cc8ptk1cymfgm" path="res://scripts/states/player_states/hit.gd" id="12_6nfx3"]
 [ext_resource type="Script" uid="uid://d0e0bke0qvk1" path="res://scripts/states/player_states/dead.gd" id="13_3hnlq"]
-[ext_resource type="Texture2D" uid="uid://b84ogw48tcq3i" path="res://assets/graphics/objects/torch.png" id="14_hv5x3"]
+[ext_resource type="Texture2D" uid="uid://jlieu4e3yuy1" path="res://assets/graphics/objects/torch.png" id="14_hv5x3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yewv4"]
 animations = [{
@@ -32,51 +31,41 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_blysn"]
-radius = 14.0
-height = 64.0
+radius = 8.0
+height = 18.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yewv4"]
-radius = 25.0
-height = 86.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_ykrpk"]
-radius = 41.01219
+radius = 24.0
+height = 48.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1090551706]
+collision_mask = 14
 script = ExtResource("1_yewv4")
-speed = null
-sprint_speed = null
-attack_duration = null
-dodge_duration = null
+speed = 100.0
 
 [node name="Player" type="AnimatedSprite2D" parent="." unique_id=1267347010]
-position = Vector2(0, -32)
-scale = Vector2(2, 2)
+position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_yewv4")
 animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1480097859]
-position = Vector2(0, -32)
+position = Vector2(0, -9)
 shape = SubResource("CapsuleShape2D_blysn")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1103473448]
+zoom = Vector2(4, 4)
 
 [node name="InteractArea" type="Area2D" parent="." unique_id=328487895]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea" unique_id=946132700]
-position = Vector2(0, -31)
+position = Vector2(0, -16)
 shape = SubResource("CapsuleShape2D_yewv4")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=2079305399]
 script = ExtResource("3_blysn")
-
-[node name="AttackComponent" type="Area2D" parent="." unique_id=306884812]
-script = ExtResource("4_hv5x3")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackComponent" unique_id=972042852]
-position = Vector2(0, -32)
-shape = SubResource("CircleShape2D_ykrpk")
 
 [node name="AbilityUser" type="Node" parent="." unique_id=877696919]
 script = ExtResource("5_ykrpk")
@@ -107,8 +96,8 @@ script = ExtResource("12_6nfx3")
 script = ExtResource("13_3hnlq")
 
 [node name="TorchSprite" type="Sprite2D" parent="." unique_id=903838198]
-position = Vector2(11, -24)
-scale = Vector2(0.09756946, 0.08645833)
+position = Vector2(7, -12.000002)
+scale = Vector2(0.057118062, 0.0515625)
 texture = ExtResource("14_hv5x3")
 
 [connection signal="area_entered" from="InteractArea" to="." method="_on_interactable_area_entered"]
