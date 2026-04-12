@@ -21,8 +21,6 @@ func _update_health(health, max_health):
 
 func _start_ability_cooldown(ability_id, remaining):
 	ability_cooldown.show()
-	# Здесь можно анимировать уменьшение
-	# Используйте Tween для плавности
 	var tween = create_tween()
 	tween.tween_property(ability_cooldown, "value", 0, remaining)
 

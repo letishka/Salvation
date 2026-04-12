@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dpn0ri1h1ujip"]
 
 [ext_resource type="Script" uid="uid://xethg35blv4l" path="res://scripts/objects/bridge.gd" id="1_pexfk"]
-[ext_resource type="Texture2D" uid="uid://cyt0seo6hxoxd" path="res://assets/graphics/objects/ice_platform.png" id="2_57faa"]
+[ext_resource type="Texture2D" uid="uid://clue3vldxo4u4" path="res://assets/graphics/objects/bridge.png" id="2_pexfk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5r4xj"]
-size = Vector2(281, 78)
+size = Vector2(281, 31)
 
 [node name="Bridge" type="StaticBody2D" unique_id=217268844]
 collision_layer = 4
@@ -12,10 +12,9 @@ collision_mask = 0
 script = ExtResource("1_pexfk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1409096709]
-position = Vector2(2.5, -1)
 shape = SubResource("RectangleShape2D_5r4xj")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2006942347]
-position = Vector2(1, -1.0000038)
-scale = Vector2(0.3076087, 0.16225)
-texture = ExtResource("2_57faa")
+position = Vector2(1, 17.999996)
+scale = Vector2(0.20349652, 0.07999999)
+texture = ExtResource("2_pexfk")

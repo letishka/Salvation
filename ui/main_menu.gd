@@ -8,7 +8,7 @@ func _ready() -> void:
 	$BackgroundMusic.play()
 
 func _on_play_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/levels/test.tscn")
+	get_tree().change_scene_to_file("res://scenes/levels/water_level_1.tscn")
 
 func _on_options_button_pressed() -> void:
 	var options_instance = options_menu_scene.instantiate()

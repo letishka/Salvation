@@ -1,6 +1,6 @@
 [gd_resource type="Theme" format=3 uid="uid://b1xkp3i1kbd0n"]
 
-[ext_resource type="FontFile" uid="uid://tiek683aqgkm" path="res://assets/ui/theme/Bitfantasy.ttf" id="1_640h2"]
+[ext_resource type="FontFile" uid="uid://tiek683aqgkm" path="res://assets/graphics/ui/theme/Bitfantasy.ttf" id="1_640h2"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_47as2"]
 texture_margin_left = 4.0
