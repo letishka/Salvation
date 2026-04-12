@@ -7,10 +7,14 @@
 [sub_resource type="GDScript" id="GDScript_uvd4k"]
 script/source = "extends CharacterBody2D
 
-@onready var helth_component = $HelthComponent
+@onready var health_component = $HelthComponent
 const SPEED = 300.0
 var max_speed = 80
 const JUMP_VELOCITY = -400.0
+
+func _ready():
+	health_component.died.connect(on_died)
+
 
 func _process(delta):
 	var direction = get_direction_to_player()
@@ -22,10 +26,13 @@ func get_direction_to_player():
 	if player != null:
 		return (player.global_position - self.global_position).normalized()
 	return Vector2.ZERO
+
+func on_died():
+	queue_free()
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dfwrw"]
-radius = 43.104523
+radius = 33.06055
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fs4m4"]
 animations = [{
@@ -41,12 +48,16 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_6x6pk"]
 radius = 16.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dfwrw"]
+radius = 22.0
+height = 62.0
+
 [node name="TestEnemy" type="CharacterBody2D" unique_id=1886436151]
-collision_layer = 0
+collision_layer = 4
+collision_mask = 5
 script = SubResource("GDScript_uvd4k")
 
 [node name="HelthComponent" parent="." unique_id=1336488682 instance=ExtResource("1_dfwrw")]
-max_health = 100
 
 [node name="HurtBoxComponent" parent="." unique_id=686741254 node_paths=PackedStringArray("health_component") instance=ExtResource("2_dfwrw")]
 health_component = NodePath("../HelthComponent")
@@ -66,3 +77,11 @@ frame_progress = 0.693359
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1428487279]
 position = Vector2(0, -16)
 shape = SubResource("CircleShape2D_6x6pk")
+
+[node name="EnemyHitBox" type="Area2D" parent="." unique_id=1319727594]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitBox" unique_id=137458640]
+position = Vector2(0, -31)
+shape = SubResource("CapsuleShape2D_dfwrw")

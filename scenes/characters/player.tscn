@@ -1,9 +1,20 @@
 [gd_scene format=3 uid="uid://cmggf021uxnuo"]
 
 [ext_resource type="Texture2D" uid="uid://cpxfnqi8juc63" path="res://assets/graphics/player.png" id="1_rp718"]
-[ext_resource type="Script" uid="uid://dmcnmyd414rip" path="res://scripts/player.gd" id="1_yewv4"]
+[ext_resource type="Script" uid="uid://3wofqfsbxbap" path="res://scripts/player.gd" id="1_yewv4"]
 [ext_resource type="PackedScene" uid="uid://bdfcda3lnlc04" path="res://scenes/abilities/attack_controller.tscn" id="2_dyp2m"]
 [ext_resource type="PackedScene" uid="uid://d3kx57jnjx3mc" path="res://scenes/components/health_component.tscn" id="3_76oj4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dyp2m"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_atpat"]
+bg_color = Color(0.99999994, 0.15068555, 0.21565476, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.2, 0.2, 0.2, 1)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yewv4"]
 animations = [{
@@ -36,14 +47,30 @@ height = 58.0
 collision_layer = 0
 script = ExtResource("1_yewv4")
 
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1863192122]
+custom_minimum_size = Vector2(200, 20)
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 210.0
+offset_bottom = 30.0
+pivot_offset = Vector2(150, 15)
+theme_override_styles/background = SubResource("StyleBoxFlat_dyp2m")
+theme_override_styles/fill = SubResource("StyleBoxFlat_atpat")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
 [node name="AbillityManager" type="Node" parent="." unique_id=203710279]
 
 [node name="AttackController" parent="AbillityManager" unique_id=1897193487 instance=ExtResource("2_dyp2m")]
 
+[node name="HelthComponent" parent="." unique_id=1336488682 instance=ExtResource("3_76oj4")]
+
 [node name="GracePeriod" type="Timer" parent="." unique_id=473204089]
+wait_time = 0.5
 one_shot = true
 
-[node name="HealthComponent" parent="." unique_id=1336488682 instance=ExtResource("3_76oj4")]
+[node name="HealthComponent" parent="." unique_id=1404676747 instance=ExtResource("3_76oj4")]
 
 [node name="Player" type="AnimatedSprite2D" parent="." unique_id=1267347010]
 position = Vector2(0, -32)
@@ -56,9 +83,6 @@ autoplay = "idle"
 position = Vector2(0, -15)
 shape = SubResource("CircleShape2D_76oj4")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1103473448]
-position_smoothing_enabled = true
-
 [node name="InteractArea" type="Area2D" parent="." unique_id=328487895]
 collision_layer = 2
 
@@ -68,12 +92,13 @@ shape = SubResource("CapsuleShape2D_yewv4")
 
 [node name="PlayerHurtBox" type="Area2D" parent="." unique_id=1715718106]
 collision_layer = 2
-collision_mask = 8
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtBox" unique_id=1151510333]
 position = Vector2(0, -29)
 shape = SubResource("CapsuleShape2D_dyp2m")
 
+[connection signal="timeout" from="GracePeriod" to="." method="_on_grace_period_timeout"]
 [connection signal="area_entered" from="InteractArea" to="." method="_on_interactable_area_entered"]
 [connection signal="area_exited" from="InteractArea" to="." method="_on_interactable_area_exited"]
 [connection signal="area_entered" from="PlayerHurtBox" to="." method="_on_player_hurt_box_area_entered"]

@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://cryk4m62lbawq"]
 
 [ext_resource type="PackedScene" uid="uid://ghuwfsm0dqfq" path="res://scenes/audio/SoundButton.tscn" id="1_b00nv"]
-[ext_resource type="Script" uid="uid://cdd4gi7swjvb2" path="res://scripts/ui/main_menu.gd" id="1_nmrkx"]
+[ext_resource type="Script" uid="uid://cdd4gi7swjvb2" path="res://scripts/main_menu.gd" id="1_nmrkx"]
 [ext_resource type="Texture2D" uid="uid://calixeuop42ap" path="res://assets/ui/лоби_чистилища.jpg" id="1_rn8js"]
 [ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://scenes/audio/BackgroundMusic.tscn" id="2_8v85u"]
 
 [node name="MainMenu" type="CanvasLayer" unique_id=2114518181]
+process_mode = 3
 script = ExtResource("1_nmrkx")
 
 [node name="BackgroundMusic" parent="." unique_id=489571506 instance=ExtResource("2_8v85u")]

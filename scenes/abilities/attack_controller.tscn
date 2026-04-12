@@ -9,7 +9,7 @@ script/source = "extends Node
 
 @onready var timer = $Timer
 
-var sword_damage = 50
+var sword_damage = 20
 
 
 func _ready():
