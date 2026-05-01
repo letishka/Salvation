@@ -22,3 +22,4 @@ func respawn():
 		player.set_process_input(true)
 		if player.has_node("StateMachine"):
 			player.get_node("StateMachine").change_to("Idle")
+		player.add_to_group("player")

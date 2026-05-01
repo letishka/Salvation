@@ -12,8 +12,8 @@ script = ExtResource("1_nmrkx")
 autoplay = true
 
 [node name="Lobby" type="Sprite2D" parent="." unique_id=639470116]
-position = Vector2(576, 323.5)
-scale = Vector2(0.8984375, 0.8908839)
+position = Vector2(639, 359)
+scale = Vector2(1.008, 1)
 texture = ExtResource("1_rn8js")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=817147960]

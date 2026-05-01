@@ -96,6 +96,8 @@ use_ability={
 2d_physics/layer_1="player"
 2d_physics/layer_2="interactable"
 2d_physics/layer_3="environment"
+2d_physics/layer_4="enimies"
+2d_physics/layer_8="enemy_attack"
 
 [physics]
 

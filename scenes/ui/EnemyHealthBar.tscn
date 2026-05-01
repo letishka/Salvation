@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://brrk51u8lnp0f"]
+
+[node name="EnemyHealthBar" type="Control" unique_id=1301134722]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1903586920]
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 17.0

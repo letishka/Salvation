@@ -23,6 +23,7 @@ func _ready():
 	LevelManager.register_player(self)
 	health_component.died.connect(_on_death)
 	ability_user.ability_used.connect(_on_ability_used)
+	health_component.health_changed.connect(_on_health_changed)
 	interact_area.area_entered.connect(_on_interactable_entered)
 	interact_area.area_exited.connect(_on_interactable_exited)
 	print("InteractArea signals connected")
@@ -30,15 +31,24 @@ func _ready():
 
 func _process(delta):
 	ability_user.update(delta)
+	
+func _physics_process(delta):
+	if state_machine.current_state.name == "Dodge":
+		return
+	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var direction = input_dir.normalized()
+	var current_speed = sprint_speed if Input.is_action_pressed("sprint") else speed
+	velocity = direction * current_speed
+	move_and_slide()
 
 func _input(event):
 	if event.is_action_pressed("attack") and state_machine.current_state.name != "Attack":
 		state_machine.change_to("Attack")
 	elif event.is_action_pressed("dodge") and state_machine.current_state.name != "Dodge":
 		state_machine.change_to("Dodge")
-	elif event.is_action_pressed("use_ability"):
+	#elif event.is_action_pressed("use_ability"):
 		# В будущем выбирать активную способность, пока просто вода
-		ability_user.use("water")
+		#ability_user.use("water")
 	elif event.is_action_pressed("interact") and current_interactable:
 		print("Interact pressed, current_interactable = ", current_interactable)
 		current_interactable.interact()
@@ -65,16 +75,22 @@ func try_create_ice_platform():
 			ice.position = global_position
 			get_parent().add_child(ice)
 
+
 func _on_death():
+	remove_from_group("player")
 	set_physics_process(false)
 	set_process_input(false)
 	state_machine.change_to("Dead")
+
+func _on_health_changed(current, max):
+	GameManager.update_health(current, max)
 
 func _on_interactable_entered(area):
 	print("Area entered: ", area.name, " parent: ", area.get_parent().name)
 	var parent = area.get_parent()
 	if parent == self:
 		return
+
 	if parent.has_method("interact"):
 		current_interactable = parent
 
@@ -82,10 +98,9 @@ func _on_interactable_exited(area):
 	if current_interactable == area.get_parent():
 		current_interactable = null
 
-# Обёртка для take_damage, чтобы компоненты могли вызывать
 func take_damage(amount: int):
 	health_component.take_damage(amount)
-	
+
 # Метод для подбора факела
 func pickup_torch():
 	has_torch = true
@@ -108,4 +123,6 @@ func place_torch():
 		torch_lit = false
 		$TorchSprite.hide()
 		# Вернуть горящий факел в инвентарь? Нет, он вставлен.
-	
+		
+func reset_health():
+	health_component.reset()

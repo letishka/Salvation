@@ -1,16 +1,19 @@
 [gd_scene format=3 uid="uid://dovcdmcrvnkl6"]
 
 [ext_resource type="TileSet" uid="uid://h3qghujbv0i4" path="res://assets/graphics/tilesets/water1.tres" id="1_8fmhc"]
+[ext_resource type="Script" uid="uid://bffoj1onu0gqi" path="res://scripts/levels/water_land.gd" id="1_gqqtm"]
 [ext_resource type="PackedScene" uid="uid://dpn0ri1h1ujip" path="res://scenes/objects/bridge.tscn" id="2_cmwfa"]
+[ext_resource type="PackedScene" uid="uid://b18mebpm3vt2y" path="res://scenes/ui/EndScreen.tscn" id="2_jjc6a"]
 [ext_resource type="PackedScene" uid="uid://diyfqbor4n64x" path="res://scenes/objects/lever.tscn" id="3_di77f"]
 [ext_resource type="PackedScene" uid="uid://dhuo75x7vtotr" path="res://scenes/objects/torch.tscn" id="4_gqqtm"]
 [ext_resource type="PackedScene" uid="uid://c7vvs6j87r7sk" path="res://scenes/objects/bonfire.tscn" id="5_jjc6a"]
 [ext_resource type="PackedScene" uid="uid://cmggf021uxnuo" path="res://scenes/characters/player/player.tscn" id="6_v4o1i"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cmwfa"]
-size = Vector2(163, 320)
+[ext_resource type="PackedScene" uid="uid://dkbad02l0bcgj" path="res://scenes/ui/ui.tscn" id="9_jjc6a"]
+[ext_resource type="PackedScene" uid="uid://u37wub0croka" path="res://scenes/characters/enemies/shadow_soldier.tscn" id="10_v4o1i"]
 
 [node name="WaterLevel1" type="Node2D" unique_id=807494377]
+script = ExtResource("1_gqqtm")
+end_screen_scene = ExtResource("2_jjc6a")
 
 [node name="TileMap" type="TileMap" parent="." unique_id=659302344]
 tile_set = ExtResource("1_8fmhc")
@@ -34,10 +37,7 @@ position = Vector2(148, 96)
 [node name="Player" parent="." unique_id=1090551706 instance=ExtResource("6_v4o1i")]
 position = Vector2(120, 203)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=820752052]
-collision_layer = 0
-collision_mask = 4
+[node name="Ui" parent="." unique_id=440906617 instance=ExtResource("9_jjc6a")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=493787514]
-position = Vector2(304.5, 162)
-shape = SubResource("RectangleShape2D_cmwfa")
+[node name="ShadowSoldier" parent="." unique_id=1970334870 instance=ExtResource("10_v4o1i")]
+position = Vector2(433, 117)

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dkbad02l0bcgj"]
+
+[ext_resource type="Script" uid="uid://mvtpleebmafi" path="res://scripts/components/health_component.gd" id="1_u7n8c"]
+
+[node name="Ui" type="CanvasLayer" unique_id=440906617]
+
+[node name="AbilityCooldown" type="TextureProgressBar" parent="." unique_id=1297625532]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+max_value = 1.0
+
+[node name="DialogueBox" type="Node" parent="." unique_id=493307523]
+
+[node name="MemoryLabel" type="Node" parent="." unique_id=1606353154]
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1873838161]
+offset_left = 34.0
+offset_top = 21.0
+offset_right = 242.0
+offset_bottom = 53.0
+step = 1.0
+value = 100.0
+script = ExtResource("1_u7n8c")
