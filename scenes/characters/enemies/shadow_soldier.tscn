@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://u37wub0croka"]
+
+[ext_resource type="Script" uid="uid://mjtem7jni1v" path="res://scripts/characters/enemies/shadow_soldier.gd" id="1_ummrs"]
+[ext_resource type="Texture2D" uid="uid://b1t6r1iey2bx" path="res://assets/graphics/characters/enimies/shadow_soldier.png" id="2_kanba"]
+[ext_resource type="Script" uid="uid://dnyfpvdiacc6y" path="res://scripts/components/health_component.gd" id="3_4cdw2"]
+[ext_resource type="Script" uid="uid://kt5blwu37w6n" path="res://scripts/components/attack_component.gd" id="4_kanba"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fqabt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kanba")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4tjwu"]
+radius = 8.0
+height = 22.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tt6g0"]
+radius = 34.0147
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g8qau"]
+radius = 106.23088
+
+[node name="ShadowSoldier" type="CharacterBody2D" unique_id=1970334870]
+collision_mask = 4
+script = ExtResource("1_ummrs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=345568183]
+position = Vector2(0, -1.4210855e-14)
+scale = Vector2(0.088169664, 0.07568361)
+sprite_frames = SubResource("SpriteFrames_fqabt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=229067875]
+position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_4tjwu")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=829657670]
+script = ExtResource("3_4cdw2")
+
+[node name="AttackComponent" type="Area2D" parent="." unique_id=1481816633]
+collision_layer = 128
+script = ExtResource("4_kanba")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackComponent" unique_id=1821748722]
+shape = SubResource("CircleShape2D_tt6g0")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=793404392]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1023048945]
+position = Vector2(1, 0)
+shape = SubResource("CircleShape2D_g8qau")
