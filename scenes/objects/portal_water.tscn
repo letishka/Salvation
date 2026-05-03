@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://dy6kc1bc3je1"]
+
+[ext_resource type="Texture2D" uid="uid://b38xn7i0683tv" path="res://assets/graphics/objects/portal_water.png" id="1_l1is6"]
+[ext_resource type="Script" uid="uid://d0om7b4k5vvg6" path="res://scripts/objects/portal_water.gd" id="1_lnheu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h5gno"]
+atlas = ExtResource("1_l1is6")
+region = Rect2(0, 0, 63, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osqbb"]
+atlas = ExtResource("1_l1is6")
+region = Rect2(64, 0, 63, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ede74"]
+atlas = ExtResource("1_l1is6")
+region = Rect2(128, 0, 63, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqigw"]
+atlas = ExtResource("1_l1is6")
+region = Rect2(192, 0, 63, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4kos"]
+atlas = ExtResource("1_l1is6")
+region = Rect2(256, 0, 63, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g248y"]
+atlas = ExtResource("1_l1is6")
+region = Rect2(320, 0, 63, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_asbtd"]
+atlas = ExtResource("1_l1is6")
+region = Rect2(384, 0, 63, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yadx3"]
+atlas = ExtResource("1_l1is6")
+region = Rect2(448, 0, 63, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bswwo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h5gno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osqbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ede74")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqigw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j4kos")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g248y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_asbtd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yadx3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gd70c"]
+radius = 13.0
+height = 60.0
+
+[node name="Portal" type="Area2D" unique_id=35049290]
+script = ExtResource("1_lnheu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1929958960]
+position = Vector2(5, -2)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_bswwo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1298820769]
+position = Vector2(2, 9)
+shape = SubResource("CapsuleShape2D_gd70c")

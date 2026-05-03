@@ -1,12 +1,13 @@
 [gd_scene format=4 uid="uid://bn66ciyv5m521"]
 
-[ext_resource type="PackedScene" uid="uid://cmggf021uxnuo" path="res://scenes/characters/player.tscn" id="1_52kye"]
-[ext_resource type="Script" uid="uid://dgwn0cj7n43h8" path="res://scripts/test.gd" id="1_koekj"]
+[ext_resource type="PackedScene" uid="uid://cmggf021uxnuo" path="res://scenes/characters/player/player.tscn" id="1_52kye"]
+[ext_resource type="Script" uid="uid://dgwn0cj7n43h8" path="res://scripts/levels/test.gd" id="1_koekj"]
 [ext_resource type="PackedScene" uid="uid://cwejyp58o1jsk" path="res://scenes/ui/end_screen.tscn" id="2_kw13u"]
-[ext_resource type="Texture2D" uid="uid://cooa7ny68ep7h" path="res://assets/graphics/dungeontileset-extended.png" id="2_yp2xm"]
-[ext_resource type="PackedScene" uid="uid://ijii36s5huog" path="res://scenes/characters/test_enemy.tscn" id="3_yp2xm"]
+[ext_resource type="Texture2D" uid="uid://cooa7ny68ep7h" path="res://assets/graphics/tilesets/dungeontileset-extended.png" id="2_yp2xm"]
+[ext_resource type="PackedScene" uid="uid://ijii36s5huog" path="res://scenes/characters/enemies/test_enemy.tscn" id="3_yp2xm"]
 [ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://scenes/audio/BackgroundMusic.tscn" id="4_uyl1e"]
-[ext_resource type="Script" uid="uid://cfwxjijbg2di6" path="res://scripts/camera_2d.gd" id="5_7115g"]
+[ext_resource type="Script" uid="uid://cfwxjijbg2di6" path="res://scripts/characters/player/camera_2d.gd" id="5_7115g"]
+[ext_resource type="PackedScene" uid="uid://dy6kc1bc3je1" path="res://scenes/objects/portal_water.tscn" id="8_im2du"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uyl1e"]
 texture = ExtResource("2_yp2xm")
@@ -64,3 +65,6 @@ position = Vector2(1022, 80)
 [node name="Camera2D" type="Camera2D" parent="." unique_id=540632001]
 position_smoothing_enabled = true
 script = ExtResource("5_7115g")
+
+[node name="Portal" parent="." unique_id=35049290 instance=ExtResource("8_im2du")]
+position = Vector2(781, 279)

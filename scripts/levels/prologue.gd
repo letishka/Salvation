@@ -1,51 +1,40 @@
-extends Control
+extends Node2D
 
-@onready var text_label = $RichTextLabel
-@onready var timer = $Timer
-@onready var audio_player = $AudioStreamPlayer
+@onready var player = $Player
+@onready var portal = $Portal
+@onready var dialogue_ui = $DialogueUI  # если отдельный узел
 
-var lines = []  # заполним из JSON
-var index = 0
-var is_heartbeat = false
+var prologue_ended = false
 
 func _ready():
-	# Загружаем пролог из DialogueManager (JSON уже загружен в менеджере)
-	var prologue_lines = DialogueManager.get_dialogue_lines("prologue_text")
-	for line in prologue_lines:
-		lines.append(line.text)
-	# Добавляем реплики сердцебиения
-	lines.append("")  # маркер паузы для сердца
-	var heartbeat_lines = DialogueManager.get_dialogue_lines("prologue_heartbeat")
-	for line in heartbeat_lines:
-		lines.append(line.text)
+	player.set_process_input(false)
+	player.set_physics_process(false)
 	
-	show()
-	text_label.visible_characters = 0
-	_next_line()
+	await show_dialogue_sequence()
+	
+	player.set_process_input(true)
+	player.set_physics_process(true)
+	prologue_ended = true
+	
+	show_hint("Иди к свету")
 
-func _next_line():
-	if index >= lines.size():
-		_finish_prologue()
-		return
-	var line = lines[index]
-	if line == "":
-		# Пауза с сердцебиением
-		audio_player.play()
-		timer.start(2.0)  # длительность звука + пауза
-		index += 1
-		return
-	text_label.text = line
-	text_label.visible_characters = 0
-	# Печатаем по буквам
-	while text_label.visible_characters < text_label.text.length():
-		text_label.visible_characters += 1
-		await get_tree().create_timer(0.05).timeout
-	index += 1
-	timer.start(2.5)  # показать строку 2.5 сек
+func show_dialogue_sequence():
 
-func _on_timer_timeout():
-	_next_line()
+	DialogueManager.start_dialogue("prologue_text")
+	await DialogueManager.dialogue_finished
 
-func _finish_prologue():
-	# Переход на водный уровень
-	get_tree().change_scene_to_file("res://scenes/levels/water_level_1.tscn")
+	$HeartbeatSound.play()
+	await get_tree().create_timer(2).timeout
+	
+	DialogueManager.start_dialogue("prologue_heartbeat")
+	await DialogueManager.dialogue_finished
+	
+	DialogueManager.start_dialogue("prologue_wakeup")
+	await DialogueManager.dialogue_finished
+
+func show_hint(text: String):
+	var hint = $CanvasLayer/HintLabel
+	hint.text = text
+	hint.visible = true
+	await get_tree().create_timer(3.0).timeout
+	hint.visible = false
