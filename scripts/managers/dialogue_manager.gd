@@ -44,3 +44,8 @@ func next_line():
 func close_dialogue():
 	_is_active = false
 	GameManager.close_dialogue()
+
+func get_dialogue_lines(key: String) -> Array:
+	if _dialogues.has(key):
+		return _dialogues[key]
+	return []
