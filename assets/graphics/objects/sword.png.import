@@ -2,26 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-<<<<<<<< Updated upstream:ui/resources/лоби_чистилища.jpg.import
-uid="uid://calixeuop42ap"
-path="res://.godot/imported/лоби_чистилища.jpg-176aa935edf24b54e85a1c6802ced83a.ctex"
-========
-uid="uid://btrv7vfqk1dxj"
+uid="uid://qa1wt2vyk0q5"
 path="res://.godot/imported/sword.png-5f9102e09a481a60c9bcbe225b1ae7bc.ctex"
->>>>>>>> Stashed changes:assets/graphics/objects/sword.png.import
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-<<<<<<<< Updated upstream:ui/resources/лоби_чистилища.jpg.import
-source_file="res://ui/resources/лоби_чистилища.jpg"
-dest_files=["res://.godot/imported/лоби_чистилища.jpg-176aa935edf24b54e85a1c6802ced83a.ctex"]
-========
 source_file="res://assets/graphics/objects/sword.png"
 dest_files=["res://.godot/imported/sword.png-5f9102e09a481a60c9bcbe225b1ae7bc.ctex"]
->>>>>>>> Stashed changes:assets/graphics/objects/sword.png.import
 
 [params]
 

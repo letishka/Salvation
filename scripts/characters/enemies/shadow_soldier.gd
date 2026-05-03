@@ -1,64 +1,41 @@
 extends CharacterBody2D
-class_name ShadowSoldier
-
-@export var speed: float = 80.0
-@export var attack_cooldown: float = 1.0
-@export var damage: int = 10
 
 @onready var health_component = $HealthComponent
-@onready var attack_component = $AttackComponent
 @onready var detection_area = $DetectionArea
-
-var player: Node = null
-var can_attack: bool = true
-var health_bar: ProgressBar = null
-var is_frozen: bool = false
+@onready var progress_bar: ProgressBar = $ProgressBar
+var player_detected: bool = false
+var max_speed = 80
 
 func _ready():
-	add_to_group("enemies")
-	player = get_tree().get_first_node_in_group("player")
-	health_component.died.connect(queue_free)
-	detection_area.body_entered.connect(_on_player_detected)
-	
-	health_bar = ProgressBar.new()
-	health_bar.max_value = health_component.max_health
-	health_bar.value = health_component.current_health
-	health_bar.custom_minimum_size = Vector2(50, 10)
-	add_child(health_bar)
-	health_bar.position = Vector2(-25, -40)   # смещение относительно врага
-	health_component.health_changed.connect(_on_health_changed)
+	health_component.died.connect(on_died)
+	health_component.health_changed.connect(on_health_changed)
+	health_update()
 
-func _physics_process(delta):
-	if not player:
-		return
-	var direction = (player.global_position - global_position).normalized()
-	velocity = direction * speed
+func _process(delta):
+	if not player_detected: return
+	var direction = get_direction_to_player()
+	velocity = max_speed * direction
 	move_and_slide()
-	if can_attack and global_position.distance_to(player.global_position) < 30:
-		attack()
 
-func attack():
-	can_attack = false
-	attack_component.activate()
-	await get_tree().create_timer(attack_cooldown).timeout
-	can_attack = true
+func get_direction_to_player():
+	var player = get_tree().get_first_node_in_group("player") as Node2D
+	if player != null:
+		return (player.global_position - self.global_position).normalized()
+	return Vector2.ZERO
 
-func _on_player_detected(body):
-	if body == player:
-		pass
+func on_died():
+	queue_free()
 
-func take_damage(amount: int):
-	health_component.take_damage(amount)
+func health_update():
+	progress_bar.value = health_component.get_health_value()
 
-func freeze(duration: float):
-	if is_frozen: return
-	is_frozen = true
-	set_physics_process(false)
-	await get_tree().create_timer(duration).timeout
-	set_physics_process(true)
-	is_frozen = false
+func on_health_changed():
+	health_update()
 
-func _on_health_changed(current: float, max: float):
-	if health_bar:
-		health_bar.value = current
-		health_bar.max_value = max
+func _on_detection_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		player_detected = true
+
+func _on_detection_area_body_exited(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		player_detected = false

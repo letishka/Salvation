@@ -9,6 +9,6 @@ func _on_area_entered(area: Area2D) -> void:
 		return
 	if health_component == null:
 		return
-	
 	var hit_box_component = area as HitBoxComponent
+	if hit_box_component.damage <= 0:	return
 	health_component.take_damage(hit_box_component.damage)
