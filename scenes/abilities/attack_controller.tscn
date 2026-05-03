@@ -1,62 +1,94 @@
 [gd_scene format=3 uid="uid://dtmnq1i5s280d"]
 
-[ext_resource type="PackedScene" uid="uid://beqmc7jwammvm" path="res://scenes/abilities/attack_ability.tscn" id="2_2fgcl"]
+[ext_resource type="PackedScene" uid="uid://bpwwmq6gnpoa8" path="res://scenes/components/hit_box_component.tscn" id="1_r234c"]
 
 [sub_resource type="GDScript" id="GDScript_r234c"]
-script/source = "extends Node
+script/source = "extends Node2D
 
-@export var attack_ability: PackedScene
-
-#@onready var timer = $Timer
-
-var sword_damage = 20
-
-@export var attack_cooldown: float = 0.6
+@export var damage: float = 10.0
+@export var attack_duration: float = 0.3
+@export var cooldown_time: float = 0.38
 
 var can_attack: bool = true
 
+@onready var sword_up: HitBoxComponent = $Sword/SwordAreaUp
+@onready var sword_down: HitBoxComponent = $Sword/SwordAreaDown
+@onready var sword_left: HitBoxComponent = $Sword/SwordAreaLeft
+@onready var sword_right: HitBoxComponent = $Sword/SwordAreaRight
+
 func _ready():
-	pass
-	
-func _process(delta):
-	pass
+	# На старте выключаем мониторинг у всех зон
+	for area in [sword_up, sword_down, sword_left, sword_right]:
+		area.monitoring = false
 
-#func _on_timer_timeout():
-	#var player = get_tree().get_first_node_in_group(\"player\") as Node2D
-	#if player == null:
-		#return
-		#
-	#var attack_instance = attack_ability.instantiate() as AttackAbillity
-	#var mouse_pos = player.get_global_mouse_position()
-	#var direction_to_mouse = mouse_pos - player.global_position
-#
-	#player.add_child(attack_instance)
-	#attack_instance.hit_box_component.damage = sword_damage
-	#
-	#if direction_to_mouse.x > 0:
-		#attack_instance.position = Vector2(30,-10)
-	#else:
-		#attack_instance.position = Vector2(-30,-10)
-		#attack_instance.scale = Vector2(-1,1)
+func perform_attack(dir_name: String):
+	if not can_attack:
+		return
 
-func perform_attackk():
-	if not can_attack: return
+	var area: HitBoxComponent
+	match dir_name:
+		\"up\": area = sword_up
+		\"down\": area = sword_down
+		\"left\": area = sword_left
+		\"right\": area = sword_right
+		_: return
+
 	can_attack = false
-	var player = get_tree().get_first_node_in_group(\"player\") as Node2D
-	if player == null: return
-	var attack_instance = attack_ability.instantiate() as Node2D
-	player.get_parent().add_child(attack_instance)
-	attack_instance.global_position = player.global_position
-	await get_tree().create_timer(attack_cooldown).timeout
+
+	# Пробрасываем урон в HitBoxComponent
+	area.damage = damage
+
+	# Включаем коллизию на время атаки
+	area.monitoring = true
+	await get_tree().create_timer(attack_duration).timeout
+	area.monitoring = false
+
+	# Кулдаун до следующей атаки
+	await get_tree().create_timer(cooldown_time).timeout
 	can_attack = true
 "
 
-[node name="AttackController" type="Node" unique_id=1897193487]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r234c"]
+size = Vector2(97, 99)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fweis"]
+size = Vector2(86, 72)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j1ow1"]
+size = Vector2(86.5, 72)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2fgcl"]
+size = Vector2(97, 100.5)
+
+[node name="AttackController" type="Node2D" unique_id=1433854051]
 script = SubResource("GDScript_r234c")
-attack_ability = ExtResource("2_2fgcl")
 
-[node name="Timer" type="Timer" parent="." unique_id=325348948]
-wait_time = 2.0
-autostart = true
+[node name="CooldownTimer" type="Timer" parent="." unique_id=604568334]
+wait_time = 0.5
+one_shot = true
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="Sword" type="Node2D" parent="." unique_id=1098031612]
+
+[node name="SwordAreaUp" parent="Sword" unique_id=1826175913 instance=ExtResource("1_r234c")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SwordAreaUp" unique_id=1679271282]
+position = Vector2(0.5, -45.5)
+shape = SubResource("RectangleShape2D_r234c")
+
+[node name="SwordAreaRight" parent="Sword" unique_id=1441369882 instance=ExtResource("1_r234c")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SwordAreaRight" unique_id=729189717]
+position = Vector2(43, -31)
+shape = SubResource("RectangleShape2D_fweis")
+
+[node name="SwordAreaLeft" parent="Sword" unique_id=1586673854 instance=ExtResource("1_r234c")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SwordAreaLeft" unique_id=1914755556]
+position = Vector2(-43.75, -31)
+shape = SubResource("RectangleShape2D_j1ow1")
+
+[node name="SwordAreaDown" parent="Sword" unique_id=940998250 instance=ExtResource("1_r234c")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SwordAreaDown" unique_id=574923807]
+position = Vector2(1, -16.75)
+shape = SubResource("RectangleShape2D_2fgcl")

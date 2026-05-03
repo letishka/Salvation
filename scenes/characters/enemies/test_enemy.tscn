@@ -54,7 +54,7 @@ height = 62.0
 
 [node name="TestEnemy" type="CharacterBody2D" unique_id=1886436151]
 collision_layer = 4
-collision_mask = 5
+collision_mask = 13
 script = SubResource("GDScript_uvd4k")
 
 [node name="HelthComponent" parent="." unique_id=1336488682 instance=ExtResource("1_dfwrw")]
