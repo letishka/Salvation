@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://6nr574q1p7mq"]
 
-[ext_resource type="AudioStream" uid="uid://cqxysr3mnpqhg" path="res://assets/audio/The_Bards_Tale.ogg" id="1_kqpl0"]
+[ext_resource type="AudioStream" uid="uid://c0mmreiye3pva" path="res://assets/audio/music/Radiohead_-_Exit_Music.mp3" id="1_kqpl0"]
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" unique_id=489571506]
 stream = ExtResource("1_kqpl0")
+volume_db = -13.983
 bus = &"Music"
