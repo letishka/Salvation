@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://boisrg8n1chpn" path="res://assets/graphics/characters/player/Sprites/RUN/run_left.png" id="9_i1nod"]
 [ext_resource type="Texture2D" uid="uid://oj7qx17rt0xx" path="res://assets/graphics/characters/player/Sprites/RUN/run_right.png" id="10_4kqyw"]
 [ext_resource type="Texture2D" uid="uid://g7ydtqtn0r6j" path="res://assets/graphics/characters/player/Sprites/RUN/run_up.png" id="11_svuau"]
+[ext_resource type="Texture2D" uid="uid://jlieu4e3yuy1" path="res://assets/graphics/objects/torch.png" id="17_svuau"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dyp2m"]
 bg_color = Color(0.2, 0.2, 0.2, 1)
@@ -711,8 +712,8 @@ animations = [{
 radius = 15.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yewv4"]
-radius = 16.0
-height = 62.0
+radius = 50.0
+height = 104.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dyp2m"]
 radius = 14.0
@@ -759,7 +760,7 @@ position = Vector2(0, -15)
 shape = SubResource("CircleShape2D_76oj4")
 
 [node name="InteractArea" type="Area2D" parent="." unique_id=328487895]
-collision_layer = 2
+collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea" unique_id=946132700]
@@ -773,6 +774,12 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtBox" unique_id=1151510333]
 position = Vector2(0, -22)
 shape = SubResource("CapsuleShape2D_dyp2m")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1315402415]
+visible = false
+position = Vector2(20.000015, -21.000008)
+scale = Vector2(0.10555557, 0.10277789)
+texture = ExtResource("17_svuau")
 
 [connection signal="timeout" from="GracePeriod" to="." method="_on_grace_period_timeout"]
 [connection signal="area_entered" from="InteractArea" to="." method="_on_interactable_area_entered"]

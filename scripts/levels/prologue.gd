@@ -8,6 +8,7 @@ extends Node2D
 @onready var player = $World/Player
 @onready var portal = $World/Portal
 @onready var hint_label = $CanvasLayer/HintLabel
+@onready var player_ui = $World/Player/Ui
 
 func _ready():
 	player.set_process_input(false)
@@ -19,6 +20,7 @@ func _ready():
 	center_text.visible = false
 	center_text.add_theme_color_override("default_color", Color.WHITE)
 	portal.visible = false
+	player_ui.visible = false
 	
 	await _show_history()
 	await _heartbeat_and_inner_dialogue()
@@ -26,11 +28,9 @@ func _ready():
 	await _show_wakeup_dialogue()
 	await _show_portal_animation()
 	
-	# Разблокируем управление
 	player.set_process_input(true)
 	player.set_physics_process(true)
 	
-	# Подсказка
 	if hint_label:
 		hint_label.text = "Иди к свету"
 		hint_label.visible = true
@@ -38,9 +38,13 @@ func _ready():
 		hint_label.visible = false
 	
 	portal.visible = true
+	player_ui.visible = true
+	
+	await get_tree().create_timer(5).timeout
+	get_tree().change_scene_to_file("res://scenes/levels/water_level_1.tscn")
 
 func _show_history():
-	var lines = DialogueManager.get_dialogue_lines("prologue_text")  # было prologue_history, исправлено!
+	var lines = DialogueManager.get_dialogue_lines("prologue_text")
 	if not center_text or lines.is_empty():
 		return
 	var full_text = ""
@@ -67,7 +71,7 @@ func _white_flash():
 	tween.tween_property(white_rect, "modulate:a", 0.0, 0.8)
 	await tween.finished
 	white_rect.visible = false
-	black_rect.visible = false   # скрываем чёрный фон
+	black_rect.visible = false
 
 func _show_wakeup_dialogue():
 	DialogueManager.start_dialogue("prologue_wakeup")
