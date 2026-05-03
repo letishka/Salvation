@@ -7,7 +7,7 @@ script/source = "extends Node2D
 
 @export var damage: float = 10.0
 @export var attack_duration: float = 0.3
-@export var cooldown_time: float = 0.38
+@export var cooldown_time: float = 0.2
 
 var can_attack: bool = true
 
@@ -17,9 +17,10 @@ var can_attack: bool = true
 @onready var sword_right: HitBoxComponent = $Sword/SwordAreaRight
 
 func _ready():
-	# На старте выключаем мониторинг у всех зон
+	# Отключаем ВСЕ зоны и сбрасываем урон
 	for area in [sword_up, sword_down, sword_left, sword_right]:
 		area.monitoring = false
+		area.damage = 0
 
 func perform_attack(dir_name: String):
 	if not can_attack:
@@ -35,15 +36,18 @@ func perform_attack(dir_name: String):
 
 	can_attack = false
 
-	# Пробрасываем урон в HitBoxComponent
-	area.damage = damage
+	# На всякий случай выключаем все зоны перед активацией нужной
+	for a in [sword_up, sword_down, sword_left, sword_right]:
+		a.monitoring = false
+		a.damage = 0
 
-	# Включаем коллизию на время атаки
+	area.damage = damage
 	area.monitoring = true
+
 	await get_tree().create_timer(attack_duration).timeout
 	area.monitoring = false
+	area.damage = 0   # ← обязательно сбросить урон
 
-	# Кулдаун до следующей атаки
 	await get_tree().create_timer(cooldown_time).timeout
 	can_attack = true
 "

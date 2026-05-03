@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @onready var health_component = $HealthComponent
 @onready var grace_period = $GracePeriod
-@onready var progress_bar = $ProgressBar
+@onready var health_bar = $Ui/HeatlhBar
 
 @onready var attack_controller = $Player/AttackController
 @onready var animated_sprite: AnimatedSprite2D = $Player
@@ -119,7 +119,7 @@ func on_died():
 	queue_free()
 
 func health_update():
-	progress_bar.value = health_component.get_health_value()
+	health_bar.value = health_component.get_health_value()
 
 func on_health_changed():
 	health_update()

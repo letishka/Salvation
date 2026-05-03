@@ -403,7 +403,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_down",
-"speed": 13.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -426,7 +426,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_left",
-"speed": 13.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -449,7 +449,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_right",
-"speed": 13.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -472,7 +472,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_up",
-"speed": 13.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -719,12 +719,12 @@ radius = 14.0
 height = 34.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1090551706 groups=["player"]]
-collision_layer = 2
+collision_layer = 128
 script = ExtResource("1_yewv4")
 
 [node name="Ui" parent="." unique_id=440906617 instance=ExtResource("2_bsn6e")]
 
-[node name="ProgressBar" type="ProgressBar" parent="." unique_id=2143320463]
+[node name="HeatlhBar" type="ProgressBar" parent="Ui" unique_id=2143320463]
 custom_minimum_size = Vector2(200, 20)
 offset_left = 10.0
 offset_top = 10.0
@@ -737,8 +737,6 @@ max_value = 1.0
 value = 0.5
 show_percentage = false
 
-[node name="HelthComponent" parent="." unique_id=1336488682 instance=ExtResource("3_76oj4")]
-
 [node name="GracePeriod" type="Timer" parent="." unique_id=473204089]
 wait_time = 0.5
 one_shot = true
@@ -749,7 +747,7 @@ one_shot = true
 position = Vector2(0, -36)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_yewv4")
-animation = &"idle_down"
+animation = &"attack_up"
 autoplay = "idle_down"
 
 [node name="AttackController" parent="Player" unique_id=1433854051 instance=ExtResource("2_dyp2m")]
@@ -762,14 +760,15 @@ shape = SubResource("CircleShape2D_76oj4")
 
 [node name="InteractArea" type="Area2D" parent="." unique_id=328487895]
 collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea" unique_id=946132700]
 position = Vector2(0, -31)
 shape = SubResource("CapsuleShape2D_yewv4")
 
 [node name="PlayerHurtBox" type="Area2D" parent="." unique_id=1715718106]
-collision_layer = 2
-collision_mask = 16
+collision_layer = 0
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtBox" unique_id=1151510333]
 position = Vector2(0, -22)

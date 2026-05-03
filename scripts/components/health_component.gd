@@ -12,6 +12,7 @@ func _ready():
 	
 func take_damage (damage):
 	current_health = max(current_health - damage, 0)
+	if damage>0: print(get_parent().name, " health: ", current_health)
 	health_changed.emit()
 	Callable(check_death).call_deferred()
 

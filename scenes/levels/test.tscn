@@ -53,10 +53,10 @@ y_sort_enabled = true
 unique_name_in_owner = true
 position = Vector2(575, 323)
 
-[node name="TestEnemy" parent="Back" unique_id=1886436151 instance=ExtResource("3_yp2xm")]
+[node name="ShadowSolider" parent="Back" unique_id=1886436151 instance=ExtResource("3_yp2xm")]
 position = Vector2(296, 248)
 
-[node name="TestEnemy2" parent="Back" unique_id=2025078902 instance=ExtResource("3_yp2xm")]
+[node name="ShadowSolider2" parent="Back" unique_id=2025078902 instance=ExtResource("3_yp2xm")]
 position = Vector2(1022, 80)
 
 [node name="Front" type="Node2D" parent="." unique_id=2122368270 groups=["front_layer"]]

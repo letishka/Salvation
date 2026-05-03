@@ -2,14 +2,14 @@ extends CharacterBody2D
 
 @onready var health_component = $HealthComponent
 @onready var detection_area = $DetectionArea
+@onready var progress_bar: ProgressBar = $ProgressBar
 var player_detected: bool = false
-const SPEED = 300.0
 var max_speed = 80
-const JUMP_VELOCITY = -400.0
 
 func _ready():
-	print("ShadowSoldier ready, detection_area = ", detection_area)
 	health_component.died.connect(on_died)
+	health_component.health_changed.connect(on_health_changed)
+	health_update()
 
 func _process(delta):
 	if not player_detected: return
@@ -26,12 +26,16 @@ func get_direction_to_player():
 func on_died():
 	queue_free()
 
+func health_update():
+	progress_bar.value = health_component.get_health_value()
+
+func on_health_changed():
+	health_update()
+
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	print("body_entered: ", body.name)
 	if body.is_in_group("player"):
 		player_detected = true
 
 func _on_detection_area_body_exited(body: Node2D) -> void:
-	print("body_exited: ", body.name)
 	if body.is_in_group("player"):
 		player_detected = false
