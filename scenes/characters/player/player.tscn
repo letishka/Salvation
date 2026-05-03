@@ -716,10 +716,10 @@ height = 62.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dyp2m"]
 radius = 14.0
-height = 58.0
+height = 34.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1090551706 groups=["player"]]
-collision_layer = 0
+collision_layer = 2
 script = ExtResource("1_yewv4")
 
 [node name="Ui" parent="." unique_id=440906617 instance=ExtResource("2_bsn6e")]
@@ -749,7 +749,7 @@ one_shot = true
 position = Vector2(0, -36)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_yewv4")
-animation = &"attack_down"
+animation = &"idle_down"
 autoplay = "idle_down"
 
 [node name="AttackController" parent="Player" unique_id=1433854051 instance=ExtResource("2_dyp2m")]
@@ -772,7 +772,7 @@ collision_layer = 2
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtBox" unique_id=1151510333]
-position = Vector2(0, -29)
+position = Vector2(0, -22)
 shape = SubResource("CapsuleShape2D_dyp2m")
 
 [connection signal="timeout" from="GracePeriod" to="." method="_on_grace_period_timeout"]
