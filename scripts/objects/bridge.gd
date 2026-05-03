@@ -1,9 +1,7 @@
 extends StaticBody2D
 class_name Bridge
 
-@export var up_position: Vector2
-@export var down_position: Vector2
+@export var up_collision_disabled: bool = true
 
 func activate(state: bool):
-	position = down_position if state else up_position
-	$CollisionShape2D.disabled = not state
+	$CollisionShape2D.disabled = state if up_collision_disabled else not state

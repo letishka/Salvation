@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://46vix7juoscp"
+path="res://.godot/imported/Флейта и Гуцинь - Флейта и Гуцинь.mp3-542940b5e5c1e3bddaaf817836f60c96.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/Флейта и Гуцинь - Флейта и Гуцинь.mp3"
+dest_files=["res://.godot/imported/Флейта и Гуцинь - Флейта и Гуцинь.mp3-542940b5e5c1e3bddaaf817836f60c96.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

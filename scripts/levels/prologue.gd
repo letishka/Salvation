@@ -11,6 +11,8 @@ extends Node2D
 @onready var player_ui = $World/Player/Ui
 
 func _ready():
+	$BackgroundMusic.play()
+	$BackgroundMusic2.play()
 	player.set_process_input(false)
 	player.set_physics_process(false)
 	
@@ -41,7 +43,7 @@ func _ready():
 	player_ui.visible = true
 	
 	await get_tree().create_timer(5).timeout
-	get_tree().change_scene_to_file("res://scenes/levels/water_level_1.tscn")
+	get_tree().change_scene_to_file("res://scenes/levels/test.tscn")
 
 func _show_history():
 	var lines = DialogueManager.get_dialogue_lines("prologue_text")

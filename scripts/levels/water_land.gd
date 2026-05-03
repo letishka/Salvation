@@ -9,6 +9,8 @@ var bridge_activated = false
 var player = null
 
 func _ready():
+	$BackgroundMusic.play()
+	$BackgroundMusic2.play()
 	# Получаем игрока через группу
 	player = get_tree().get_first_node_in_group("player")
 	if not player:
@@ -26,13 +28,13 @@ func _ready():
 	enemy.set_physics_process(false)
 	
 	# Настройка моста
-	bridge.position = bridge.up_position
+	# bridge.position = bridge.up_position
 	var collision = bridge.get_node("CollisionShape2D")
 	if collision:
 		collision.disabled = true
 
 func _process(delta):
-	if not bridge_activated and bridge.position == bridge.down_position:
+	if not bridge_activated:
 		bridge_activated = true
 		_activate_enemy()
 

@@ -6,6 +6,7 @@ extends Node
 
 
 func _ready():
+	$BackgroundMusic.play()
 	player.health_component.died.connect(on_died)
 	
 	

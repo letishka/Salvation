@@ -5,9 +5,18 @@
 [ext_resource type="PackedScene" uid="uid://dy6kc1bc3je1" path="res://scenes/objects/portal_water.tscn" id="2_ohehc"]
 [ext_resource type="AudioStream" uid="uid://r03xb8yjo6hh" path="res://assets/audio/sounds/heartbeat.mp3" id="4_4g3re"]
 [ext_resource type="PackedScene" uid="uid://divippgmak8bb" path="res://scenes/ui/DialogueUI.tscn" id="5_4g3re"]
+[ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://scenes/audio/BackgroundMusic.tscn" id="6_xtvax"]
+[ext_resource type="AudioStream" uid="uid://dvfexkyni6i3e" path="res://assets/audio/sounds/gustoy-tuman--gorod-v-oblake.mp3" id="7_eqhsi"]
+[ext_resource type="AudioStream" uid="uid://dsosgf08l2wds" path="res://assets/audio/sounds/Звук пульсации в голове при мигрени.mp3" id="8_eqhsi"]
+[ext_resource type="Texture2D" uid="uid://d3haqqmwm5nbk" path="res://assets/graphics/sky/1.png" id="9_hu3c8"]
 
 [node name="Prologue" type="Node2D" unique_id=66247742]
 script = ExtResource("1_f3jka")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1199015088]
+position = Vector2(578.5, 324)
+scale = Vector2(2.0052083, 2.006173)
+texture = ExtResource("9_hu3c8")
 
 [node name="World" type="Node2D" parent="." unique_id=1585327293]
 
@@ -49,3 +58,11 @@ offset_bottom = 13.0
 [node name="HeartbeatSound" type="AudioStreamPlayer2D" parent="." unique_id=646126858]
 position = Vector2(291, 479)
 stream = ExtResource("4_4g3re")
+
+[node name="BackgroundMusic" parent="." unique_id=489571506 instance=ExtResource("6_xtvax")]
+stream = ExtResource("7_eqhsi")
+volume_db = -5.317
+
+[node name="BackgroundMusic2" parent="." unique_id=1544195847 instance=ExtResource("6_xtvax")]
+stream = ExtResource("8_eqhsi")
+volume_db = -21.353
