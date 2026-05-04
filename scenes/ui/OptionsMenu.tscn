@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://be84a1qlq0yly"]
 
-[ext_resource type="Script" uid="uid://7qel5jbrfhe1" path="res://ui/options_menu.gd" id="1_fqj3q"]
-[ext_resource type="Texture2D" uid="uid://calixeuop42ap" path="res://ui/resources/лоби_чистилища.jpg" id="2_5k8le"]
-[ext_resource type="PackedScene" uid="uid://ghuwfsm0dqfq" path="res://ui/SoundButton.tscn" id="3_qwewx"]
+[ext_resource type="Script" uid="uid://7qel5jbrfhe1" path="res://scripts/ui/options_menu.gd" id="1_fqj3q"]
+[ext_resource type="Texture2D" uid="uid://whsexrad15ut" path="res://assets/ui/china.jpg" id="2_uxfc2"]
+[ext_resource type="PackedScene" uid="uid://ghuwfsm0dqfq" path="res://scenes/audio/SoundButton.tscn" id="3_qwewx"]
 
 [node name="OptionsMenu" type="CanvasLayer" unique_id=2114518181]
 script = ExtResource("1_fqj3q")
@@ -10,7 +10,7 @@ script = ExtResource("1_fqj3q")
 [node name="ЛобиЧистилища" type="Sprite2D" parent="." unique_id=639470116]
 position = Vector2(576.0002, 323.5001)
 scale = Vector2(0.8984377, 0.8908841)
-texture = ExtResource("2_5k8le")
+texture = ExtResource("2_uxfc2")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=817147960]
 anchors_preset = 15

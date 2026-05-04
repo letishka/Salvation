@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dm51dpte7fo40"
-path="res://.godot/imported/shadow_soldier.png-2d91139b168a3d6966b406868e60f3f2.ctex"
+uid="uid://b1t6r1iey2bx"
+path="res://.godot/imported/old_shadow_soldier.png-8eaee51bc52f6c601b2542ed9a219460.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/characters/enimies/shadow_soldier.png"
-dest_files=["res://.godot/imported/shadow_soldier.png-2d91139b168a3d6966b406868e60f3f2.ctex"]
+source_file="res://assets/graphics/characters/enimies/old_shadow_soldier.png"
+dest_files=["res://.godot/imported/old_shadow_soldier.png-8eaee51bc52f6c601b2542ed9a219460.ctex"]
 
 [params]
 

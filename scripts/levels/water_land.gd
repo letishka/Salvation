@@ -3,7 +3,7 @@ extends Node2D
 @export var end_screen_scene: PackedScene
 @onready var bridge = $Bridge
 @onready var enemy = $ShadowSoldier
-@onready var memory_shard = $MemoryShard
+#@onready var memory_shard = $MemoryShard
 
 var bridge_activated = false
 var player = null
