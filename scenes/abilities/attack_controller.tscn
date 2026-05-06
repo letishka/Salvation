@@ -56,10 +56,10 @@ func perform_attack(dir_name: String):
 size = Vector2(97, 99)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fweis"]
-size = Vector2(86, 72)
+size = Vector2(100, 72)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j1ow1"]
-size = Vector2(86.5, 72)
+size = Vector2(95.5, 72)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2fgcl"]
 size = Vector2(97, 100.5)
@@ -82,13 +82,13 @@ shape = SubResource("RectangleShape2D_r234c")
 [node name="SwordAreaRight" parent="Sword" unique_id=1441369882 instance=ExtResource("1_r234c")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SwordAreaRight" unique_id=729189717]
-position = Vector2(43, -31)
+position = Vector2(50, -31)
 shape = SubResource("RectangleShape2D_fweis")
 
 [node name="SwordAreaLeft" parent="Sword" unique_id=1586673854 instance=ExtResource("1_r234c")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SwordAreaLeft" unique_id=1914755556]
-position = Vector2(-43.75, -31)
+position = Vector2(-48.25, -31)
 shape = SubResource("RectangleShape2D_j1ow1")
 
 [node name="SwordAreaDown" parent="Sword" unique_id=940998250 instance=ExtResource("1_r234c")]
