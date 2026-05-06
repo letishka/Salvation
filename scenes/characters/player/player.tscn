@@ -720,6 +720,7 @@ radius = 14.0
 height = 34.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1090551706 groups=["player"]]
+z_index = 2
 collision_layer = 128
 script = ExtResource("1_yewv4")
 

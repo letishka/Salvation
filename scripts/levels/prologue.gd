@@ -33,11 +33,10 @@ func _ready():
 	player.set_process_input(true)
 	player.set_physics_process(true)
 	
-	if hint_label:
-		hint_label.text = "Иди к свету"
-		hint_label.visible = true
-		await get_tree().create_timer(3.0).timeout
-		hint_label.visible = false
+	hint_label.text = "Иди к свету"
+	hint_label.visible = true
+	await get_tree().create_timer(3.0).timeout
+	hint_label.visible = false
 	
 	# portal.visible = true
 	player_ui.visible = true
