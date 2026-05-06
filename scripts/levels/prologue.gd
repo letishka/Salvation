@@ -39,10 +39,10 @@ func _ready():
 		await get_tree().create_timer(3.0).timeout
 		hint_label.visible = false
 	
-	portal.visible = true
+	# portal.visible = true
 	player_ui.visible = true
 	
-	await get_tree().create_timer(5).timeout
+	await get_tree().create_timer(2).timeout
 	get_tree().change_scene_to_file("res://scenes/levels/test.tscn")
 
 func _show_history():

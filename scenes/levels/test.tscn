@@ -65,4 +65,4 @@ script = ExtResource("5_7115g")
 
 [node name="BackgroundMusic" parent="." unique_id=489571506 instance=ExtResource("4_uyl1e")]
 stream = ExtResource("8_im2du")
-volume_db = -21.353
+volume_db = -24.957
