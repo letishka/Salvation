@@ -1,6 +1,8 @@
 extends StaticBody2D
 class_name Lever
 
+signal interacted
+
 @export var target_node_path: NodePath
 @export var active: bool = false
 
@@ -11,3 +13,4 @@ func interact():
 	var target = get_node(target_node_path)
 	if target and target.has_method("activate"):
 		target.activate(active)
+	interacted.emit()

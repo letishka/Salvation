@@ -3,10 +3,10 @@ extends Node
 signal dialogue_finished
 
 var _dialogues: Dictionary = {}
-
 var _current_key: String = ""
 var _current_line_index: int = 0
 var _is_active: bool = false
+var _saved_player_process_mode: int = 0
 
 func _ready():
 	_load_all_dialogues()
@@ -16,7 +16,6 @@ func _load_all_dialogues():
 	if not DirAccess.dir_exists_absolute(dir_path):
 		print("DialogueManager: Папка диалогов не найдена: ", dir_path)
 		return
-	
 	var files = DirAccess.get_files_at(dir_path)
 	for file in files:
 		if file.ends_with(".json"):
@@ -35,21 +34,15 @@ func _load_all_dialogues():
 				_dialogues[key] = json[key]
 
 func get_dialogue_lines(key: String) -> Array:
-	if _dialogues.has(key):
-		return _dialogues[key]
-	return []
+	return _dialogues.get(key, [])
 
 func start_dialogue(key: String):
-	if _is_active:
-		print("DialogueManager: Диалог уже активен, сначала закройте его.")
-		return
-	if not _dialogues.has(key):
-		print("DialogueManager: Диалог с ключом '", key, "' не найден.")
-		return
-	
+	if _is_active: return
+	if not _dialogues.has(key): return
 	_current_key = key
 	_current_line_index = 0
 	_is_active = true
+	_pause_game(true)
 	_show_current_line()
 
 func _show_current_line():
@@ -63,19 +56,28 @@ func _show_current_line():
 		close_dialogue()
 
 func next_line():
-	if not _is_active:
-		return
+	if not _is_active: return
 	_current_line_index += 1
 	_show_current_line()
 
 func close_dialogue():
-	if not _is_active:
-		return
+	if not _is_active: return
 	_is_active = false
 	_current_key = ""
 	_current_line_index = 0
 	GameManager.hide_dialogue.emit()
+	_pause_game(false)
 	dialogue_finished.emit()
 
 func is_active() -> bool:
 	return _is_active
+
+func _pause_game(paused: bool):
+	get_tree().paused = paused
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		if paused:
+			_saved_player_process_mode = player.process_mode
+			player.set_process_mode(Node.PROCESS_MODE_DISABLED)
+		else:
+			player.set_process_mode(_saved_player_process_mode)

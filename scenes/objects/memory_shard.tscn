@@ -1,3 +1,110 @@
 [gd_scene format=3 uid="uid://d0b1tkcjo86ho"]
 
-[node name="MemoryShard" type="Node2D" unique_id=873936505]
+[ext_resource type="Script" uid="uid://dl6js3ua4yy8l" path="res://scripts/objects/memory_shard.gd" id="1_cae2k"]
+[ext_resource type="Texture2D" uid="uid://cpwq56t8o8hm7" path="res://assets/graphics/objects/crystal_dark_64x64_12f_20d_normal.png" id="1_xicpa"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cae2k"]
+radius = 64.0
+height = 172.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6dv5p"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aeghb"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hb6pk"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_px10e"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8r4f"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3hcc"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pievc"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mg4a"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4o4x6"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inyji"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvkkp"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ync5j"]
+atlas = ExtResource("1_xicpa")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pq40a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6dv5p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aeghb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hb6pk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_px10e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8r4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f3hcc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pievc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5mg4a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4o4x6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inyji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvkkp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ync5j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MemoryShard" type="Area2D" unique_id=1656148041]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_cae2k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=286768929]
+shape = SubResource("CapsuleShape2D_cae2k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=193693807]
+sprite_frames = SubResource("SpriteFrames_pq40a")

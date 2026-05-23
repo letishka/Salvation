@@ -36,6 +36,9 @@ func _ready():
 	add_to_group("player")
 
 func _physics_process(delta):
+	if get_tree().paused:
+		velocity = Vector2.ZERO
+		return
 	# Во время атаки не двигаемся
 	if is_attacking:
 		return
@@ -68,9 +71,17 @@ func get_direction_name(dir: Vector2) -> String:
 
 # --------- АТАКА ----------
 func _input(event):
+	if get_tree().paused:
+		return
+		
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if attack_controller and not is_attacking:
 			start_attack()
+	if event.is_action_pressed("interact") and current_interactable:
+		if current_interactable.has_method("interact"):
+			current_interactable.interact()
+		else:
+			print("Ошибка: у ", current_interactable.name, " нет метода interact")
 
 func start_attack():
 	is_attacking = true
@@ -101,11 +112,22 @@ func start_attack():
 	var move_input = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	update_animation(move_input)
 
-func _on_interactable_area_entered(area):
-	current_interactable = area.get_parent()
+func _on_interactable_area_entered(area: Area2D):
+	print("=== Вход в зону: ", area.name, ", родитель: ", area.get_parent().name, " ===")
+	print("  - area.collision_layer = ", area.collision_layer)
+	print("  - area.collision_mask = ", area.collision_mask)
+	print("  - parent.has_method('interact')? ", area.get_parent().has_method("interact"))
+	if area.has_method("interact"):
+		current_interactable = area
+		print("current_interactable установлен на area")
+	else:
+		var parent = area.get_parent()
+		if parent and parent.has_method("interact"):
+			current_interactable = parent
+			print("current_interactable установлен на родителя: ", parent.name)
 
-func _on_interactable_area_exited(area):
-	if current_interactable == area.get_parent():
+func _on_interactable_area_exited(area: Area2D):
+	if current_interactable == area or current_interactable == area.get_parent():
 		current_interactable = null
 
 # player.gd

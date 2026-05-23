@@ -9,4 +9,7 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.is_in_group("player"):
-		get_tree().change_scene_to_file(target_scene)
+		call_deferred("_change_scene")
+
+func _change_scene():
+	get_tree().change_scene_to_file(target_scene)
