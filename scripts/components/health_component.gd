@@ -22,3 +22,7 @@ func get_health_value():
 func check_death ():
 	if current_health == 0:
 		died.emit()
+
+func heal(amount: float):
+	current_health = min(current_health + amount, max_health)
+	health_changed.emit()

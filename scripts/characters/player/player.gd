@@ -23,6 +23,9 @@ var current_interactable = null
 var is_attacking: bool = false
 var last_direction: Vector2 = Vector2.DOWN   # взгляд по умолчанию вниз
 
+var has_torch: bool = false
+var torch_lit: bool = false
+
 func _ready():
 	health_component.died.connect(on_died)
 	health_component.health_changed.connect(on_health_changed)
@@ -104,7 +107,7 @@ func _on_interactable_area_exited(area):
 		current_interactable = null
 
 func check_if_damaged():
-	if enemies_colliding == 0 || !grace_period.is_stopped(): return
+	if enemies_colliding == 0 or not grace_period.is_stopped(): return
 	else: health_component.take_damage(10)
 	grace_period.start()
 
@@ -126,3 +129,23 @@ func on_health_changed():
 
 func _on_grace_period_timeout() -> void:
 	check_if_damaged()
+
+func reset_health():
+	health_component.current_health = health_component.max_health
+	health_component.health_changed.emit()
+	
+func pickup_torch():
+	has_torch = true
+	torch_lit = false
+	print("Подобран факел (не зажжён)")
+
+func light_torch():
+	if has_torch and not torch_lit:
+		torch_lit = true
+		print("Факел зажжён")
+
+func place_torch():
+	if has_torch and torch_lit:
+		has_torch = false
+		torch_lit = false
+		print("Факел установлен в держатель")

@@ -40,9 +40,10 @@ func _ready():
 		hint_label.visible = false
 	
 	portal.visible = true
+	portal.get_node("CollisionShape2D").disabled = false
 	player_ui.visible = true
 	
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(5).timeout
 	get_tree().change_scene_to_file("res://scenes/levels/test.tscn")
 
 func _show_history():
