@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://qfuqvnv5yfq2" path="res://scenes/components/hurt_box_component.tscn" id="2_dfwrw"]
 [ext_resource type="Texture2D" uid="uid://dm51dpte7fo40" path="res://assets/graphics/characters/enimies/shadow_soldier.png" id="3_42o20"]
 [ext_resource type="PackedScene" uid="uid://bpwwmq6gnpoa8" path="res://scenes/components/hit_box_component.tscn" id="5_4cdw2"]
+[ext_resource type="AudioStream" uid="uid://c5ei8wknc6rnq" path="res://assets/audio/sounds/шаги/Frightening_Footprint.mp3" id="6_4tjwu"]
+[ext_resource type="AudioStream" uid="uid://dnqcdv5d1gyyt" path="res://assets/audio/sounds/sword-swing-during-combat.mp3" id="7_tt6g0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kanba"]
 bg_color = Color(0.2, 0.2, 0.2, 1)
@@ -16,6 +18,9 @@ border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
 border_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4cdw2"]
+size = Vector2(199, 88)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dfwrw"]
 radius = 37.01351
@@ -87,6 +92,10 @@ region = Rect2(896, 448, 128, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_cfday"]
 atlas = ExtResource("3_42o20")
 region = Rect2(1024, 448, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edeka"]
+atlas = ExtResource("3_42o20")
+region = Rect2(1152, 448, 128, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7dcl6"]
 atlas = ExtResource("3_42o20")
@@ -258,6 +267,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cfday")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edeka")
 }],
 "loop": false,
 "name": &"death",
@@ -384,7 +396,12 @@ radius = 241.46635
 
 [node name="ShadowSoldier" type="CharacterBody2D" unique_id=1886436151]
 collision_layer = 32768
+collision_mask = 32769
 script = ExtResource("1_kanba")
+attack_swoosh_sound = ExtResource("7_tt6g0")
+footstep_sounds = Dictionary[String, AudioStream]({
+"default": ExtResource("6_4tjwu")
+})
 
 [node name="AttackCooldown" type="Timer" parent="." unique_id=1060637328]
 wait_time = 4.0
@@ -405,6 +422,14 @@ max_value = 1.0
 value = 0.5
 show_percentage = false
 
+[node name="AttackTrigger" type="Area2D" parent="." unique_id=1323649539]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackTrigger" unique_id=280292717]
+position = Vector2(0.5, -23)
+shape = SubResource("RectangleShape2D_4cdw2")
+
 [node name="HurtBoxComponent" parent="." unique_id=686741254 node_paths=PackedStringArray("health_component") instance=ExtResource("2_dfwrw")]
 health_component = NodePath("../HealthComponent")
 
@@ -416,10 +441,8 @@ shape = SubResource("CircleShape2D_dfwrw")
 position = Vector2(7, -54.000004)
 scale = Vector2(3.3802142, 2.8337715)
 sprite_frames = SubResource("SpriteFrames_fs4m4")
-animation = &"attack"
+animation = &"death"
 autoplay = "idle"
-frame = 7
-frame_progress = 1.0
 offset = Vector2(32, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1428487279]
@@ -442,5 +465,18 @@ collision_mask = 128
 position = Vector2(0, -15)
 shape = SubResource("CircleShape2D_ummrs")
 
+[node name="FootstepPlayer" type="AudioStreamPlayer2D" parent="." unique_id=759491380]
+stream = ExtResource("6_4tjwu")
+
+[node name="AttackSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=914286547]
+stream = ExtResource("7_tt6g0")
+volume_db = -10.0
+pitch_scale = 1.52
+
+[node name="GroundCheckRay" type="RayCast2D" parent="." unique_id=1527514643]
+target_position = Vector2(0, 10)
+
+[connection signal="body_entered" from="AttackTrigger" to="." method="_on_attack_trigger_body_entered"]
+[connection signal="body_exited" from="AttackTrigger" to="." method="_on_attack_trigger_body_exited"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

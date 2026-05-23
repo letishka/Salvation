@@ -618,7 +618,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_down",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -647,7 +647,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_left",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -676,7 +676,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_right",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -705,7 +705,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_up",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_76oj4"]
@@ -749,8 +749,9 @@ max_health = 100.0
 position = Vector2(0, -36)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_yewv4")
-animation = &"attack_up"
+animation = &"run_up"
 autoplay = "idle_down"
+frame_progress = 0.32836327
 
 [node name="AttackController" parent="Player" unique_id=1433854051 instance=ExtResource("2_dyp2m")]
 position = Vector2(0, 18)
