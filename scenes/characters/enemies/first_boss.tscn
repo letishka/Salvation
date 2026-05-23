@@ -76,6 +76,10 @@ region = Rect2(258, 98, 86, 49)
 atlas = ExtResource("4_2fo72")
 region = Rect2(344, 98, 86, 49)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_re4ng"]
+atlas = ExtResource("5_a74up")
+region = Rect2(430, 98, 86, 49)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_42xge"]
 atlas = ExtResource("4_2fo72")
 region = Rect2(0, 147, 86, 49)
@@ -222,6 +226,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1yduv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_re4ng")
 }],
 "loop": false,
 "name": &"attack",
@@ -352,8 +359,7 @@ radius = 349.03583
 collision_layer = 32768
 up_direction = Vector2(0, 1)
 script = ExtResource("1_pm6p0")
-max_speed = 50.0
-attack_damage = 40.0
+attack_duration = 0.3
 attack_swoosh_sound = ExtResource("2_a74up")
 footstep_sounds = Dictionary[String, AudioStream]({
 "default": ExtResource("7_2fo72")
@@ -399,7 +405,7 @@ shape = SubResource("CapsuleShape2D_2vatv")
 position = Vector2(0, -68)
 scale = Vector2(3.3, 2.8)
 sprite_frames = SubResource("SpriteFrames_fs4m4")
-animation = &"walk_down"
+animation = &"attack"
 autoplay = "idle"
 offset = Vector2(6, 0)
 
@@ -425,7 +431,6 @@ shape = SubResource("CircleShape2D_ummrs")
 
 [node name="FootstepPlayer" type="AudioStreamPlayer2D" parent="." unique_id=474621379]
 stream = ExtResource("7_2fo72")
-volume_db = -20.0
 
 [node name="AttackSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1768190191]
 stream = ExtResource("2_a74up")

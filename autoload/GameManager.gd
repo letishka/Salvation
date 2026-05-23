@@ -7,6 +7,7 @@ signal hide_dialogue
 signal show_memory(text: String, image: Texture)
 
 var player: Node = null
+var initial_player_health: float = 100.0
 
 func _ready():
 	player = get_tree().get_first_node_in_group("player")

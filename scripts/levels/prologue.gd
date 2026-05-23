@@ -11,6 +11,7 @@ extends Node2D
 @onready var player_ui = $World/Player/Ui
 
 func _ready():
+	GameManager.initial_player_health = player.health_component.current_health
 	$BackgroundMusic.play()
 	$BackgroundMusic2.play()
 	player.set_process_input(false)

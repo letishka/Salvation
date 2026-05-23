@@ -27,6 +27,8 @@ var has_torch: bool = false
 var torch_lit: bool = false
 
 func _ready():
+	if health_component.current_health <= 0:
+		health_component.health = GameManager.initial_player_health
 	health_component.died.connect(on_died)
 	health_component.health_changed.connect(on_health_changed)
 	health_update()
@@ -106,14 +108,19 @@ func _on_interactable_area_exited(area):
 	if current_interactable == area.get_parent():
 		current_interactable = null
 
-func check_if_damaged():
-	if enemies_colliding == 0 or not grace_period.is_stopped(): return
-	else: health_component.take_damage(10)
+# player.gd
+func check_if_damaged(damage: float = 10):
+	if enemies_colliding == 0 or not grace_period.is_stopped(): 
+		return
+	health_component.take_damage(damage)
 	grace_period.start()
 
-func _on_player_hurt_box_area_entered(area: Area2D) -> void:
-	enemies_colliding +=1
-	check_if_damaged()
+func _on_player_hurt_box_area_entered(area: Area2D):
+	enemies_colliding += 1
+	if area.has_method("get_damage") or "damage" in area:
+		check_if_damaged(area.damage)   # берём урон из HitBoxComponent
+	else:
+		check_if_damaged(10)            # fallback
 
 func _on_player_hurt_box_area_exited(area: Area2D) -> void:
 	enemies_colliding -=1

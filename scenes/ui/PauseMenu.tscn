@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://bpxfwnl8nd08t"]
+
+[ext_resource type="Script" uid="uid://dh2cmxcsdyu02" path="res://scripts/ui/pause_menu.gd" id="1_n5dsq"]
+[ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://scenes/audio/BackgroundMusic.tscn" id="2_v5pi0"]
+[ext_resource type="PackedScene" uid="uid://ghuwfsm0dqfq" path="res://scenes/audio/SoundButton.tscn" id="4_csaq8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5twic"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=2114518181]
+process_mode = 3
+script = ExtResource("1_n5dsq")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1253422071]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.3019608)
+
+[node name="BackgroundMusic" parent="." unique_id=489571506 instance=ExtResource("2_v5pi0")]
+autoplay = true
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=817147960]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -120.0
+offset_right = 150.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0016758, 1.001169)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=331604709]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_5twic")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=1384783241]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=439637719]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 70
+text = "Paused
+"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=459475003]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 5
+
+[node name="ContinueButton" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer" unique_id=1531885285 instance=ExtResource("4_csaq8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 36
+text = "Continue"
+icon_alignment = 1
+
+[node name="OptionsButton" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer" unique_id=259380395 instance=ExtResource("4_csaq8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 36
+text = "Options"
+icon_alignment = 1
+
+[node name="QuitMenuButton" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer" unique_id=1144573504 instance=ExtResource("4_csaq8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 36
+text = "Quit to Menu"
+icon_alignment = 1
+
+[node name="SaveButton" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer" unique_id=808805161 instance=ExtResource("4_csaq8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 36
+text = "Save"
+icon_alignment = 1
+
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/QuitMenuButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]

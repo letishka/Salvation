@@ -2,14 +2,15 @@ extends CharacterBody2D
 
 enum State { IDLE, WALK, ATTACK, HIT, DEATH }
 
-@export var max_health: float = 30.0
-@export var max_speed: float = 80.0
-@export var attack_damage: float = 13.0
+@export var max_health: float = 150.0
+@export var max_speed: float = 50.0
+@export var attack_damage: float = 14.0
 @export var attack_duration: float = 0.1     # длительность активной зоны
-@export var attack_cooldown: float = 0.6
+@export var attack_cooldown: float = 0.9
 @export var flip_offset_x: float = -5.0
 @export var collision_offset_x: float = -30.0
-@export var hit_delay: float = 0.3           # задержка до удара внутри анимации
+@export var hit_delay: float = 0.1           # задержка до удара внутри анимации
+@export var combo_pause: float = 0.01   # пауза между ударами в серии
 
 # ==== ЗВУКИ ====
 @export var attack_swoosh_sound: AudioStream        # звук взмаха меча
@@ -39,6 +40,7 @@ var player_detected: bool = false
 var current_state: State = State.IDLE
 var can_attack: bool = true
 var player_in_attack_zone: bool = false
+var is_attacking: bool = false   # флаг, что атака прямо сейчас выполняется
 
 var _attack_collision_base_pos: Vector2
 var _footstep_timer: float = 0.0   # таймер для отсчёта интервала шагов
@@ -124,17 +126,14 @@ func _start_attack():
 	
 	animated_sprite.play("attack")
 	
-	# Проигрываем звук взмаха 3 раза с интервалом 0.3 секунды, не блокируя атаку
+	# Звук взмаха (можно оставить как есть или тоже привязать к ударам)
 	if attack_swoosh_sound and attack_sound_player:
-		# Первый звук сразу
 		attack_sound_player.stream = attack_swoosh_sound
 		attack_sound_player.play()
-		# Второй звук через 0.3 с
 		var timer2 = get_tree().create_timer(0.3)
 		timer2.timeout.connect(func():
 			attack_sound_player.stream = attack_swoosh_sound
 			attack_sound_player.play()
-			# Третий звук ещё через 0.3 с
 			var timer3 = get_tree().create_timer(0.3)
 			timer3.timeout.connect(func():
 				attack_sound_player.stream = attack_swoosh_sound
@@ -142,19 +141,27 @@ func _start_attack():
 			)
 		)
 	
+	# Задержка перед первым ударом
 	await get_tree().create_timer(hit_delay).timeout
 	
-	attack_area.monitoring = false
-	attack_area.damage = attack_damage
-	attack_area.collision_layer = 8
-	attack_area.monitoring = true
-	await get_tree().create_timer(attack_duration).timeout
+	# Серия из трёх ударов
+	for i in range(3):
+		attack_area.monitoring = false
+		attack_area.damage = attack_damage
+		attack_area.collision_layer = 8
+		attack_area.monitoring = true
+		
+		await get_tree().create_timer(attack_duration).timeout
+		
+		attack_area.monitoring = false
+		attack_area.collision_layer = 0
+		attack_area.damage = 0
+		attack_area.monitoring = true
+		
+		if i < 2:
+			await get_tree().create_timer(combo_pause).timeout
 	
-	attack_area.monitoring = false
-	attack_area.collision_layer = 0
-	attack_area.damage = 0
-	attack_area.monitoring = true
-	
+	# Кулдаун всей атаки
 	attack_cooldown_timer.start()
 	await attack_cooldown_timer.timeout
 	can_attack = true

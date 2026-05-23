@@ -9,6 +9,7 @@ var bridge_activated = false
 var player = null
 
 func _ready():
+	GameManager.initial_player_health = player.health_component.current_health
 	$BackgroundMusic.play()
 	$BackgroundMusic2.play()
 	# Получаем игрока через группу

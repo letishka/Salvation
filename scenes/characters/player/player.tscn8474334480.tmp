@@ -739,7 +739,7 @@ value = 0.5
 show_percentage = false
 
 [node name="GracePeriod" type="Timer" parent="." unique_id=473204089]
-wait_time = 0.3
+wait_time = 0.5
 one_shot = true
 
 [node name="HealthComponent" parent="." unique_id=1404676747 instance=ExtResource("3_76oj4")]
