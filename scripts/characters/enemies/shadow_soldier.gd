@@ -173,7 +173,6 @@ func _on_died():
 	$HurtBoxComponent.monitoring = false
 	var death_length = animated_sprite.sprite_frames.get_frame_count("death") / animated_sprite.sprite_frames.get_animation_speed("death")
 	await get_tree().create_timer(death_length).timeout
-	queue_free()
 
 func _get_player() -> Node2D:
 	return get_tree().get_first_node_in_group("player") as Node2D

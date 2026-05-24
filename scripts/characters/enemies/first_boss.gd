@@ -293,9 +293,8 @@ func _spawn_shadow_soldiers():
 	var spawn_offset = perpendicular * (dist * spawn_distance_multiplier)
 	
 	# Создаём двух солдат и добавляем на сцену
-	var parent_node = get_parent()   # или owner, или get_tree().current_scene
+	var parent_node = get_parent()
 	for i in [-1, 1]:
 		var soldier = shadow_soldier_scene.instantiate()
 		soldier.global_position = center + spawn_offset * i
-		# Если нужно, задайте начальное направление взгляда (например, на игрока)
 		parent_node.add_child(soldier)

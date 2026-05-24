@@ -48,7 +48,3 @@ func _on_quit_button_pressed() -> void:
 
 func _on_continue_button_pressed() -> void:
 	close()
-
-
-func _on_save_button_pressed() -> void:
-	SaveManager.save_checkpoint()
