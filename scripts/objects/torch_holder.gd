@@ -1,6 +1,8 @@
 extends StaticBody2D
 class_name TorchHolder
 
+signal torch_placed
+
 @export var target_node_path: NodePath
 var is_lit: bool = false
 
@@ -10,7 +12,10 @@ func interact():
 		if player.torch_lit and not is_lit:
 			player.place_torch()
 			is_lit = true
-			$Sprite2D.frame = 1
+			$Sprite2D.frame = 1   # меняем на зажжённый спрайт
+			torch_placed.emit()
 			var target = get_node(target_node_path)
-			if target and target.has_method("activate"):
+			if target and target.has_method("register_lit_torch"):
+				target.register_lit_torch()
+			elif target and target.has_method("activate"):
 				target.activate(true)

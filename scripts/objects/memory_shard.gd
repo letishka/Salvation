@@ -28,8 +28,3 @@ func interact():
 		DialogueManager.start_dialogue(dialogue_key)
 	
 	queue_free()
-
-# опционально – подбор касанием
-# func _on_body_entered(body):
-#     if body.is_in_group("player") and not _used:
-#         interact()
