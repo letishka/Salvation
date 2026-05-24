@@ -223,3 +223,22 @@ func _on_attack_trigger_body_entered(body: Node2D) -> void:
 func _on_attack_trigger_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player_in_attack_zone = false
+
+
+func save_state() -> Dictionary:
+	return {
+		"health": $HealthComponent.save_state(),
+		"position": global_position,
+		"state": current_state,
+		"can_attack": can_attack
+	}
+
+func load_state(state: Dictionary) -> void:
+	if state.has("health"):
+		$HealthComponent.load_state(state["health"])
+	if state.has("position"):
+		global_position = state["position"]
+	if state.has("state"):
+		_set_state(state["state"])
+	if state.has("can_attack"):
+		can_attack = state["can_attack"]

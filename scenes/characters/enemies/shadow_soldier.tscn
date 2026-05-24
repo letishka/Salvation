@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://qfuqvnv5yfq2" path="res://scenes/components/hurt_box_component.tscn" id="2_dfwrw"]
 [ext_resource type="Texture2D" uid="uid://dm51dpte7fo40" path="res://assets/graphics/characters/enimies/shadow_soldier.png" id="3_42o20"]
 [ext_resource type="PackedScene" uid="uid://bpwwmq6gnpoa8" path="res://scenes/components/hit_box_component.tscn" id="5_4cdw2"]
-[ext_resource type="AudioStream" uid="uid://c5ei8wknc6rnq" path="res://assets/audio/sounds/шаги/Frightening_Footprint.mp3" id="6_4tjwu"]
 [ext_resource type="AudioStream" uid="uid://dnqcdv5d1gyyt" path="res://assets/audio/sounds/sword-swing-during-combat.mp3" id="7_tt6g0"]
+[ext_resource type="AudioStream" uid="uid://dtuohfaj422kk" path="res://assets/audio/sounds/шаги/Infernal_Walk.mp3" id="8_tt6g0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kanba"]
 bg_color = Color(0.2, 0.2, 0.2, 1)
@@ -400,7 +400,7 @@ collision_mask = 32769
 script = ExtResource("1_kanba")
 attack_swoosh_sound = ExtResource("7_tt6g0")
 footstep_sounds = Dictionary[String, AudioStream]({
-"default": ExtResource("6_4tjwu")
+"default": ExtResource("8_tt6g0")
 })
 
 [node name="AttackCooldown" type="Timer" parent="." unique_id=1060637328]
@@ -466,12 +466,9 @@ position = Vector2(0, -15)
 shape = SubResource("CircleShape2D_ummrs")
 
 [node name="FootstepPlayer" type="AudioStreamPlayer2D" parent="." unique_id=759491380]
-stream = ExtResource("6_4tjwu")
-volume_db = 10.0
+volume_db = -10.0
 
 [node name="AttackSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=914286547]
-stream = ExtResource("7_tt6g0")
-volume_db = -10.0
 pitch_scale = 1.52
 
 [node name="GroundCheckRay" type="RayCast2D" parent="." unique_id=1527514643]
