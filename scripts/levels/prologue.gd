@@ -44,8 +44,6 @@ func _ready():
 	portal.get_node("CollisionShape2D").disabled = false
 	player_ui.visible = true
 	
-	await get_tree().create_timer(5).timeout
-	get_tree().change_scene_to_file("res://scenes/levels/test.tscn")
 
 func _show_history():
 	var lines = DialogueManager.get_dialogue_lines("prologue_text")
@@ -56,7 +54,7 @@ func _show_history():
 		full_text += line.text + "\n\n"
 	center_text.text = full_text.strip_edges()
 	center_text.visible = true
-	await get_tree().create_timer(10).timeout
+	await get_tree().create_timer(1).timeout
 	center_text.visible = false
 
 func _heartbeat_and_inner_dialogue():

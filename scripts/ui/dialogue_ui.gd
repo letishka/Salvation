@@ -17,7 +17,10 @@ func _ready():
 	GameManager.hide_dialogue.connect(_on_hide_dialogue)
 	next_button.pressed.connect(_on_next_pressed)
 	
-
+func _input(event):
+	if visible and (event.is_action_pressed("ui_accept") or (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed) or event.is_action_pressed("interact")):
+		_on_next_pressed()
+		
 func _on_show_dialogue(speaker: String, text: String):
 	panel.show()
 	name_label.text = speaker if speaker != "" else "---"

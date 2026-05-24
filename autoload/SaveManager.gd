@@ -11,7 +11,6 @@ func _on_scene_changed(scene: Node = null) -> void:
 	if not scene:
 		return
 
-	# НЕ сохраняем, если сцена из папки UI (меню, настройки, конец игры и т.д.)
 	var path = scene.scene_file_path
 	if path.begins_with("res://scenes/ui/"):
 		return

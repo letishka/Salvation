@@ -5,6 +5,7 @@ signal ability_cooldown_started(ability_id: String, remaining: float)
 signal show_dialogue(speaker: String, text: String)
 signal hide_dialogue
 signal show_memory(text: String, image: Texture)
+signal show_hint(text: String, duration: float)
 
 var player: Node = null
 

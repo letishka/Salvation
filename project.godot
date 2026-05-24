@@ -17,9 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*uid://87pxyttguwo"
-DialogueManager="*uid://fm2xkrwe7wiq"
-LevelManager="*uid://bij63e4eml4ly"
+GameManager="*uid://bvasqeqquoy88"
+DialogueManager="*uid://bw0gttkwj51wx"
+LevelManager="*uid://pwj6oke58v0n"
 SaveManager="*uid://kgeed05k5ao1"
 
 [display]
