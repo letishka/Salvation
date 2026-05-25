@@ -9,6 +9,7 @@ extends Node2D
 @onready var segment_title = $SegmentTitle
 @onready var hint_system = $HintSystem
 
+var lever_used = false
 var dialog_started = false
 
 func _ready():
@@ -51,12 +52,14 @@ func _on_start_zone_entered(body):
 	GameManager.show_hint.emit("Нажмите E, чтобы взаимодействовать с рычагом", 4.0)
 
 func _on_lever_pulled():
+	if lever_used: return
+	lever_used = true
 	if bridge.has_method("activate"):
 		bridge.activate(true)
 	if enemy:
 		enemy.visible = true
 		enemy.set_physics_process(true)
-		GameManager.show_hint.emit("ЛКМ – атака, Пробел – уклонение", 5.0)
+		GameManager.show_hint.emit("ЛКМ – атака", 5.0)
 		if enemy.has_node("HealthComponent"):
 			enemy.health_component.died.connect(_on_enemy_defeated)
 
