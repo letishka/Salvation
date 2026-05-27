@@ -54,6 +54,11 @@ y_sort_enabled = true
 unique_name_in_owner = true
 position = Vector2(575, 323)
 
+[node name="Camera2D" type="Camera2D" parent="Back/Player" unique_id=540632001]
+position = Vector2(0, 1)
+position_smoothing_enabled = true
+script = ExtResource("5_7115g")
+
 [node name="ShadowSolider" parent="Back" unique_id=1886436151 instance=ExtResource("3_yp2xm")]
 position = Vector2(296, 248)
 
@@ -61,10 +66,6 @@ position = Vector2(296, 248)
 position = Vector2(1022, 80)
 
 [node name="FirstBoss" parent="Back" unique_id=249620138 instance=ExtResource("7_im2du")]
-position = Vector2(567, 14)
+position = Vector2(574, -116)
 
 [node name="Front" type="Node2D" parent="." unique_id=2122368270 groups=["front_layer"]]
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=540632001]
-position_smoothing_enabled = true
-script = ExtResource("5_7115g")

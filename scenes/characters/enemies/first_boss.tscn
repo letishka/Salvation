@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b1kijta3dip0j" path="res://scripts/characters/enemies/first_boss.gd" id="1_pm6p0"]
 [ext_resource type="AudioStream" uid="uid://dnqcdv5d1gyyt" path="res://assets/audio/sounds/sword-swing-during-combat.mp3" id="2_a74up"]
 [ext_resource type="PackedScene" uid="uid://qfuqvnv5yfq2" path="res://scenes/components/hurt_box_component.tscn" id="2_dfwrw"]
+[ext_resource type="AudioStream" uid="uid://c5ei8wknc6rnq" path="res://assets/audio/sounds/шаги/Frightening_Footprint.mp3" id="3_ry0c3"]
 [ext_resource type="Texture2D" uid="uid://vyexwb52mogv" path="res://assets/graphics/characters/enimies/knight.png" id="4_2fo72"]
 [ext_resource type="PackedScene" uid="uid://ijii36s5huog" path="res://scenes/characters/enemies/shadow_soldier.tscn" id="4_2vatv"]
 [ext_resource type="PackedScene" uid="uid://bpwwmq6gnpoa8" path="res://scenes/components/hit_box_component.tscn" id="5_4cdw2"]
@@ -22,11 +23,11 @@ border_width_bottom = 4
 border_color = Color(0.2, 0.2, 0.2, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm6p0"]
-size = Vector2(315.25, 130)
+size = Vector2(326, 149)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2vatv"]
 radius = 32.0
-height = 88.0
+height = 68.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ry0c3"]
 atlas = ExtResource("4_2fo72")
@@ -357,12 +358,13 @@ radius = 349.03583
 
 [node name="FirstBoss" type="CharacterBody2D" unique_id=1886436151]
 collision_layer = 32768
+collision_mask = 32768
 up_direction = Vector2(0, 1)
 script = ExtResource("1_pm6p0")
 attack_duration = 0.3
 attack_swoosh_sound = ExtResource("2_a74up")
 footstep_sounds = Dictionary[String, AudioStream]({
-"default": ExtResource("7_2fo72")
+"default": ExtResource("3_ry0c3")
 })
 shadow_soldier_scene = ExtResource("4_2vatv")
 
@@ -388,10 +390,10 @@ show_percentage = false
 
 [node name="AttackTrigger" type="Area2D" parent="." unique_id=199182533]
 collision_layer = 0
-collision_mask = 128
+collision_mask = 138
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackTrigger" unique_id=47630056]
-position = Vector2(0, -46)
+position = Vector2(7, -45.5)
 shape = SubResource("RectangleShape2D_pm6p0")
 
 [node name="HurtBoxComponent" parent="." unique_id=686741254 node_paths=PackedStringArray("health_component") instance=ExtResource("2_dfwrw")]
@@ -434,6 +436,7 @@ stream = ExtResource("7_2fo72")
 
 [node name="AttackSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1768190191]
 stream = ExtResource("2_a74up")
+volume_db = 5.0
 pitch_scale = 1.52
 
 [node name="GroundCheckRay" type="RayCast2D" parent="." unique_id=2118776675]

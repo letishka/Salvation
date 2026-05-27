@@ -9,7 +9,7 @@ enum State { IDLE, WALK, ATTACK, HIT, DEATH }
 @export var attack_cooldown: float = 0.6
 @export var flip_offset_x: float = -32.0
 @export var collision_offset_x: float = -32.0
-@export var hit_delay: float = 0.3           # задержка до удара внутри анимации
+@export var hit_delay: float = 0.3          # задержка до удара внутри анимации
 
 # ==== ЗВУКИ ====
 @export var attack_swoosh_sound: AudioStream                # звук взмаха меча
