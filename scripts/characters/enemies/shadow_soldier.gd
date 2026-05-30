@@ -21,6 +21,7 @@ enum State { IDLE, WALK, ATTACK, HIT, DEATH }
 @onready var detection_area: Area2D = $DetectionArea
 @onready var progress_bar: ProgressBar = $ProgressBar
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var root: CharacterBody2D = $"."
 @onready var attack_area: HitBoxComponent = $EnemyHitBox
 @onready var attack_collision: CollisionShape2D = $EnemyHitBox/CollisionShape2D
 @onready var attack_cooldown_timer: Timer = $AttackCooldown
@@ -173,6 +174,8 @@ func _on_died():
 	$HurtBoxComponent.monitoring = false
 	var death_length = animated_sprite.sprite_frames.get_frame_count("death") / animated_sprite.sprite_frames.get_animation_speed("death")
 	await get_tree().create_timer(death_length).timeout
+	root.set_collision_layer_value(16, false)
+	root.set_collision_mask_value(16, false)
 
 func _get_player() -> Node2D:
 	return get_tree().get_first_node_in_group("player") as Node2D

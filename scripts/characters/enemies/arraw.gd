@@ -2,7 +2,7 @@ extends Area2D
 
 var speed: float = 0.0
 var direction: Vector2 = Vector2.RIGHT
-var damage: float = 10.0
+var damage: float = 15.0
 
 func _ready():
 	if has_meta("speed"): speed = get_meta("speed")

@@ -447,12 +447,11 @@ position = Vector2(-1, -52)
 shape = SubResource("CapsuleShape2D_2vatv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=689220880]
-position = Vector2(-21.999998, -59.000004)
+position = Vector2(0, -59)
 scale = Vector2(3.3, 2.8)
 sprite_frames = SubResource("SpriteFrames_fs4m4")
 animation = &"attack_diagonal"
 autoplay = "idle_down"
-offset = Vector2(6, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1428487279]
 position = Vector2(-0.5, -10.5)

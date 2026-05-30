@@ -4,18 +4,17 @@ enum State { IDLE, WALK, ATTACK, HIT, DEATH }
 
 @export var max_health: float = 0.0
 @export var max_speed: float = 80.0
-@export var attack_cooldown: float = 0.8
+@export var attack_cooldown: float = 1
 
 @export var vertical_threshold: float = 40.0
-@export var diagonal_attack_angle: float = 15.0
 
 @export var projectile_scene: PackedScene
 @export var arrow_damage: float = 13.0
 @export var arrow_speed: float = 500.0
-@export var hit_delay: float = 0.5
-@export var hit_delay_diagonal: float = 0.4
-@export var arrow_spawn_diagonal_offset: Vector2 = Vector2(10, -20)
-@export var retreat_radius: float = 250.0
+@export var hit_delay: float = 0.1
+@export var arrow_spawn_offset: Vector2 = Vector2(70, -20)
+
+@export var retreat_radius: float = 200.0
 var _facing_sign: int = 1
 
 @export var attack_sound: AudioStream
@@ -26,7 +25,6 @@ var _facing_sign: int = 1
 @onready var detection_area: Area2D = $DetectionArea
 @onready var progress_bar: ProgressBar = $ProgressBar
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var root: CharacterBody2D = $"."
 @onready var attack_cooldown_timer: Timer = $AttackCooldown
 @onready var arrow_spawn: Marker2D = $ArrowSpawn if has_node("ArrowSpawn") else null
 
@@ -41,6 +39,7 @@ var player_in_attack_zone: bool = false
 
 var _footstep_timer: float = 0.0
 var _vertical_orientation: String = "down"
+@export var arrow_flight_animation: String = "flight"
 
 func _ready():
 	health_component.died.connect(_on_died)
@@ -96,7 +95,7 @@ func _handle_movement():
 	if distance < retreat_radius:
 		var away_dir = -to_player.normalized()
 		velocity = away_dir * max_speed
-		_apply_flip(away_dir.x < 0)          # смотрим в сторону движения
+		_apply_flip(away_dir.x < 0)
 		_set_state(State.WALK)
 
 	elif player_in_attack_zone and can_attack:
@@ -105,7 +104,7 @@ func _handle_movement():
 	else:
 		var direction = to_player.normalized()
 		velocity = direction * max_speed
-		_apply_flip(to_player.x < 0)         # смотрим на игрока
+		_apply_flip(to_player.x < 0)
 		_set_state(State.WALK)
 
 	if velocity != Vector2.ZERO:
@@ -131,47 +130,34 @@ func _start_attack():
 
 	var player = _get_player()
 	if not player:
+		# Если игрока нет – стреляем вправо без смещения (или с вашим смещением)
 		_apply_flip(false)
-		_shoot_arrow(Vector2.RIGHT, "attack", Vector2.ZERO)
+		_shoot_arrow(Vector2.RIGHT, Vector2.ZERO)
 		attack_cooldown_timer.start()
 		await attack_cooldown_timer.timeout
 		can_attack = true
 		_set_state(State.WALK if player_detected else State.IDLE)
 		return
 
-	# Вычисляем вектор к игроку от центра врага (для выбора анимации и flip)
 	var to_player = player.global_position - global_position
 	_apply_flip(to_player.x < 0)
 
-	# Выбор анимации по углу от центра (только для визуала)
-	var anim = "attack"
-	var delay = hit_delay
-	var spawn_offset = Vector2.ZERO
-
-	if to_player.angle() < -deg_to_rad(diagonal_attack_angle):
-		anim = "attack_diagonal"
-		delay = hit_delay_diagonal
-		spawn_offset = arrow_spawn_diagonal_offset
-
-	if animated_sprite.flip_h:
-		spawn_offset.x *= -1
-
-	# Запускаем анимацию и звук
-	animated_sprite.play(anim)
+	# Всегда одна анимация и одна задержка
+	animated_sprite.play("attack")
 	if attack_sound and attack_sound_player:
 		attack_sound_player.stream = attack_sound
 		attack_sound_player.play()
 
-	await get_tree().create_timer(delay).timeout
+	await get_tree().create_timer(hit_delay).timeout
 
-	# ВАЖНО: определяем точку появления стрелы
+	# Применяем смещение с учётом поворота
+	var spawn_offset = arrow_spawn_offset
+	if animated_sprite.flip_h:
+		spawn_offset.x *= -1
+
 	var base_pos = arrow_spawn.global_position if arrow_spawn else global_position
-	var spawn_pos = base_pos + spawn_offset
-
-	# Направление стрелы – ОТ ТОЧКИ ПОЯВЛЕНИЯ К ЦЕЛИ
-	var arrow_dir = (player.global_position - spawn_pos).normalized()
-
-	_shoot_arrow(arrow_dir, anim, spawn_offset)
+	var arrow_dir = (player.global_position - base_pos).normalized()
+	_shoot_arrow(arrow_dir, spawn_offset)
 
 	attack_cooldown_timer.start()
 	await attack_cooldown_timer.timeout
@@ -179,7 +165,7 @@ func _start_attack():
 
 	_set_state(State.WALK if player_detected else State.IDLE)
 
-func _shoot_arrow(direction: Vector2, _anim: String, spawn_offset: Vector2):
+func _shoot_arrow(direction: Vector2, spawn_offset: Vector2):
 	if not projectile_scene:
 		return
 	var arrow = projectile_scene.instantiate()
@@ -188,12 +174,19 @@ func _shoot_arrow(direction: Vector2, _anim: String, spawn_offset: Vector2):
 	var base_pos = arrow_spawn.global_position if arrow_spawn else global_position
 	arrow.global_position = base_pos + spawn_offset
 
+	# Инициализация через метод, если есть
 	if arrow.has_method("init"):
 		arrow.init(direction, arrow_speed, arrow_damage)
 	else:
 		arrow.set_meta("direction", direction)
 		arrow.set_meta("speed", arrow_speed)
 		arrow.set_meta("damage", arrow_damage)
+
+	# Запускаем анимацию полёта, если у стрелы есть AnimatedSprite2D
+	if arrow.has_node("AnimatedSprite2D"):
+		var arrow_sprite: AnimatedSprite2D = arrow.get_node("AnimatedSprite2D")
+		if arrow_sprite.sprite_frames and arrow_sprite.sprite_frames.has_animation(arrow_flight_animation):
+			arrow_sprite.play(arrow_flight_animation)
 
 func _on_died():
 	_set_state(State.DEATH)
@@ -204,8 +197,7 @@ func _on_died():
 	$HurtBoxComponent.monitoring = false
 	var death_length = animated_sprite.sprite_frames.get_frame_count("death") / animated_sprite.sprite_frames.get_animation_speed("death")
 	await get_tree().create_timer(death_length).timeout
-	root.set_collision_layer_value(16, false)
-	root.set_collision_mask_value(16, false)
+	queue_free()
 
 func _get_player() -> Node2D:
 	return get_tree().get_first_node_in_group("player") as Node2D
