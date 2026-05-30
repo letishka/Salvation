@@ -23,7 +23,7 @@ border_width_bottom = 4
 border_color = Color(0.2, 0.2, 0.2, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm6p0"]
-size = Vector2(326, 149)
+size = Vector2(326, 134)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2vatv"]
 radius = 32.0
@@ -393,7 +393,7 @@ collision_layer = 0
 collision_mask = 138
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackTrigger" unique_id=47630056]
-position = Vector2(7, -45.5)
+position = Vector2(7, -38)
 shape = SubResource("RectangleShape2D_pm6p0")
 
 [node name="HurtBoxComponent" parent="." unique_id=686741254 node_paths=PackedStringArray("health_component") instance=ExtResource("2_dfwrw")]

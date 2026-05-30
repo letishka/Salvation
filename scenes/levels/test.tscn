@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://scenes/audio/BackgroundMusic.tscn" id="4_uyl1e"]
 [ext_resource type="Script" uid="uid://cfwxjijbg2di6" path="res://scripts/characters/player/camera_2d.gd" id="5_7115g"]
 [ext_resource type="PackedScene" uid="uid://c0wdfipsumq4s" path="res://scenes/characters/enemies/first_boss.tscn" id="7_im2du"]
+[ext_resource type="PackedScene" uid="uid://de4nvbom8l85a" path="res://scenes/characters/enemies/archer.tscn" id="9_f5esd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uyl1e"]
 texture = ExtResource("2_yp2xm")
@@ -60,12 +61,12 @@ position_smoothing_enabled = true
 script = ExtResource("5_7115g")
 
 [node name="ShadowSolider" parent="Back" unique_id=1886436151 instance=ExtResource("3_yp2xm")]
-position = Vector2(296, 248)
-
-[node name="ShadowSolider2" parent="Back" unique_id=2025078902 instance=ExtResource("3_yp2xm")]
-position = Vector2(1022, 80)
+position = Vector2(244, 418)
 
 [node name="FirstBoss" parent="Back" unique_id=249620138 instance=ExtResource("7_im2du")]
-position = Vector2(574, -116)
+position = Vector2(275, -114)
+
+[node name="Archer" parent="Back" unique_id=1481174821 instance=ExtResource("9_f5esd")]
+position = Vector2(859, -107)
 
 [node name="Front" type="Node2D" parent="." unique_id=2122368270 groups=["front_layer"]]

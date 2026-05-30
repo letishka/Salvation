@@ -716,8 +716,8 @@ radius = 50.0
 height = 104.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dyp2m"]
-radius = 14.0
-height = 34.0
+radius = 16.0
+height = 60.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1090551706 groups=["player"]]
 collision_layer = 129
@@ -770,11 +770,11 @@ position = Vector2(0, -31)
 shape = SubResource("CapsuleShape2D_yewv4")
 
 [node name="PlayerHurtBox" type="Area2D" parent="." unique_id=1715718106]
-collision_layer = 0
+collision_layer = 64
 collision_mask = 136
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtBox" unique_id=1151510333]
-position = Vector2(0, -22)
+position = Vector2(0, -31)
 shape = SubResource("CapsuleShape2D_dyp2m")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1315402415]
