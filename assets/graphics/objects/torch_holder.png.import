@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyt0seo6hxoxd"
-path="res://.godot/imported/ice_platform.png-1a425a5f20e299841b06ef8fa16c71d9.ctex"
+uid="uid://boiw2857bjcfr"
+path="res://.godot/imported/torch_holder.png-76df8324fe5a6cf3ab42429e9f179004.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/objects/ice_platform.png"
-dest_files=["res://.godot/imported/ice_platform.png-1a425a5f20e299841b06ef8fa16c71d9.ctex"]
+source_file="res://assets/graphics/objects/torch_holder.png"
+dest_files=["res://.godot/imported/torch_holder.png-76df8324fe5a6cf3ab42429e9f179004.ctex"]
 
 [params]
 

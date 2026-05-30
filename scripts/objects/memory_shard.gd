@@ -16,15 +16,22 @@ func interact():
 	if _used: return
 	_used = true
 	
-	if memory_text != "" or memory_image != null:
-		GameManager.display_memory(memory_text, memory_image)
-	
+	# Лечение игрока
 	var player = get_tree().get_first_node_in_group("player")
 	if player and player.has_node("HealthComponent"):
 		player.health_component.heal(20)
+		print("Player healed +20 HP")
 	
+	# Создаём и показываем воспоминание
+	var memory_ui = preload("res://scenes/ui/MemoryUI.tscn").instantiate()
+	get_tree().current_scene.add_child(memory_ui)
+	
+	# Запускаем показ воспоминания, после закрытия запустится диалог
+	memory_ui.show_memory(memory_text, memory_image, _on_memory_closed)
+
+func _on_memory_closed():
+	print("Memory closed, starting dialogue: ", dialogue_key)
 	if dialogue_key != "":
-		await get_tree().create_timer(0.5).timeout
 		DialogueManager.start_dialogue(dialogue_key)
 	
 	queue_free()

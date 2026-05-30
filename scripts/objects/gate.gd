@@ -3,26 +3,26 @@ class_name Gate
 
 signal opened
 
-@export var required_torches: int = 3   # сколько факелов нужно для открытия
-var lit_torches: int = 0               # текущее количество зажжённых факелов
+@export var required_torches: int = 3
+var lit_torches: int = 0
+
+@onready var closed_sprite = $ClosedSprite
+@onready var open_sprite = $OpenSprite
+@onready var anim_player = $AnimationPlayer
 
 func register_lit_torch():
 	lit_torches += 1
+	print("Gate: torch placed, ", lit_torches, "/", required_torches)
 	if lit_torches >= required_torches:
 		open()
 
 func open():
-	# Анимация открытия ворот (если есть)
-	if has_node("AnimationPlayer"):
-		$AnimationPlayer.play("open")
-	
-	# Отключаем коллизию, чтобы игрок мог пройти
+	print("Gate opening!")
+	if closed_sprite:
+		closed_sprite.visible = false
+	if open_sprite:
+		open_sprite.visible = true
+	if anim_player and anim_player.has_animation("open"):
+		anim_player.play("open")
 	$CollisionShape2D.disabled = true
-	
-	# (Опционально) скрываем визуальную часть ворот
-	if has_node("Sprite2D"):
-		$Sprite2D.visible = false
-	elif has_node("AnimatedSprite2D"):
-		$AnimatedSprite2D.play("open")
-	
 	opened.emit()

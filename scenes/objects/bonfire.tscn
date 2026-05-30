@@ -10,7 +10,7 @@ radius = 15.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ehkru"]
 size = Vector2(12, 6.5)
 
-[node name="Bonfire" type="StaticBody2D" unique_id=183457378]
+[node name="Bonfire" type="Area2D" unique_id=1539607131]
 scale = Vector2(2.5, 2.5)
 collision_layer = 2
 script = ExtResource("1_av1pb")

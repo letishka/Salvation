@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bsj6js40b5yr7"]
+
+[ext_resource type="Script" uid="uid://bgoin465mjvqn" path="res://scripts/objects/gate.gd" id="1_33swo"]
+[ext_resource type="Texture2D" uid="uid://p5dpxm7o7uhb" path="res://assets/graphics/objects/JapanProps-02.png" id="2_sb1ok"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qkig8"]
+size = Vector2(123, 118)
+
+[node name="Gate" type="StaticBody2D" unique_id=1739702693]
+script = ExtResource("1_33swo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1938983907]
+position = Vector2(-0.5, 34)
+shape = SubResource("RectangleShape2D_qkig8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1839597842]
+scale = Vector2(2, 2)
+texture = ExtResource("2_sb1ok")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=25081702]
+scale = Vector2(2, 2)
+texture = ExtResource("2_sb1ok")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1137782681]
