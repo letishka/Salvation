@@ -376,12 +376,28 @@ target_node_path = NodePath("../Bridge")
 [node name="Torch" parent="." unique_id=1336749232 instance=ExtResource("5_wub3r")]
 position = Vector2(72, 72)
 
-[node name="Bonfire" parent="." unique_id=183457378 instance=ExtResource("6_l32b0")]
-position = Vector2(321, 96)
+[node name="MemoryShard" parent="." unique_id=1656148041 instance=ExtResource("17_ohitc")]
+position = Vector2(1326, 330)
+memory_text = "Лицо воина. Он смотрит прямо на тебя. Во взгляде нет ненависти, только вопрос: \"За что?\" "
+memory_image = ExtResource("18_vb40y")
+
+[node name="Bonfire2" parent="." unique_id=2086911344 instance=ExtResource("6_l32b0")]
+position = Vector2(126, 425)
+
+[node name="TorchPickup" parent="." unique_id=439908847 instance=ExtResource("5_wub3r")]
+position = Vector2(51, 245)
+
+[node name="TorchPickup2" parent="." unique_id=1563577053 instance=ExtResource("5_wub3r")]
+position = Vector2(265, 262)
+
+[node name="TorchPickup3" parent="." unique_id=1917775910 instance=ExtResource("5_wub3r")]
+position = Vector2(141, 287)
 
 [node name="Player" parent="." unique_id=1090551706 instance=ExtResource("7_h0mxx")]
 z_index = 2
 position = Vector2(168, 189)
+speed = null
+sprint_speed = null
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1696336299]
 script = ExtResource("8_405k0")
@@ -429,7 +445,5 @@ offset_right = 40.0
 offset_bottom = 13.0
 metadata/_edit_use_anchors_ = true
 
-[node name="MemoryShard" parent="." unique_id=1656148041 instance=ExtResource("17_ohitc")]
-position = Vector2(1326, 330)
-memory_text = "Лицо воина. Он смотрит прямо на тебя. Во взгляде нет ненависти, только вопрос: \"За что?\" "
-memory_image = ExtResource("18_vb40y")
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=5143117]
+color = Color(0.5744047, 0.51765215, 0.96510047, 1)

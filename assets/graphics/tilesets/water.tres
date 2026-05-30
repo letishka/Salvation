@@ -1,0 +1,43 @@
+[gd_resource type="TileSet" format=3 uid="uid://dwjvyp3khye02"]
+
+[ext_resource type="Texture2D" uid="uid://cfxpeykb7hjt8" path="res://assets/graphics/tilesets/seasonal sample (spring).png" id="1_l5vi0"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dx5k6"]
+texture = ExtResource("1_l5vi0")
+5:11/0 = 0
+6:11/0 = 0
+7:11/0 = 0
+8:11/0 = 0
+9:11/0 = 0
+10:11/0 = 0
+5:12/0 = 0
+6:12/0 = 0
+7:12/0 = 0
+8:12/0 = 0
+9:12/0 = 0
+10:12/0 = 0
+5:13/0 = 0
+6:13/0 = 0
+7:13/0 = 0
+8:13/0 = 0
+9:13/0 = 0
+10:13/0 = 0
+11:13/0 = 0
+12:13/0 = 0
+13:13/0 = 0
+5:14/0 = 0
+6:14/0 = 0
+7:14/0 = 0
+8:14/0 = 0
+9:14/0 = 0
+10:14/0 = 0
+11:14/0 = 0
+12:14/0 = 0
+13:14/0 = 0
+6:15/0 = 0
+7:15/0 = 0
+8:15/0 = 0
+9:15/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_dx5k6")

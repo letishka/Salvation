@@ -3,9 +3,9 @@ extends CharacterBody2D
 @onready var health_component = $HealthComponent
 @onready var grace_period = $GracePeriod
 @onready var health_bar = $Ui/HeatlhBar
-
 @onready var attack_controller = $Player/AttackController
 @onready var animated_sprite: AnimatedSprite2D = $Player
+@onready var torch_light = $TorchLight    # PointLight2D (свет от факела)
 
 @export var speed: float = 200.0
 @export var sprint_speed: float = 350.0
@@ -21,25 +21,29 @@ var current_interactable = null
 
 # Переменные анимации и атаки
 var is_attacking: bool = false
-var last_direction: Vector2 = Vector2.DOWN   # взгляд по умолчанию вниз
+var last_direction: Vector2 = Vector2.DOWN
 
+# Инвентарь (факел)
 var has_torch: bool = false
 var torch_lit: bool = false
 
 func _ready():
 	if health_component.current_health <= 0:
-		health_component.health = GameManager.initial_player_health
+		health_component.current_health = GameManager.initial_player_health
 	health_component.died.connect(on_died)
 	health_component.health_changed.connect(on_health_changed)
 	health_update()
 	current_speed = speed
 	add_to_group("player")
+	
+	# Свет от факела изначально выключен
+	if torch_light:
+		torch_light.enabled = false
 
 func _physics_process(delta):
 	if get_tree().paused:
 		velocity = Vector2.ZERO
 		return
-	# Во время атаки не двигаемся
 	if is_attacking:
 		return
 
@@ -86,19 +90,15 @@ func _input(event):
 func start_attack():
 	is_attacking = true
 
-	# Направление на курсор
 	var mouse_dir = (get_global_mouse_position() - global_position).normalized()
 	var dir_name = get_direction_name(mouse_dir)
 
-	# Проигрываем анимацию атаки на теле
 	if animated_sprite and animated_sprite.sprite_frames.has_animation("attack_" + dir_name):
 		animated_sprite.play("attack_" + dir_name)
 
-	# Запускаем ударную зону
 	attack_controller.perform_attack(dir_name)
 
-	# Вычисляем длительность анимации атаки
-	var duration = 0.4   # fallback
+	var duration = 0.4
 	if animated_sprite and animated_sprite.sprite_frames.has_animation("attack_" + dir_name):
 		var anim_name = "attack_" + dir_name
 		var fps = animated_sprite.sprite_frames.get_animation_speed(anim_name)
@@ -108,15 +108,12 @@ func start_attack():
 	await get_tree().create_timer(duration).timeout
 	is_attacking = false
 
-	# Возвращаемся к idle или run
 	var move_input = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	update_animation(move_input)
 
+# --------- ВЗАИМОДЕЙСТВИЕ ----------
 func _on_interactable_area_entered(area: Area2D):
 	print("=== Вход в зону: ", area.name, ", родитель: ", area.get_parent().name, " ===")
-	print("  - area.collision_layer = ", area.collision_layer)
-	print("  - area.collision_mask = ", area.collision_mask)
-	print("  - parent.has_method('interact')? ", area.get_parent().has_method("interact"))
 	if area.has_method("interact"):
 		current_interactable = area
 		print("current_interactable установлен на area")
@@ -130,7 +127,7 @@ func _on_interactable_area_exited(area: Area2D):
 	if current_interactable == area or current_interactable == area.get_parent():
 		current_interactable = null
 
-# player.gd
+# --------- ЗДОРОВЬЕ И УРОН ----------
 func check_if_damaged(damage: float = 10):
 	if enemies_colliding == 0 or not grace_period.is_stopped(): 
 		return
@@ -140,12 +137,12 @@ func check_if_damaged(damage: float = 10):
 func _on_player_hurt_box_area_entered(area: Area2D):
 	enemies_colliding += 1
 	if area.has_method("get_damage") or "damage" in area:
-		check_if_damaged(area.damage)   # берём урон из HitBoxComponent
+		check_if_damaged(area.damage)
 	else:
-		check_if_damaged(10)            # fallback
+		check_if_damaged(10)
 
 func _on_player_hurt_box_area_exited(area: Area2D) -> void:
-	enemies_colliding -=1
+	enemies_colliding -= 1
 
 func on_died():
 	queue_free()
@@ -162,19 +159,30 @@ func _on_grace_period_timeout() -> void:
 func reset_health():
 	health_component.current_health = health_component.max_health
 	health_component.health_changed.emit()
-	
+
+# --------- ФАКЕЛ (ИНВЕНТАРЬ + СВЕТ) ----------
 func pickup_torch():
 	has_torch = true
 	torch_lit = false
-	print("Подобран факел (не зажжён)")
+	if torch_light:
+		torch_light.enabled = false
+	GameManager.update_inventory(has_torch, torch_lit)
+	GameManager.show_hint.emit("Факел подобран. Подойди к костру, чтобы зажечь.", 3.0)
 
 func light_torch():
 	if has_torch and not torch_lit:
 		torch_lit = true
-		print("Факел зажжён")
+		if torch_light:
+			torch_light.enabled = true
+		GameManager.update_inventory(has_torch, torch_lit)
+		GameManager.show_hint.emit("Факел зажжён! Неси к пустой подставке.", 2.0)
 
-func place_torch():
+func place_torch() -> bool:
 	if has_torch and torch_lit:
 		has_torch = false
 		torch_lit = false
-		print("Факел установлен в держатель")
+		if torch_light:
+			torch_light.enabled = false
+		GameManager.update_inventory(has_torch, torch_lit)
+		return true
+	return false

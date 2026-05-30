@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://wru628c6fpvk" path="res://scripts/objects/bonfire.gd" id="1_av1pb"]
 [ext_resource type="Texture2D" uid="uid://b5fql5s25wxtd" path="res://assets/graphics/objects/bonfire.png" id="2_yjuxu"]
+[ext_resource type="Texture2D" uid="uid://dqboebg778tdr" path="res://assets/graphics/objects/light.png" id="3_yjuxu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5150a"]
 radius = 15.0
@@ -28,3 +29,14 @@ texture = ExtResource("2_yjuxu")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=185303988]
 position = Vector2(0, 3.75)
 shape = SubResource("RectangleShape2D_ehkru")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1352326]
+position = Vector2(-5.9604645e-08, 0)
+scale = Vector2(6.809948, 5.9489784)
+color = Color(0.93333334, 0.73333335, 0.6745098, 1)
+range_z_min = -100
+range_z_max = 100
+texture = ExtResource("3_yjuxu")
+texture_scale = 0.01
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=933315629]

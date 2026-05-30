@@ -68,8 +68,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gd70c"]
-radius = 41.0
-height = 118.0
+radius = 19.0
+height = 78.0
 
 [node name="Portal" type="Area2D" unique_id=35049290]
 script = ExtResource("1_lnheu")

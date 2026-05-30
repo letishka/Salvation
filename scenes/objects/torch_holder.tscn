@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://v7g51cursc0m"]
+
+[ext_resource type="Texture2D" uid="uid://dqboebg778tdr" path="res://assets/graphics/objects/light.png" id="1_vtqfn"]
+
+[node name="TorchHolder" type="StaticBody2D" unique_id=119021336]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1404110908]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1175903952]
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=940230616]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1641113736]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1631798675]
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=658100143]
+position = Vector2(0, -8)
+scale = Vector2(2.5127628, 2.321425)
+enabled = false
+color = Color(0.8156863, 0.6, 0.5568628, 0.70980394)
+range_z_min = -100
+range_z_max = 100
+texture = ExtResource("1_vtqfn")
+texture_scale = 0.01

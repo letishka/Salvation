@@ -433,3 +433,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(1326, 330)
 memory_text = "Лицо воина. Он смотрит прямо на тебя. Во взгляде нет ненависти, только вопрос: \"За что?\" "
 memory_image = ExtResource("18_g6kow")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1665535259]
+color = Color(0.5744047, 0.51765215, 0.96510047, 1)

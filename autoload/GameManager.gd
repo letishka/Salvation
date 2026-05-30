@@ -5,7 +5,8 @@ signal ability_cooldown_started(ability_id: String, remaining: float)
 signal show_dialogue(speaker: String, text: String)
 signal hide_dialogue
 signal show_memory(text: String, image: Texture)
-signal show_hint(text: String, duration: float)   # <-- добавь эту строку
+signal show_hint(text: String, duration: float)
+signal inventory_changed(has_torch: bool, torch_lit: bool)
 
 var player: Node = null
 var initial_player_health: float = 100.0
@@ -28,3 +29,6 @@ func close_dialogue():
 
 func display_memory(text: String, image: Texture = null):
 	show_memory.emit(text, image)
+
+func update_inventory(has_torch: bool, torch_lit: bool):
+	inventory_changed.emit(has_torch, torch_lit)

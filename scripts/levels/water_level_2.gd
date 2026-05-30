@@ -39,6 +39,9 @@ func _ready():
 
 func _on_start_zone_entered(body):
 	if not body.is_in_group("player"): return
+	SaveManager.save_checkpoint()
+	LevelManager.set_checkpoint(global_position)
+	
 	if dialog_started: return
 	dialog_started = true
 	start_zone.queue_free()
@@ -107,3 +110,15 @@ func _on_exit_zone_entered(body):
 
 func _change_to_next_level():
 	get_tree().change_scene_to_file("res://scenes/levels/water_level_3.tscn")
+	
+func transition_to_scene(target: String):
+	var black = ColorRect.new()
+	black.color = Color.BLACK
+	black.size = get_viewport().get_visible_rect().size
+	black.z_index = 100
+	add_child(black)
+	
+	var tween = create_tween()
+	tween.tween_property(black, "modulate:a", 1.0, 0.5)
+	await tween.finished
+	get_tree().change_scene_to_file(target)

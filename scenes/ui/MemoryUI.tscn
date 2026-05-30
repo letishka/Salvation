@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bu2x6sdqg7mw6"]
+
+[ext_resource type="Script" uid="uid://2p42duf4q2ew" path="res://scripts/ui/memory_ui.gd" id="1_hosgo"]
+
+[node name="MemoryUi" type="CanvasLayer" unique_id=1708988976]
+script = ExtResource("1_hosgo")
+
+[node name="BlackRect" type="ColorRect" parent="." unique_id=1095979309]
+visible = false
+offset_right = 1191.0
+offset_bottom = 664.0
+color = Color(0, 0, 0, 1)
+
+[node name="FlashRect" type="ColorRect" parent="." unique_id=1671343159]
+visible = false
+offset_right = 1180.0
+offset_bottom = 661.0
+
+[node name="ContentContainer" type="Control" parent="." unique_id=973186257]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PictureRect" type="TextureRect" parent="ContentContainer" unique_id=564079876]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 646.0
+
+[node name="TextLabel" type="RichTextLabel" parent="ContentContainer" unique_id=1898010787]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 507.0
+offset_right = 1093.0
+offset_bottom = 609.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="." unique_id=480919809]
+wait_time = 3.0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvg81mdiuqdub"
-path="res://.godot/imported/autumn water sparkles B 16x16.png-41093835968ac58610f081e0c805e05d.ctex"
+uid="uid://dqboebg778tdr"
+path="res://.godot/imported/light.png-4e9937869ed453c35a9f255549e08fa4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/graphics/tilesets/autumn water sparkles B 16x16.png"
-dest_files=["res://.godot/imported/autumn water sparkles B 16x16.png-41093835968ac58610f081e0c805e05d.ctex"]
+source_file="res://assets/graphics/objects/light.png"
+dest_files=["res://.godot/imported/light.png-4e9937869ed453c35a9f255549e08fa4.ctex"]
 
 [params]
 

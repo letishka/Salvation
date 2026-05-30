@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b8crhwvgi8tut"]
 
-[ext_resource type="Script" uid="uid://25xv5ojmsmxs" path="res://scripts/objects/ice_platform.gd" id="1_lpujd"]
+[ext_resource type="Script" path="res://scripts/objects/ice_platform.gd" id="1_lpujd"]
 [ext_resource type="Texture2D" uid="uid://cyt0seo6hxoxd" path="res://assets/graphics/objects/ice_platform.png" id="2_5kodg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fn6ej"]
