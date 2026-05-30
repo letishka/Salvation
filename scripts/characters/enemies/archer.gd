@@ -26,7 +26,6 @@ var _facing_sign: int = 1
 @onready var detection_area: Area2D = $DetectionArea
 @onready var progress_bar: ProgressBar = $ProgressBar
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var root: CharacterBody2D = $"."
 @onready var attack_cooldown_timer: Timer = $AttackCooldown
 @onready var arrow_spawn: Marker2D = $ArrowSpawn if has_node("ArrowSpawn") else null
 
@@ -163,8 +162,16 @@ func _start_attack():
 		attack_sound_player.play()
 
 	await get_tree().create_timer(delay).timeout
-
-	# ВАЖНО: определяем точку появления стрелы
+	
+	if not is_instance_valid(player):
+		var fallback_dir = to_player.normalized()
+		_shoot_arrow(fallback_dir, anim, spawn_offset)
+		attack_cooldown_timer.start()
+		await attack_cooldown_timer.timeout
+		can_attack = true
+		_set_state(State.WALK if player_detected else State.IDLE)
+		return
+	
 	var base_pos = arrow_spawn.global_position if arrow_spawn else global_position
 	var spawn_pos = base_pos + spawn_offset
 
@@ -204,8 +211,8 @@ func _on_died():
 	$HurtBoxComponent.monitoring = false
 	var death_length = animated_sprite.sprite_frames.get_frame_count("death") / animated_sprite.sprite_frames.get_animation_speed("death")
 	await get_tree().create_timer(death_length).timeout
-	root.set_collision_layer_value(16, false)
-	root.set_collision_mask_value(16, false)
+	set_collision_layer_value(16, false)
+	set_collision_mask_value(16, false)
 
 func _get_player() -> Node2D:
 	return get_tree().get_first_node_in_group("player") as Node2D
