@@ -1,28 +1,31 @@
 extends StaticBody2D
 class_name Gate
 
-signal opened
+signal portal_activated
 
 @export var required_torches: int = 3
 var lit_torches: int = 0
 
-@onready var closed_sprite = $ClosedSprite
-@onready var open_sprite = $OpenSprite
-@onready var anim_player = $AnimationPlayer
+@onready var closed_sprite = $Sprite2D
+@onready var portal_texture = $TextureRect
 
 func register_lit_torch():
 	lit_torches += 1
 	print("Gate: torch placed, ", lit_torches, "/", required_torches)
 	if lit_torches >= required_torches:
-		open()
+		activate_portal()
 
-func open():
-	print("Gate opening!")
-	if closed_sprite:
-		closed_sprite.visible = false
-	if open_sprite:
-		open_sprite.visible = true
-	if anim_player and anim_player.has_animation("open"):
-		anim_player.play("open")
-	$CollisionShape2D.disabled = true
-	opened.emit()
+func activate_portal():
+	print("Portal activated on gate!")
+	
+	if portal_texture:
+		portal_texture.visible = true
+		
+		portal_texture.modulate.a = 0.0
+		var tween = create_tween()
+		tween.tween_property(portal_texture, "modulate:a", 1.0, 0.5)
+
+	if has_node("AudioStreamPlayer2D"):
+		$AudioStreamPlayer2D.play()
+	
+	portal_activated.emit()

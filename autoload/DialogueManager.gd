@@ -40,17 +40,23 @@ func get_dialogue_lines(key: String) -> Array:
 	return []
 
 func start_dialogue(key: String):
-	if _is_active:
-		print("DialogueManager: Диалог уже активен, сначала закройте его.")
-		return
-	if not _dialogues.has(key):
-		print("DialogueManager: Диалог с ключом '", key, "' не найден.")
-		return
+	if _is_active: return
+	if not _dialogues.has(key): return
 	
 	_current_key = key
 	_current_line_index = 0
 	_is_active = true
+	get_tree().paused = true  # ← пауза игры
 	_show_current_line()
+
+func close_dialogue():
+	if not _is_active: return
+	_is_active = false
+	_current_key = ""
+	_current_line_index = 0
+	GameManager.hide_dialogue.emit()
+	get_tree().paused = false  # ← снятие паузы
+	dialogue_finished.emit()
 
 func _show_current_line():
 	var lines = _dialogues[_current_key]
@@ -67,15 +73,6 @@ func next_line():
 		return
 	_current_line_index += 1
 	_show_current_line()
-
-func close_dialogue():
-	if not _is_active:
-		return
-	_is_active = false
-	_current_key = ""
-	_current_line_index = 0
-	GameManager.hide_dialogue.emit()
-	dialogue_finished.emit()
 
 func is_active() -> bool:
 	return _is_active

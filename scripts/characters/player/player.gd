@@ -162,6 +162,9 @@ func reset_health():
 
 # --------- ФАКЕЛ (ИНВЕНТАРЬ + СВЕТ) ----------
 func pickup_torch():
+	if has_torch:
+		GameManager.show_hint.emit("У тебя уже есть факел!", 2.0)
+		return
 	has_torch = true
 	torch_lit = false
 	if torch_light:
@@ -170,19 +173,29 @@ func pickup_torch():
 	GameManager.show_hint.emit("Факел подобран. Подойди к костру, чтобы зажечь.", 3.0)
 
 func light_torch():
-	if has_torch and not torch_lit:
-		torch_lit = true
-		if torch_light:
-			torch_light.enabled = true
-		GameManager.update_inventory(has_torch, torch_lit)
-		GameManager.show_hint.emit("Факел зажжён! Неси к пустой подставке.", 2.0)
+	if not has_torch:
+		GameManager.show_hint.emit("У тебя нет факела!", 2.0)
+		return
+	if torch_lit:
+		GameManager.show_hint.emit("Факел уже зажжён!", 2.0)
+		return
+	torch_lit = true
+	if torch_light:
+		torch_light.enabled = true
+	GameManager.update_inventory(has_torch, torch_lit)
+	GameManager.show_hint.emit("Факел зажжён! Неси к пустой подставке.", 2.0)
 
 func place_torch() -> bool:
-	if has_torch and torch_lit:
-		has_torch = false
-		torch_lit = false
-		if torch_light:
-			torch_light.enabled = false
-		GameManager.update_inventory(has_torch, torch_lit)
-		return true
-	return false
+	if not has_torch:
+		GameManager.show_hint.emit("У тебя нет факела!", 2.0)
+		return false
+	if not torch_lit:
+		GameManager.show_hint.emit("Факел не зажжён! Подойди к костру.", 2.0)
+		return false
+	has_torch = false
+	torch_lit = false
+	if torch_light:
+		torch_light.enabled = false
+	GameManager.update_inventory(has_torch, torch_lit)
+	GameManager.show_hint.emit("Факел установлен в подставку!", 2.0)
+	return true

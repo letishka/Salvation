@@ -132,19 +132,28 @@ func _on_exit_zone_entered(body):
 		transition_to_scene("res://scenes/levels/water_level_2.tscn")
 
 func transition_to_scene(target: String):
-	# Чёрный экран
 	var black = ColorRect.new()
 	black.color = Color.BLACK
 	black.size = get_viewport().get_visible_rect().size
+	black.position = Vector2.ZERO  # ← важно!
 	black.z_index = 100
 	add_child(black)
 	
 	var tween = create_tween()
 	tween.tween_property(black, "modulate:a", 1.0, 0.5)
 	await tween.finished
-	
 	get_tree().change_scene_to_file(target)
 
 func _on_player_died():
 	var end_screen = end_screen_scene.instantiate()
 	add_child(end_screen)
+
+# ==================== ПАУЗА ====================
+
+var pause_menu_scene = preload("res://scenes/ui/PauseMenu.tscn")
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause") and not get_tree().paused:
+		var menu = pause_menu_scene.instantiate()
+		add_child(menu)
+		get_tree().paused = true

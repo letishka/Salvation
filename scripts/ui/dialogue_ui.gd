@@ -10,6 +10,7 @@ var is_typing = false
 var typing_timer: Timer
 
 func _ready():
+	process_mode = PROCESS_MODE_ALWAYS
 	print("GameManager = ", GameManager)
 	print("DialogueManager = ", DialogueManager)
 	panel.hide()

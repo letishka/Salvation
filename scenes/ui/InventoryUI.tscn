@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dr3nh34gl40rb" path="res://scripts/ui/inventoty_ui.gd" id="1_jywan"]
 [ext_resource type="Texture2D" uid="uid://cr60nfxjlh44k" path="res://assets/graphics/objects/lit_torch.png" id="1_p0ay3"]
+[ext_resource type="Texture2D" uid="uid://jlieu4e3yuy1" path="res://assets/graphics/objects/torch.png" id="3_1r87s"]
+[ext_resource type="Texture2D" uid="uid://dqboebg778tdr" path="res://assets/graphics/objects/light.png" id="4_xbxri"]
 
 [node name="InventoryUi" type="CanvasLayer" unique_id=208670129]
 script = ExtResource("1_jywan")
@@ -18,7 +20,8 @@ layout_mode = 0
 offset_right = 62.0
 offset_bottom = 54.0
 
-[node name="ItemIcon" type="TextureRect" parent="Panel/Slot" unique_id=1246931736]
+[node name="WithFire" type="TextureRect" parent="Panel/Slot" unique_id=1246931736]
+visible = false
 layout_mode = 0
 offset_left = -10.0
 offset_top = -4.0
@@ -26,3 +29,22 @@ offset_right = 73.0
 offset_bottom = 59.0
 texture = ExtResource("1_p0ay3")
 expand_mode = 1
+
+[node name="WithoutFire" type="TextureRect" parent="Panel/Slot" unique_id=1955822365]
+layout_mode = 0
+offset_left = -10.0
+offset_top = -4.0
+offset_right = 73.0
+offset_bottom = 59.0
+texture = ExtResource("3_1r87s")
+expand_mode = 1
+
+[node name="TorchLight" type="PointLight2D" parent="Panel/Slot" unique_id=72681452]
+position = Vector2(31.1875, 27.125061)
+scale = Vector2(3.1441355, 2.7423468)
+enabled = false
+color = Color(0.8352941, 0.6, 0.47058824, 1)
+range_z_min = -100
+range_z_max = 100
+texture = ExtResource("4_xbxri")
+texture_scale = 0.01

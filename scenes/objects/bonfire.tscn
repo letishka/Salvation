@@ -31,8 +31,8 @@ position = Vector2(0, 3.75)
 shape = SubResource("RectangleShape2D_ehkru")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1352326]
-position = Vector2(-5.9604645e-08, 0)
-scale = Vector2(6.809948, 5.9489784)
+position = Vector2(0, -0.80000114)
+scale = Vector2(10.282524, 8.729591)
 color = Color(0.93333334, 0.73333335, 0.6745098, 1)
 range_z_min = -100
 range_z_max = 100

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bsj6js40b5yr7"]
 
 [ext_resource type="Script" uid="uid://bgoin465mjvqn" path="res://scripts/objects/gate.gd" id="1_33swo"]
+[ext_resource type="Texture2D" uid="uid://d3haqqmwm5nbk" path="res://assets/graphics/sky/1.png" id="2_qkig8"]
 [ext_resource type="Texture2D" uid="uid://p5dpxm7o7uhb" path="res://assets/graphics/objects/JapanProps-02.png" id="2_sb1ok"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qkig8"]
@@ -13,11 +14,15 @@ script = ExtResource("1_33swo")
 position = Vector2(-0.5, 34)
 shape = SubResource("RectangleShape2D_qkig8")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1839597842]
-scale = Vector2(2, 2)
-texture = ExtResource("2_sb1ok")
+[node name="TextureRect" type="TextureRect" parent="." unique_id=745063742]
+offset_left = -58.0
+offset_top = -22.0
+offset_right = 59.0
+offset_bottom = 93.0
+texture = ExtResource("2_qkig8")
+expand_mode = 1
 
-[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=25081702]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1839597842]
 scale = Vector2(2, 2)
 texture = ExtResource("2_sb1ok")
 

@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://cvtrl07kvmn1l" path="res://scripts/ui/hint_system.gd" id="15_66gb6"]
 [ext_resource type="PackedScene" uid="uid://bu2x6sdqg7mw6" path="res://scenes/ui/MemoryUI.tscn" id="17_66gb6"]
 [ext_resource type="Script" uid="uid://cgfeh84wyyt7k" path="res://scripts/ui/segment_title.gd" id="17_wwge0"]
+[ext_resource type="PackedScene" uid="uid://bpxfwnl8nd08t" path="res://scenes/ui/PauseMenu.tscn" id="18_dafcy"]
 [ext_resource type="Texture2D" uid="uid://dyj7767pdc242" path="res://assets/graphics/memories/eyes.jpg" id="18_wwge0"]
 
 [sub_resource type="GDScript" id="GDScript_66gb6"]
@@ -246,8 +247,13 @@ shape = SubResource("CircleShape2D_66gb6")
 script = ExtResource("15_66gb6")
 
 [node name="Label" type="Label" parent="HintSystem" unique_id=388481962]
-offset_right = 40.0
-offset_bottom = 13.0
+anchors_preset = -1
+anchor_top = -0.0015432099
+anchor_right = 0.13802083
+offset_left = 11.0
+offset_top = 41.0
+offset_right = 51.0
+offset_bottom = 54.0
 metadata/_edit_use_anchors_ = true
 
 [node name="DialogueUi" parent="." unique_id=1432111096 instance=ExtResource("15_53cdh")]
@@ -256,16 +262,24 @@ metadata/_edit_use_anchors_ = true
 script = ExtResource("17_wwge0")
 
 [node name="Label" type="Label" parent="SegmentTitle" unique_id=39563392]
-offset_right = 40.0
-offset_bottom = 13.0
+anchors_preset = -1
+anchor_left = -0.036458332
+anchor_right = 0.075520836
+offset_left = 1009.0
+offset_top = 16.0
+offset_right = 1049.0
+offset_bottom = 29.0
 metadata/_edit_use_anchors_ = true
 
 [node name="MemoryShard" parent="." unique_id=1656148041 instance=ExtResource("14_53cdh")]
 position = Vector2(1326, 330)
 memory_text = "Лицо воина. Он смотрит прямо на тебя. Во взгляде нет ненависти, только вопрос: \"За что?\" "
 memory_image = ExtResource("18_wwge0")
+dialogue_key = "memory_old_man"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=719813027]
 color = Color(0.5744047, 0.51765215, 0.96510047, 1)
 
 [node name="MemoryUi" parent="." unique_id=1708988976 instance=ExtResource("17_66gb6")]
+
+[node name="PauseMenu" parent="." unique_id=2114518181 instance=ExtResource("18_dafcy")]

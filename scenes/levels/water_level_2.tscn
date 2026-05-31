@@ -19,6 +19,8 @@
 [ext_resource type="PackedScene" uid="uid://bsj6js40b5yr7" path="res://scenes/objects/gate.tscn" id="17_vyuh1"]
 [ext_resource type="Texture2D" uid="uid://dyj7767pdc242" path="res://assets/graphics/memories/eyes.jpg" id="18_vb40y"]
 [ext_resource type="PackedScene" uid="uid://v7g51cursc0m" path="res://scenes/objects/torch_holder.tscn" id="18_wub3r"]
+[ext_resource type="PackedScene" uid="uid://3d5ipwn05vus" path="res://scenes/ui/InventoryUI.tscn" id="20_acobx"]
+[ext_resource type="PackedScene" uid="uid://bpxfwnl8nd08t" path="res://scenes/ui/PauseMenu.tscn" id="21_vyuh1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_53cdh"]
 texture = ExtResource("2_54wbh")
@@ -117,12 +119,6 @@ script = ExtResource("8_405k0")
 
 [node name="Ui" parent="." unique_id=440906617 instance=ExtResource("9_dgabv")]
 
-[node name="ShadowSoldier1" parent="." unique_id=1970334870 instance=ExtResource("10_0gqtm")]
-position = Vector2(1335, 172)
-
-[node name="ShadowSoldier2" parent="." unique_id=1886436151 instance=ExtResource("10_0gqtm")]
-position = Vector2(1335, 172)
-
 [node name="BackgroundMusic" parent="." unique_id=489571506 instance=ExtResource("11_icaek")]
 stream = ExtResource("12_un811")
 volume_db = -13.0
@@ -143,14 +139,6 @@ shape = SubResource("CircleShape2D_3f1xv")
 position = Vector2(859, -80)
 shape = SubResource("CircleShape2D_66gb6")
 
-[node name="HintSystem" type="CanvasLayer" parent="." unique_id=211303410]
-script = ExtResource("14_ekucx")
-
-[node name="Label" type="Label" parent="HintSystem" unique_id=388481962]
-offset_right = 40.0
-offset_bottom = 13.0
-metadata/_edit_use_anchors_ = true
-
 [node name="DialogueUi" parent="." unique_id=1432111096 instance=ExtResource("15_ta505")]
 
 [node name="SegmentTitle" type="CanvasLayer" parent="." unique_id=496223211]
@@ -162,7 +150,12 @@ offset_bottom = 13.0
 metadata/_edit_use_anchors_ = true
 
 [node name="MemoryAfterBattle" parent="." unique_id=1656148041 instance=ExtResource("17_ohitc")]
-position = Vector2(1326, 330)
+position = Vector2(635, 145)
+memory_text = "Лицо воина. Он смотрит прямо на тебя. Во взгляде нет ненависти, только вопрос: \"За что?\" "
+memory_image = ExtResource("18_vb40y")
+
+[node name="MemoryFlashback" parent="." unique_id=96640115 instance=ExtResource("17_ohitc")]
+position = Vector2(919, 222)
 memory_text = "Лицо воина. Он смотрит прямо на тебя. Во взгляде нет ненависти, только вопрос: \"За что?\" "
 memory_image = ExtResource("18_vb40y")
 
@@ -172,31 +165,55 @@ color = Color(0.5744047, 0.51765215, 0.96510047, 1)
 [node name="MemoryUi" parent="." unique_id=1708988976 instance=ExtResource("15_acobx")]
 
 [node name="Bonfire" parent="." unique_id=1539607131 instance=ExtResource("6_l32b0")]
-position = Vector2(547, 209)
+position = Vector2(334.00006, 277)
 
 [node name="Gate" parent="." unique_id=1739702693 instance=ExtResource("17_vyuh1")]
 position = Vector2(859, -121)
 
 [node name="TorchHolder1" parent="." unique_id=119021336 instance=ExtResource("18_wub3r")]
-position = Vector2(968, -17)
+position = Vector2(955, -20)
 target_node_path = NodePath("../Gate")
 
 [node name="TorchHolder2" parent="." unique_id=2010945731 instance=ExtResource("18_wub3r")]
-position = Vector2(1017, 10)
+position = Vector2(1050, 36)
+target_node_path = NodePath("../Gate")
 
 [node name="TorchHolder3" parent="." unique_id=184448800 instance=ExtResource("18_wub3r")]
-position = Vector2(733, -19)
+position = Vector2(757, -21)
 target_node_path = NodePath("../Gate")
 
 [node name="TorchHolder4" parent="." unique_id=1333519262 instance=ExtResource("18_wub3r")]
-position = Vector2(687, 13)
+position = Vector2(667, 32)
 target_node_path = NodePath("../Gate")
 
 [node name="TorchPickup1" parent="." unique_id=439908847 instance=ExtResource("5_wub3r")]
 position = Vector2(468, 226)
 
 [node name="TorchPickup2" parent="." unique_id=1201080785 instance=ExtResource("5_wub3r")]
-position = Vector2(839, 480)
+position = Vector2(604, 396)
 
 [node name="TorchPickup3" parent="." unique_id=1701704862 instance=ExtResource("5_wub3r")]
 position = Vector2(298, 134)
+
+[node name="InventoryUi" parent="." unique_id=208670129 instance=ExtResource("20_acobx")]
+
+[node name="ShadowSoldier1" parent="." unique_id=1886436151 instance=ExtResource("10_0gqtm")]
+position = Vector2(1335, 172)
+
+[node name="ShadowSoldier2" parent="." unique_id=761181149 instance=ExtResource("10_0gqtm")]
+position = Vector2(403, -70)
+
+[node name="HintSystem" type="CanvasLayer" parent="." unique_id=1572378946]
+script = ExtResource("14_ekucx")
+
+[node name="Label" type="Label" parent="HintSystem" unique_id=1949138094]
+anchors_preset = -1
+anchor_top = -0.0015432099
+anchor_right = 0.13802083
+offset_left = 11.0
+offset_top = 41.0
+offset_right = 51.0
+offset_bottom = 54.0
+metadata/_edit_use_anchors_ = true
+
+[node name="PauseMenu" parent="." unique_id=2114518181 instance=ExtResource("21_vyuh1")]
