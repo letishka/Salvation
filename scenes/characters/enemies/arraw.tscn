@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://su6t4on8054"]
+
+[ext_resource type="Script" uid="uid://bue2c3sxnotpi" path="res://scripts/characters/enemies/arraw.gd" id="1_un0ep"]
+[ext_resource type="Texture2D" uid="uid://b3vpfax0xdsjf" path="res://assets/graphics/characters/enimies/Archer/arraw.png" id="2_wlbi2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h1f52"]
+size = Vector2(23, 2)
+
+[node name="Arraw" type="Area2D" unique_id=482826100]
+scale = Vector2(2, 2)
+collision_layer = 32
+collision_mask = 65
+script = ExtResource("1_un0ep")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=31715350]
+shape = SubResource("RectangleShape2D_h1f52")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=868490350]
+scale = Vector2(1.4, 1.4)
+texture = ExtResource("2_wlbi2")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1011831402]
+position = Vector2(-8, 0)
+rect = Rect2(-10, -10, 36, 20)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

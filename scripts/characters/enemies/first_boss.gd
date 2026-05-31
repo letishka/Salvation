@@ -5,18 +5,17 @@ enum State { IDLE, WALK, ATTACK, HIT, DEATH }
 @export var max_health: float = 150.0
 @export var max_speed: float = 50.0
 @export var attack_damage: float = 14.0
-@export var attack_duration: float = 0.1     # длительность активной зоны
+@export var attack_duration: float = 0.1
 @export var attack_cooldown: float = 0.9
 @export var flip_offset_x: float = -5.0
 @export var collision_offset_x: float = -30.0
-@export var hit_delay: float = 0.1           # задержка до удара внутри анимации
-@export var combo_pause: float = 0.01   # пауза между ударами в серии
+@export var hit_delay: float = 0.1
+@export var combo_pause: float = 0.01
+@export var attack_abort_delay: float = 0.3   # >>> задержка перед отменой атаки
 
-# ==== ЗВУКИ ====
-@export var attack_swoosh_sound: AudioStream        # звук взмаха меча
-@export var footstep_sounds: Dictionary[String, AudioStream] = {}        # ключ: группа поверхности, значение: AudioStream
-@export var footstep_interval: float = 0.4          # интервал между звуками шагов
-# ===============
+@export var attack_swoosh_sound: AudioStream
+@export var footstep_sounds: Dictionary[String, AudioStream] = {}
+@export var footstep_interval: float = 0.4
 
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var detection_area: Area2D = $DetectionArea
@@ -27,30 +26,31 @@ enum State { IDLE, WALK, ATTACK, HIT, DEATH }
 @onready var attack_cooldown_timer: Timer = $AttackCooldown
 @onready var attack_trigger: Area2D = $AttackTrigger
 
-# Звуковые узлы (добавьте их в сцену как дочерние или создадутся автоматически)
+
 @onready var footstep_player: AudioStreamPlayer2D = $FootstepPlayer
 @onready var attack_sound_player: AudioStreamPlayer2D = $AttackSoundPlayer
-@onready var ground_check_ray: RayCast2D = $GroundCheckRay  # луч вниз для определения поверхности
+@onready var ground_check_ray: RayCast2D = $GroundCheckRay
 
-@export var shadow_soldier_scene: PackedScene        # сцена солдата
-@export var spawn_distance_multiplier: float = 0.5   # множитель половины расстояния до игрока (0.5 даст квадратный ромб)
+@export var shadow_soldier_scene: PackedScene
+@export var spawn_distance_multiplier: float = 0.5
 
 var attack_counter: int = 0
 var player_detected: bool = false
 var current_state: State = State.IDLE
 var can_attack: bool = true
 var player_in_attack_zone: bool = false
-var is_attacking: bool = false   # флаг, что атака прямо сейчас выполняется
 
 var _attack_collision_base_pos: Vector2
-var _footstep_timer: float = 0.0   # таймер для отсчёта интервала шагов
+var _footstep_timer: float = 0.0
+var _abort_delay_timer: float = 0.0       # >>> таймер задержки
+var _abort_requested: bool = false        # >>> флаг запроса прерывания
+var _attack_sound_aborted: bool = false   # >>> блокировка будущих звуков
 
 func _ready():
 	health_component.died.connect(_on_died)
 	health_component.health_changed.connect(_on_health_changed)
 	_update_health_bar()
 
-	# Зона всегда включена, но безобидна (слой 0)
 	attack_area.monitoring = true
 	attack_area.collision_layer = 0
 	attack_area.damage = 0
@@ -61,7 +61,6 @@ func _ready():
 	if attack_collision:
 		_attack_collision_base_pos = attack_collision.position
 
-	# Если аудио-узлы не назначены в сцене, создаём их программно
 	if not footstep_player:
 		footstep_player = AudioStreamPlayer2D.new()
 		add_child(footstep_player)
@@ -70,7 +69,7 @@ func _ready():
 		add_child(attack_sound_player)
 	if not ground_check_ray:
 		ground_check_ray = RayCast2D.new()
-		ground_check_ray.target_position = Vector2(0, 10)  # луч на 10 пикселей вниз
+		ground_check_ray.target_position = Vector2(0, 10)
 		ground_check_ray.enabled = true
 		add_child(ground_check_ray)
 
@@ -84,7 +83,6 @@ func _apply_flip(is_left: bool):
 			attack_collision.position.x = _attack_collision_base_pos.x
 
 func _physics_process(delta):
-	# Обновление таймера шагов и воспроизведение при WALK
 	if current_state == State.WALK:
 		_footstep_timer += delta
 		if _footstep_timer >= footstep_interval:
@@ -96,9 +94,23 @@ func _physics_process(delta):
 	match current_state:
 		State.IDLE, State.WALK:
 			_handle_movement()
-		State.ATTACK, State.HIT, State.DEATH:
+		State.ATTACK:
 			velocity = Vector2.ZERO
 			move_and_slide()
+			# >>> Логика задержки прерывания
+			if not player_in_attack_zone:
+				_abort_delay_timer += delta
+				if _abort_delay_timer >= attack_abort_delay:
+					_abort_requested = true
+			else:
+				_abort_delay_timer = 0.0
+				_abort_requested = false
+		State.HIT, State.DEATH:
+			velocity = Vector2.ZERO
+			move_and_slide()
+			# >>> сброс таймера задержки вне атаки
+			_abort_delay_timer = 0.0
+			_abort_requested = false
 
 func _handle_movement():
 	if not player_detected:
@@ -107,70 +119,118 @@ func _handle_movement():
 	var player = _get_player()
 	if not player:
 		return
-	var distance = global_position.distance_to(player.global_position)
 	if player_in_attack_zone and can_attack:
 		_start_attack()
 	else:
 		var direction = (player.global_position - global_position).normalized()
 		velocity = direction * max_speed
-		_set_state(State.WALK)   # теперь _update_walk_animation() вызовет _apply_flip при необходимости
+		_set_state(State.WALK)
 	move_and_slide()
+
+func _abort_attack():
+	if current_state != State.ATTACK:
+		return
+
+	# >>> Останавливаем звук и запрещаем будущие
+	_attack_sound_aborted = true
+	if attack_sound_player and attack_sound_player.playing:
+		attack_sound_player.stop()
+
+	if attack_cooldown_timer:
+		attack_cooldown_timer.stop()
+
+	attack_area.monitoring = false
+	attack_area.collision_layer = 0
+	attack_area.damage = 0
+	attack_area.monitoring = true
+
+	can_attack = true
+	_abort_delay_timer = 0.0
+	_abort_requested = false
+
+	if player_detected:
+		_set_state(State.WALK)
+	else:
+		_set_state(State.IDLE)
 
 func _start_attack():
 	_set_state(State.ATTACK)
 	can_attack = false
+	_abort_delay_timer = 0.0      # >>> сброс при старте
+	_abort_requested = false
+	_attack_sound_aborted = false # >>> разрешаем звуки
+
 	var player = _get_player()
-	
 	if player:
 		_apply_flip((player.global_position.x - global_position.x) < 0)
-	
+
 	animated_sprite.play("attack")
-	
-	# Звук взмаха (можно оставить как есть или тоже привязать к ударам)
+
+	# Планируем три звука с проверкой флага
 	if attack_swoosh_sound and attack_sound_player:
 		attack_sound_player.stream = attack_swoosh_sound
 		attack_sound_player.play()
-		var timer2 = get_tree().create_timer(0.3)
-		timer2.timeout.connect(func():
+		var t1 = get_tree().create_timer(0.3)
+		t1.timeout.connect(func():
+			if _attack_sound_aborted: return
 			attack_sound_player.stream = attack_swoosh_sound
 			attack_sound_player.play()
-			var timer3 = get_tree().create_timer(0.3)
-			timer3.timeout.connect(func():
+			var t2 = get_tree().create_timer(0.3)
+			t2.timeout.connect(func():
+				if _attack_sound_aborted: return
 				attack_sound_player.stream = attack_swoosh_sound
 				attack_sound_player.play()
 			)
 		)
-	
-	# Задержка перед первым ударом
+
 	await get_tree().create_timer(hit_delay).timeout
-	
-	# Серия из трёх ударов
+	if current_state != State.ATTACK or _abort_requested:   # >>> изменено
+		_abort_attack()
+		return
+
 	for i in range(3):
+		if current_state != State.ATTACK or _abort_requested:   # >>> изменено
+			_abort_attack()
+			return
+
 		attack_area.monitoring = false
 		attack_area.damage = attack_damage
 		attack_area.collision_layer = 8
 		attack_area.monitoring = true
-		
+
 		await get_tree().create_timer(attack_duration).timeout
-		
+		if current_state != State.ATTACK or _abort_requested:   # >>> изменено
+			_abort_attack()
+			return
+
 		attack_area.monitoring = false
 		attack_area.collision_layer = 0
 		attack_area.damage = 0
 		attack_area.monitoring = true
-		
+
 		if i < 2:
 			await get_tree().create_timer(combo_pause).timeout
-	
-	# Кулдаун всей атаки
+			if current_state != State.ATTACK or _abort_requested:   # >>> изменено
+				_abort_attack()
+				return
+
+	if _abort_requested:          # >>> изменено
+		_abort_attack()
+		return
+
 	attack_cooldown_timer.start()
 	await attack_cooldown_timer.timeout
+	if current_state != State.ATTACK or _abort_requested:   # >>> изменено
+		_abort_attack()
+		return
+
 	can_attack = true
-	
+
 	attack_counter += 1
 	if attack_counter >= 5 and shadow_soldier_scene:
 		_spawn_shadow_soldiers()
 		attack_counter = 0
-	
+
 	if player_detected: _set_state(State.WALK)
 	else: _set_state(State.IDLE)
 
@@ -178,6 +238,13 @@ func _on_health_changed():
 	_update_health_bar()
 	if current_state == State.DEATH:
 		return
+
+	attack_area.monitoring = false
+	attack_area.collision_layer = 0
+	attack_area.damage = 0
+	attack_cooldown_timer.stop()
+	can_attack = true
+
 	_set_state(State.HIT)
 	var player = _get_player()
 	if player:
@@ -196,9 +263,13 @@ func _on_died():
 	_set_state(State.DEATH)
 	set_collision_layer_value(1, false)
 	set_collision_mask_value(1, false)
+	progress_bar.visible = false
 	animated_sprite.play("death")
+	$HurtBoxComponent.monitoring = false
 	var death_length = animated_sprite.sprite_frames.get_frame_count("death") / animated_sprite.sprite_frames.get_animation_speed("death")
 	await get_tree().create_timer(death_length).timeout
+	set_collision_layer_value(16, false)
+	set_collision_mask_value(16, false)
 
 func _get_player() -> Node2D:
 	return get_tree().get_first_node_in_group("player") as Node2D
@@ -217,24 +288,22 @@ func _update_walk_animation():
 	var dir = Vector2.ZERO
 	if velocity.length_squared() > 0.1:
 		dir = velocity.normalized()
-	
+
 	if dir == Vector2.ZERO:
-		# Если скорость нулевая, ставим обычный walk без флипа (на всякий случай)
 		animated_sprite.play("walk")
 		_apply_flip(false)
 		return
-	
+
 	var angle = dir.angle()
-	# Пороговый угол ±45° от вертикали
-	if abs(angle - PI/2) < PI/4:      # движение вниз
+	if abs(angle - PI/2) < PI/4:
 		animated_sprite.play("walk_down")
-		_apply_flip(false)            # вертикальные анимации не флипаем
-	elif abs(angle + PI/2) < PI/4:    # движение вверх
+		_apply_flip(false)
+	elif abs(angle + PI/2) < PI/4:
 		animated_sprite.play("walk_up")
 		_apply_flip(false)
-	else:                             # горизонтальное движение
+	else:
 		animated_sprite.play("walk")
-		_apply_flip(dir.x < 0)        # флип по горизонтали
+		_apply_flip(dir.x < 0)
 
 func _update_health_bar():
 	progress_bar.value = health_component.get_health_value()
@@ -249,7 +318,6 @@ func _play_footstep_sound():
 			if collider.is_in_group(group):
 				surface_group = group
 				break
-	# Получаем звук для группы или для default
 	var sound = footstep_sounds.get(surface_group, null)
 	if not sound:
 		sound = footstep_sounds.get("default", null)
@@ -275,27 +343,19 @@ func _on_attack_trigger_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player_in_attack_zone = false
 
-
 func _spawn_shadow_soldiers():
 	var player = _get_player()
 	if not player:
 		return
-	
-	# Центр ромба – середина между боссом и игроком
+
 	var center = (global_position + player.global_position) * 0.5
-	
-	# Вектор от босса к игроку и его перпендикуляр
 	var to_player = player.global_position - global_position
 	var dist = to_player.length()
 	var perpendicular = to_player.orthogonal().normalized()
-	
-	# Расстояние от центра до солдата (половина расстояния до игрока, чтобы диагонали были равны)
 	var spawn_offset = perpendicular * (dist * spawn_distance_multiplier)
-	
-	# Создаём двух солдат и добавляем на сцену
-	var parent_node = get_parent()   # или owner, или get_tree().current_scene
+
+	var parent_node = get_parent()
 	for i in [-1, 1]:
 		var soldier = shadow_soldier_scene.instantiate()
 		soldier.global_position = center + spawn_offset * i
-		# Если нужно, задайте начальное направление взгляда (например, на игрока)
 		parent_node.add_child(soldier)

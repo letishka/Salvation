@@ -9,7 +9,7 @@ enum State { IDLE, WALK, ATTACK, HIT, DEATH }
 @export var attack_cooldown: float = 0.6
 @export var flip_offset_x: float = -32.0
 @export var collision_offset_x: float = -32.0
-@export var hit_delay: float = 0.3           # задержка до удара внутри анимации
+@export var hit_delay: float = 0.3          # задержка до удара внутри анимации
 
 # ==== ЗВУКИ ====
 @export var attack_swoosh_sound: AudioStream                # звук взмаха меча
@@ -21,6 +21,7 @@ enum State { IDLE, WALK, ATTACK, HIT, DEATH }
 @onready var detection_area: Area2D = $DetectionArea
 @onready var progress_bar: ProgressBar = $ProgressBar
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var root: CharacterBody2D = $"."
 @onready var attack_area: HitBoxComponent = $EnemyHitBox
 @onready var attack_collision: CollisionShape2D = $EnemyHitBox/CollisionShape2D
 @onready var attack_cooldown_timer: Timer = $AttackCooldown
@@ -173,7 +174,8 @@ func _on_died():
 	$HurtBoxComponent.monitoring = false
 	var death_length = animated_sprite.sprite_frames.get_frame_count("death") / animated_sprite.sprite_frames.get_animation_speed("death")
 	await get_tree().create_timer(death_length).timeout
-	queue_free()
+	root.set_collision_layer_value(16, false)
+	root.set_collision_mask_value(16, false)
 
 func _get_player() -> Node2D:
 	return get_tree().get_first_node_in_group("player") as Node2D

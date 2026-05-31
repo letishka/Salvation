@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://qms6uspymqty"]
+
+[ext_resource type="Script" uid="uid://dvbkawu1wykoj" path="res://scripts/characters/enemies/ball.gd" id="1_3ngwf"]
+[ext_resource type="Texture2D" uid="uid://dqim8qahmyegm" path="res://assets/graphics/characters/enimies/water_soul.png" id="2_3ngwf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nmfd5"]
+radius = 4.0
+height = 21.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xysps"]
+atlas = ExtResource("2_3ngwf")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ngwf"]
+atlas = ExtResource("2_3ngwf")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nmfd5"]
+atlas = ExtResource("2_3ngwf")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vekub"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xysps")
+}],
+"loop": true,
+"name": &"flight",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ngwf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nmfd5")
+}],
+"loop": false,
+"name": &"impact",
+"speed": 5.0
+}]
+
+[node name="Ball" type="Area2D" unique_id=482826100]
+scale = Vector2(2, 2)
+collision_layer = 32
+collision_mask = 193
+script = ExtResource("1_3ngwf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=31715350]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_nmfd5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2100382397]
+sprite_frames = SubResource("SpriteFrames_vekub")
+animation = &"impact"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1011831402]
+position = Vector2(-1.5, -1.5)
+rect = Rect2(-10, -10, 23, 21)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

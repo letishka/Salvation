@@ -89,15 +89,6 @@ theme_override_font_sizes/font_size = 36
 text = "Quit to Menu"
 icon_alignment = 1
 
-[node name="SaveButton" parent="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer" unique_id=808805161 instance=ExtResource("4_csaq8")]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 36
-text = "Save"
-icon_alignment = 1
-
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/QuitMenuButton" to="." method="_on_quit_button_pressed"]
-[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
