@@ -17,10 +17,10 @@
 [ext_resource type="Script" uid="uid://cgfeh84wyyt7k" path="res://scripts/ui/segment_title.gd" id="16_s18ep"]
 [ext_resource type="PackedScene" uid="uid://d0b1tkcjo86ho" path="res://scenes/objects/memory_shard.tscn" id="17_ohitc"]
 [ext_resource type="PackedScene" uid="uid://bsj6js40b5yr7" path="res://scenes/objects/gate.tscn" id="17_vyuh1"]
-[ext_resource type="Texture2D" uid="uid://dyj7767pdc242" path="res://assets/graphics/memories/eyes.jpg" id="18_vb40y"]
 [ext_resource type="PackedScene" uid="uid://v7g51cursc0m" path="res://scenes/objects/torch_holder.tscn" id="18_wub3r"]
 [ext_resource type="PackedScene" uid="uid://3d5ipwn05vus" path="res://scenes/ui/InventoryUI.tscn" id="20_acobx"]
 [ext_resource type="PackedScene" uid="uid://bpxfwnl8nd08t" path="res://scenes/ui/PauseMenu.tscn" id="21_vyuh1"]
+[ext_resource type="PackedScene" uid="uid://de4nvbom8l85a" path="res://scenes/characters/enemies/archer.tscn" id="22_wub3r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_53cdh"]
 texture = ExtResource("2_54wbh")
@@ -151,13 +151,13 @@ metadata/_edit_use_anchors_ = true
 
 [node name="MemoryAfterBattle" parent="." unique_id=1656148041 instance=ExtResource("17_ohitc")]
 position = Vector2(635, 145)
-memory_text = "Лицо воина. Он смотрит прямо на тебя. Во взгляде нет ненависти, только вопрос: \"За что?\" "
-memory_image = ExtResource("18_vb40y")
+memory_text = "Крики, запах гари, пламя пожирает дома. Старуха в чёрном платке прижимает к себе мёртвого внука и смотрит прямо на тебя. Тот же взгляд – без ненависти, только вопрос."
+dialogue_key = "segment3_torches"
 
 [node name="MemoryFlashback" parent="." unique_id=96640115 instance=ExtResource("17_ohitc")]
 position = Vector2(919, 222)
-memory_text = "Лицо воина. Он смотрит прямо на тебя. Во взгляде нет ненависти, только вопрос: \"За что?\" "
-memory_image = ExtResource("18_vb40y")
+memory_text = "Ты сражаешься на автомате, не понимая, что происходит. Отбиваешься, уклоняешься, наносишь удары… "
+dialogue_key = "segment2_flashback"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=719813027]
 color = Color(0.5744047, 0.51765215, 0.96510047, 1)
@@ -217,3 +217,8 @@ offset_bottom = 54.0
 metadata/_edit_use_anchors_ = true
 
 [node name="PauseMenu" parent="." unique_id=2114518181 instance=ExtResource("21_vyuh1")]
+visible = false
+
+[node name="EnemyArcher" parent="." unique_id=1457921354 instance=ExtResource("22_wub3r")]
+position = Vector2(840, 438)
+scale = Vector2(0.7, 0.7)

@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://cmggf021uxnuo" path="res://scenes/characters/player/player.tscn" id="7_mmudc"]
 [ext_resource type="Script" uid="uid://cfwxjijbg2di6" path="res://scripts/characters/player/camera_2d.gd" id="8_vyyq5"]
 [ext_resource type="PackedScene" uid="uid://dpfwvvbw05fyi" path="res://scenes/ui/ui.tscn" id="9_u3msr"]
-[ext_resource type="PackedScene" uid="uid://ijii36s5huog" path="res://scenes/characters/enemies/shadow_soldier.tscn" id="10_lde8x"]
 [ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://scenes/audio/BackgroundMusic.tscn" id="11_6kpeq"]
 [ext_resource type="AudioStream" uid="uid://b2w2wtrf85iet" path="res://assets/audio/sounds/lake-water-breaks-on-a-rocky-shore.mp3" id="12_onokv"]
 [ext_resource type="PackedScene" uid="uid://bu2x6sdqg7mw6" path="res://scenes/ui/MemoryUI.tscn" id="13_5n1wg"]
@@ -14,9 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://divippgmak8bb" path="res://scenes/ui/DialogueUI.tscn" id="15_bybq6"]
 [ext_resource type="PackedScene" uid="uid://c0wdfipsumq4s" path="res://scenes/characters/enemies/first_boss.tscn" id="16_1as7i"]
 [ext_resource type="Script" uid="uid://cgfeh84wyyt7k" path="res://scripts/ui/segment_title.gd" id="16_jjjvr"]
+[ext_resource type="PackedScene" uid="uid://ckh5ryoug0plw" path="res://scenes/characters/enemies/water_soul.tscn" id="17_5n1wg"]
 [ext_resource type="PackedScene" uid="uid://d0b1tkcjo86ho" path="res://scenes/objects/memory_shard.tscn" id="17_h4tyd"]
 [ext_resource type="PackedScene" uid="uid://bpxfwnl8nd08t" path="res://scenes/ui/PauseMenu.tscn" id="17_jh1u8"]
-[ext_resource type="Texture2D" uid="uid://dyj7767pdc242" path="res://assets/graphics/memories/eyes.jpg" id="18_g6kow"]
+[ext_resource type="PackedScene" uid="uid://dy6kc1bc3je1" path="res://scenes/objects/portal_water.tscn" id="18_5n1wg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_53cdh"]
 texture = ExtResource("2_jh1u8")
@@ -126,13 +126,13 @@ volume_db = -21.353
 [node name="StartZone" type="Area2D" parent="." unique_id=1997128710]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartZone" unique_id=688882051]
-position = Vector2(67, 395)
+position = Vector2(71, 404)
 shape = SubResource("CircleShape2D_3f1xv")
 
 [node name="ExitZone" type="Area2D" parent="." unique_id=306234452]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitZone" unique_id=1636480618]
-position = Vector2(859, -80)
+position = Vector2(854, 364)
 shape = SubResource("CircleShape2D_66gb6")
 
 [node name="DialogueUi" parent="." unique_id=1432111096 instance=ExtResource("15_bybq6")]
@@ -147,24 +147,18 @@ metadata/_edit_use_anchors_ = true
 
 [node name="MemoryFatherStone" parent="." unique_id=1656148041 instance=ExtResource("17_h4tyd")]
 position = Vector2(635, 145)
-memory_text = "Лицо воина. Он смотрит прямо на тебя. Во взгляде нет ненависти, только вопрос: \"За что?\" "
-memory_image = ExtResource("18_g6kow")
+memory_text = "Камень с высеченным иероглифом \"Отец\". Рука принца — детская, маленькая — гладит этот иероглиф. Чей-то тёплый голос: \"Когда-нибудь ты тоже станешь отцом, малыш. И поймёшь, что значит любить сильнее жизни\"."
+dialogue_key = "memory_father_stone"
 
 [node name="MemoryToy" parent="." unique_id=1849682101 instance=ExtResource("17_h4tyd")]
 position = Vector2(430, 183)
-memory_text = "Лицо воина. Он смотрит прямо на тебя. Во взгляде нет ненависти, только вопрос: \"За что?\" "
-memory_image = ExtResource("18_g6kow")
+memory_text = "У старой лодки детская игрушка. Когда-то здесь играли дети."
+dialogue_key = "memory_toy"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=719813027]
 color = Color(0.5744047, 0.51765215, 0.96510047, 1)
 
 [node name="MemoryUi" parent="." unique_id=1708988976 instance=ExtResource("13_5n1wg")]
-
-[node name="PreBattleSoldier1" parent="." unique_id=1886436151 instance=ExtResource("10_lde8x")]
-position = Vector2(1335, 172)
-
-[node name="PreBattleSoldier2" parent="." unique_id=761181149 instance=ExtResource("10_lde8x")]
-position = Vector2(864, 341)
 
 [node name="HintSystem" type="CanvasLayer" parent="." unique_id=1774204342]
 script = ExtResource("14_jeey4")
@@ -180,7 +174,17 @@ offset_bottom = 54.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Boss" parent="." unique_id=1312783105 instance=ExtResource("16_1as7i")]
-position = Vector2(376, 765)
+position = Vector2(744, 413)
 max_health = 10.0
 
 [node name="PauseMenu" parent="." unique_id=2114518181 instance=ExtResource("17_jh1u8")]
+visible = false
+
+[node name="WaterSoul1" parent="." unique_id=1886436151 instance=ExtResource("17_5n1wg")]
+position = Vector2(176, 487)
+
+[node name="WaterSoul2" parent="." unique_id=632924118 instance=ExtResource("17_5n1wg")]
+position = Vector2(199, 357)
+
+[node name="Portal" parent="." unique_id=35049290 instance=ExtResource("18_5n1wg")]
+position = Vector2(850, 362)

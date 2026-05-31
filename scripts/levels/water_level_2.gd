@@ -6,8 +6,11 @@ extends Node2D
 @onready var torch_holders = [$TorchHolder1, $TorchHolder2, $TorchHolder3]
 @onready var torch_pickups = [$TorchPickup1, $TorchPickup2, $TorchPickup3]
 
+# Враги
+@onready var enemy_archer = $EnemyArcher
 @onready var enemy_soldier1 = $ShadowSoldier1
 @onready var enemy_soldier2 = $ShadowSoldier2
+
 @onready var start_zone = $StartZone
 @onready var exit_zone = $ExitZone
 @onready var memory_after_battle = $MemoryAfterBattle
@@ -22,13 +25,19 @@ var battle_started = false
 var enemies_defeated = false
 
 # Сохраняем позиции врагов для респавна
+var archer_spawn_pos: Vector2
 var soldier1_spawn_pos: Vector2
 var soldier2_spawn_pos: Vector2
+
+# Сцены врагов
+var archer_scene = preload("res://scenes/characters/enemies/archer.tscn")
+var soldier_scene = preload("res://scenes/characters/enemies/shadow_soldier.tscn")
 
 # ==================== ГОЛОВНЫЕ ФУНКЦИИ ====================
 
 func _ready():
 	# Сохраняем позиции врагов
+	archer_spawn_pos = enemy_archer.global_position
 	soldier1_spawn_pos = enemy_soldier1.global_position
 	soldier2_spawn_pos = enemy_soldier2.global_position
 	
@@ -66,7 +75,14 @@ func _ready():
 		$TorchHolder4.torch_placed.emit()
 
 func _set_enemies_active(active: bool):
-	# Проверяем, что враги ещё существуют
+	# Лучник
+	if is_instance_valid(enemy_archer):
+		enemy_archer.visible = active
+		enemy_archer.set_physics_process(active)
+		enemy_archer.set_collision_layer_value(1, active)
+		enemy_archer.set_collision_mask_value(1, active)
+	
+	# Солдаты
 	if is_instance_valid(enemy_soldier1):
 		enemy_soldier1.visible = active
 		enemy_soldier1.set_physics_process(active)
@@ -78,12 +94,6 @@ func _set_enemies_active(active: bool):
 		enemy_soldier2.set_physics_process(active)
 		enemy_soldier2.set_collision_layer_value(1, active)
 		enemy_soldier2.set_collision_mask_value(1, active)
-
-func _reset_enemies_health():
-	if is_instance_valid(enemy_soldier1):
-		enemy_soldier1.health_component.current_health = enemy_soldier1.health_component.max_health
-	if is_instance_valid(enemy_soldier2):
-		enemy_soldier2.health_component.current_health = enemy_soldier2.health_component.max_health
 
 # ==================== СТАРТ УРОВНЯ ====================
 
@@ -125,46 +135,64 @@ func _start_battle():
 	
 	print("Первый факел установлен — начинаем бой!")
 	
-	# СОЗДАЁМ НОВЫХ ВРАГОВ (не переиспользуем старых)
-	var enemy_scene = preload("res://scenes/characters/enemies/shadow_soldier.tscn")
+	# Удаляем старых врагов (если есть)
+	if is_instance_valid(enemy_archer):
+		enemy_archer.queue_free()
+	if is_instance_valid(enemy_soldier1):
+		enemy_soldier1.queue_free()
+	if is_instance_valid(enemy_soldier2):
+		enemy_soldier2.queue_free()
 	
-	var new_enemy1 = enemy_scene.instantiate()
-	new_enemy1.global_position = soldier1_spawn_pos
-	new_enemy1.visible = true
-	new_enemy1.set_physics_process(true)
-	add_child(new_enemy1)
+	# СОЗДАЁМ НОВЫХ ВРАГОВ
+	# Лучник
+	var new_archer = archer_scene.instantiate()
+	new_archer.global_position = archer_spawn_pos
+	new_archer.visible = true
+	new_archer.set_physics_process(true)
+	add_child(new_archer)
+	enemy_archer = new_archer
 	
-	var new_enemy2 = enemy_scene.instantiate()
-	new_enemy2.global_position = soldier2_spawn_pos
-	new_enemy2.visible = true
-	new_enemy2.set_physics_process(true)
-	add_child(new_enemy2)
+	# Солдат 1
+	var new_soldier1 = soldier_scene.instantiate()
+	new_soldier1.global_position = soldier1_spawn_pos
+	new_soldier1.visible = true
+	new_soldier1.set_physics_process(true)
+	add_child(new_soldier1)
+	enemy_soldier1 = new_soldier1
 	
-	# Сохраняем ссылки на новых врагов
-	enemy_soldier1 = new_enemy1
-	enemy_soldier2 = new_enemy2
+	# Солдат 2
+	var new_soldier2 = soldier_scene.instantiate()
+	new_soldier2.global_position = soldier2_spawn_pos
+	new_soldier2.visible = true
+	new_soldier2.set_physics_process(true)
+	add_child(new_soldier2)
+	enemy_soldier2 = new_soldier2
 	
 	GameManager.show_hint.emit("ЛКМ – атака, Пробел – уклонение", 5.0)
 	
 	# Подключаем сигналы смерти
+	if not enemy_archer.health_component.died.is_connected(_on_enemy_defeated):
+		enemy_archer.health_component.died.connect(_on_enemy_defeated)
 	if not enemy_soldier1.health_component.died.is_connected(_on_enemy_defeated):
 		enemy_soldier1.health_component.died.connect(_on_enemy_defeated)
 	if not enemy_soldier2.health_component.died.is_connected(_on_enemy_defeated):
 		enemy_soldier2.health_component.died.connect(_on_enemy_defeated)
 
 func _on_enemy_defeated():
-	# Проверяем, что оба врага мертвы или не существуют
+	# Проверяем, что все три врага мертвы
+	var archer_dead = not is_instance_valid(enemy_archer) or enemy_archer.health_component.current_health <= 0
 	var soldier1_dead = not is_instance_valid(enemy_soldier1) or enemy_soldier1.health_component.current_health <= 0
 	var soldier2_dead = not is_instance_valid(enemy_soldier2) or enemy_soldier2.health_component.current_health <= 0
 	
-	if soldier1_dead and soldier2_dead and not enemies_defeated:
+	if archer_dead and soldier1_dead and soldier2_dead and not enemies_defeated:
 		enemies_defeated = true
 		_after_battle()
 
 func _after_battle():
 	print("Враги побеждены!")
 	
-	# Очищаем ссылки (враги уже удалены)
+	# Очищаем ссылки
+	enemy_archer = null
 	enemy_soldier1 = null
 	enemy_soldier2 = null
 	
@@ -200,7 +228,6 @@ func transition_to_scene(target: String):
 	tween.tween_property(black, "modulate:a", 1.0, 0.5)
 	await tween.finished
 	get_tree().change_scene_to_file(target)
-
 
 # ==================== ПАУЗА ====================
 
