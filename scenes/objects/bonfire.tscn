@@ -2,13 +2,79 @@
 
 [ext_resource type="Script" uid="uid://wru628c6fpvk" path="res://scripts/objects/bonfire.gd" id="1_av1pb"]
 [ext_resource type="Texture2D" uid="uid://b5fql5s25wxtd" path="res://assets/graphics/objects/bonfire.png" id="2_yjuxu"]
+[ext_resource type="AudioStream" uid="uid://cgwfy0mesqevt" path="res://assets/audio/sounds/sound-effects-library-camp-fire-burning.mp3" id="3_crfkg"]
 [ext_resource type="Texture2D" uid="uid://dqboebg778tdr" path="res://assets/graphics/objects/light.png" id="3_yjuxu"]
+[ext_resource type="Texture2D" uid="uid://eix28k5d5gxs" path="res://assets/graphics/objects/Group 5 - 3.png" id="4_5150a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5150a"]
-radius = 15.0
+radius = 18.00111
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ehkru"]
-size = Vector2(12, 6.5)
+size = Vector2(15.600002, 19.600002)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehkru"]
+atlas = ExtResource("4_5150a")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_210e0"]
+atlas = ExtResource("4_5150a")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wftjl"]
+atlas = ExtResource("4_5150a")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knvg4"]
+atlas = ExtResource("4_5150a")
+region = Rect2(48, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fgjc"]
+atlas = ExtResource("4_5150a")
+region = Rect2(64, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcnvm"]
+atlas = ExtResource("4_5150a")
+region = Rect2(80, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_njdlp"]
+atlas = ExtResource("4_5150a")
+region = Rect2(96, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8ucj"]
+atlas = ExtResource("4_5150a")
+region = Rect2(112, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ocyvw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ehkru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_210e0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wftjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_knvg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fgjc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fcnvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_njdlp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8ucj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Bonfire" type="Area2D" unique_id=1539607131]
 scale = Vector2(2.5, 2.5)
@@ -22,16 +88,13 @@ collision_layer = 2
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_5150a")
 
-[node name="Bonfire" type="Sprite2D" parent="." unique_id=690169491]
-scale = Vector2(0.02, 0.02)
-texture = ExtResource("2_yjuxu")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=185303988]
-position = Vector2(0, 3.75)
+position = Vector2(0.19999969, 2.9999995)
+scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_ehkru")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1352326]
-position = Vector2(0, -0.80000114)
+position = Vector2(0, 6.0000005)
 scale = Vector2(10.282524, 8.729591)
 color = Color(0.93333334, 0.73333335, 0.6745098, 1)
 range_z_min = -100
@@ -39,4 +102,17 @@ range_z_max = 100
 texture = ExtResource("3_yjuxu")
 texture_scale = 0.01
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=933315629]
+[node name="FireSound" type="AudioStreamPlayer2D" parent="." unique_id=933315629]
+stream = ExtResource("3_crfkg")
+volume_db = -14.0
+max_distance = 700.0
+attenuation = 2.5491211
+
+[node name="Bonfire" type="AnimatedSprite2D" parent="." unique_id=576534566]
+position = Vector2(0, -5.2)
+sprite_frames = SubResource("SpriteFrames_ocyvw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=217761296]
+position = Vector2(0, 8.4)
+scale = Vector2(0.015826618, 0.008285713)
+texture = ExtResource("2_yjuxu")

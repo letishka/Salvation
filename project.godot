@@ -21,6 +21,7 @@ GameManager="*uid://bvasqeqquoy88"
 DialogueManager="*uid://bw0gttkwj51wx"
 LevelManager="*uid://pwj6oke58v0n"
 SaveManager="*uid://kgeed05k5ao1"
+MusicManager="*uid://n1ipol48py8t"
 
 [display]
 

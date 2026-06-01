@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cmggf021uxnuo" path="res://scenes/characters/player/player.tscn" id="1_w5ih2"]
 [ext_resource type="PackedScene" uid="uid://dy6kc1bc3je1" path="res://scenes/objects/portal_water.tscn" id="2_ohehc"]
 [ext_resource type="AudioStream" uid="uid://r03xb8yjo6hh" path="res://assets/audio/sounds/heartbeat.mp3" id="4_4g3re"]
+[ext_resource type="AudioStream" uid="uid://duchr6tu5204i" path="res://assets/audio/sounds/portail-du-nether.mp3" id="4_xmrjh"]
 [ext_resource type="PackedScene" uid="uid://divippgmak8bb" path="res://scenes/ui/DialogueUI.tscn" id="5_4g3re"]
 [ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://scenes/audio/BackgroundMusic.tscn" id="6_xtvax"]
 [ext_resource type="AudioStream" uid="uid://dvfexkyni6i3e" path="res://assets/audio/sounds/gustoy-tuman--gorod-v-oblake.mp3" id="7_eqhsi"]
@@ -22,6 +23,7 @@ texture = ExtResource("9_hu3c8")
 
 [node name="Portal" parent="World" unique_id=35049290 instance=ExtResource("2_ohehc")]
 position = Vector2(756, 266)
+portal_music = ExtResource("4_xmrjh")
 
 [node name="Player" parent="World" unique_id=1090551706 instance=ExtResource("1_w5ih2")]
 position = Vector2(372, 398)
@@ -56,13 +58,17 @@ offset_bottom = 13.0
 [node name="DialogueUi" parent="." unique_id=1432111096 instance=ExtResource("5_4g3re")]
 
 [node name="HeartbeatSound" type="AudioStreamPlayer2D" parent="." unique_id=646126858]
+process_mode = 3
 position = Vector2(291, 479)
 stream = ExtResource("4_4g3re")
+volume_db = -5.0
 
 [node name="BackgroundMusic" parent="." unique_id=489571506 instance=ExtResource("6_xtvax")]
+process_mode = 3
 stream = ExtResource("7_eqhsi")
-volume_db = -5.317
+volume_db = -5.0
 
 [node name="BackgroundMusic2" parent="." unique_id=1544195847 instance=ExtResource("6_xtvax")]
+process_mode = 3
 stream = ExtResource("8_eqhsi")
-volume_db = -21.353
+volume_db = -21.0

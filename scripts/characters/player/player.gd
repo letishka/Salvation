@@ -6,6 +6,10 @@ extends CharacterBody2D
 @onready var attack_controller = $Player/AttackController
 @onready var animated_sprite: AnimatedSprite2D = $Player
 @onready var torch_light = $TorchLight    # PointLight2D (свет от факела)
+@onready var torch_pickup_sound = $TorchPickupSound   # AudioStreamPlayer2D
+@onready var torch_ignite_sound = $TorchIgniteSound   # AudioStreamPlayer2D
+@onready var torch_ambient_sound = $TorchAmbientSound # AudioStreamPlayer2D
+@onready var torch_ambient_sound2 = $TorchAmbientSound2 
 
 @export var speed: float = 200.0
 @export var sprint_speed: float = 350.0
@@ -165,10 +169,16 @@ func pickup_torch():
 	if has_torch:
 		GameManager.show_hint.emit("У тебя уже есть факел!", 2.0)
 		return
+	
 	has_torch = true
 	torch_lit = false
 	if torch_light:
 		torch_light.enabled = false
+	
+	# Звук подбора факела
+	if torch_pickup_sound:
+		torch_pickup_sound.play()
+	
 	GameManager.update_inventory(has_torch, torch_lit)
 	GameManager.show_hint.emit("Факел подобран. Подойди к костру, чтобы зажечь.", 3.0)
 
@@ -179,9 +189,19 @@ func light_torch():
 	if torch_lit:
 		GameManager.show_hint.emit("Факел уже зажжён!", 2.0)
 		return
+	
 	torch_lit = true
 	if torch_light:
 		torch_light.enabled = true
+	
+	# Звук зажигания факела
+	if torch_ignite_sound:
+		torch_ignite_sound.play()
+	
+	# Звук горения (зацикленный)
+	if torch_ambient_sound:
+		torch_ambient_sound.play()
+	
 	GameManager.update_inventory(has_torch, torch_lit)
 	GameManager.show_hint.emit("Факел зажжён! Неси к пустой подставке.", 2.0)
 
@@ -192,10 +212,18 @@ func place_torch() -> bool:
 	if not torch_lit:
 		GameManager.show_hint.emit("Факел не зажжён! Подойди к костру.", 2.0)
 		return false
+	
+	# Останавливаем звук горения
+	if torch_ambient_sound:
+		torch_ambient_sound.stop()
+	
 	has_torch = false
 	torch_lit = false
 	if torch_light:
 		torch_light.enabled = false
+	
 	GameManager.update_inventory(has_torch, torch_lit)
 	GameManager.show_hint.emit("Факел установлен в подставку!", 2.0)
 	return true
+	
+	

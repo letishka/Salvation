@@ -5,15 +5,20 @@ extends CanvasLayer
 @onready var music_slider: HSlider = %MusicSlider
 
 func _ready() -> void:
-	update_options()
+	# Загружаем текущую громкость из MusicManager
+	music_slider.value = MusicManager.get_volume_linear()
+	music_slider.value_changed.connect(_on_music_volume_changed)
 	
+	update_options()
+
 func update_options():
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 		window_mode_button.text = "Windowed"
 	else:
 		window_mode_button.text = "Fullscreen"
+	
+	# SFX громкость (оставляем через AudioServer)
 	sfx_slider.value = get_volume_percent(2)
-	music_slider.value = get_volume_percent(1)
 
 func get_volume_percent(bus_index: int):
 	var volume_db = AudioServer.get_bus_volume_db(bus_index)
@@ -27,17 +32,13 @@ func _on_window_mode_button_pressed() -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	update_options()
 
-
 func _on_sfx_slider_value_changed(value: float) -> void:
 	var volume_db = linear_to_db(value)
 	AudioServer.set_bus_volume_db(2, volume_db)
-	
 
-
-func _on_music_slider_value_changed(value: float) -> void:
+func _on_music_volume_changed(value: float) -> void:
 	var volume_db = linear_to_db(value)
-	AudioServer.set_bus_volume_db(1, volume_db)
-
+	MusicManager.set_volume(volume_db)
 
 func _on_back_button_pressed() -> void:
 	queue_free()

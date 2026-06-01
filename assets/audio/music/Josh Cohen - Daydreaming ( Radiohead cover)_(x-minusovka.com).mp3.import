@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://40qq2pjo5ebg"
+path="res://.godot/imported/Josh Cohen - Daydreaming ( Radiohead cover)_(x-minusovka.com).mp3-c789e1c33635eaff4ea8f1ad48aac04d.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/Josh Cohen - Daydreaming ( Radiohead cover)_(x-minusovka.com).mp3"
+dest_files=["res://.godot/imported/Josh Cohen - Daydreaming ( Radiohead cover)_(x-minusovka.com).mp3-c789e1c33635eaff4ea8f1ad48aac04d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -4,17 +4,22 @@
 [ext_resource type="Texture2D" uid="uid://d3haqqmwm5nbk" path="res://assets/graphics/sky/1.png" id="2_qkig8"]
 [ext_resource type="Texture2D" uid="uid://p5dpxm7o7uhb" path="res://assets/graphics/objects/JapanProps-02.png" id="2_sb1ok"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qkig8"]
-size = Vector2(123, 118)
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_sb1ok"]
+a = Vector2(3, -108)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_qkig8"]
+a = Vector2(55, 91)
+b = Vector2(54, -53)
 
 [node name="Gate" type="StaticBody2D" unique_id=1739702693]
 script = ExtResource("1_33swo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1938983907]
-position = Vector2(-0.5, 34)
-shape = SubResource("RectangleShape2D_qkig8")
+position = Vector2(-58, 84)
+shape = SubResource("SegmentShape2D_sb1ok")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=745063742]
+visible = false
 offset_left = -58.0
 offset_top = -22.0
 offset_right = 59.0
@@ -27,3 +32,6 @@ scale = Vector2(2, 2)
 texture = ExtResource("2_sb1ok")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1137782681]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=356263371]
+shape = SubResource("SegmentShape2D_qkig8")

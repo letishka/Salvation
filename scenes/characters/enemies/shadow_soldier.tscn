@@ -468,11 +468,11 @@ shape = SubResource("CircleShape2D_ummrs")
 
 [node name="FootstepPlayer" type="AudioStreamPlayer2D" parent="." unique_id=759491380]
 stream = ExtResource("6_4tjwu")
-volume_db = -10.0
+volume_db = -15.0
 
 [node name="AttackSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=914286547]
 stream = ExtResource("7_tt6g0")
-volume_db = -5.0
+volume_db = -15.0
 pitch_scale = 1.52
 
 [node name="GroundCheckRay" type="RayCast2D" parent="." unique_id=1527514643]

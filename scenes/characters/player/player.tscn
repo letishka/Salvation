@@ -16,7 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://boisrg8n1chpn" path="res://assets/graphics/characters/player/Sprites/RUN/run_left.png" id="9_i1nod"]
 [ext_resource type="Texture2D" uid="uid://oj7qx17rt0xx" path="res://assets/graphics/characters/player/Sprites/RUN/run_right.png" id="10_4kqyw"]
 [ext_resource type="Texture2D" uid="uid://g7ydtqtn0r6j" path="res://assets/graphics/characters/player/Sprites/RUN/run_up.png" id="11_svuau"]
+[ext_resource type="AudioStream" uid="uid://buxy2a6salpf" path="res://assets/audio/sounds/sound_3964d.mp3" id="18_8y75b"]
 [ext_resource type="Texture2D" uid="uid://dqboebg778tdr" path="res://assets/graphics/objects/light.png" id="18_svuau"]
+[ext_resource type="AudioStream" uid="uid://bi84et3fqe3ys" path="res://assets/audio/sounds/zvuki-zvuk-ognya-fakela.mp3" id="19_tebod"]
+[ext_resource type="AudioStream" uid="uid://cgwfy0mesqevt" path="res://assets/audio/sounds/sound-effects-library-camp-fire-burning.mp3" id="20_6nfx3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dyp2m"]
 bg_color = Color(0.2, 0.2, 0.2, 1)
@@ -786,6 +789,26 @@ range_z_min = -100
 range_z_max = 100
 texture = ExtResource("18_svuau")
 texture_scale = 0.01
+
+[node name="TorchPickupSound" type="AudioStreamPlayer2D" parent="." unique_id=1259698190]
+volume_db = -15.0
+
+[node name="TorchIgniteSound" type="AudioStreamPlayer2D" parent="." unique_id=478905503]
+stream = ExtResource("18_8y75b")
+volume_db = -15.0
+max_distance = 100.0
+
+[node name="TorchAmbientSound" type="AudioStreamPlayer2D" parent="." unique_id=327300744]
+stream = ExtResource("19_tebod")
+volume_db = -15.0
+max_distance = 300.0
+attenuation = 1.6245048
+
+[node name="TorchAmbientSound2" type="AudioStreamPlayer2D" parent="." unique_id=504899086]
+stream = ExtResource("20_6nfx3")
+volume_db = -15.0
+max_distance = 300.0
+attenuation = 1.6817931
 
 [connection signal="timeout" from="GracePeriod" to="." method="_on_grace_period_timeout"]
 [connection signal="area_entered" from="InteractArea" to="." method="_on_interactable_area_entered"]

@@ -10,15 +10,20 @@ var is_lit: bool = false
 @onready var holder_lit = $Sprite2D2
 @onready var holder_light = $PointLight2D
 @onready var interact_area = $Area2D
+@onready var ambient_sound = $AmbientSound
+@onready var ambient_sound2 = $AmbientSound2
 
 func _ready():
-	# Изначально подставка пустая
 	if holder_empty:
 		holder_empty.visible = true
 	if holder_lit:
 		holder_lit.visible = false
 	if holder_light:
 		holder_light.enabled = false
+	
+	if ambient_sound:
+		ambient_sound.stop()
+		ambient_sound2.stop()
 
 func interact():
 	print("TorchHolder.interact() called")
@@ -44,12 +49,10 @@ func interact():
 		GameManager.show_hint.emit("Факел не зажжён! Подойди к костру.", 2.0)
 		return
 	
-	# Устанавливаем факел
 	print("Placing torch...")
 	if player.place_torch():
 		is_lit = true
-		
-		# Меняем визуал подставки
+
 		if holder_empty:
 			holder_empty.visible = false
 		if holder_lit:
@@ -57,10 +60,11 @@ func interact():
 		if holder_light:
 			holder_light.enabled = true
 		
-		# Отправляем сигнал на уровень
+		ambient_sound.play()
+		ambient_sound2.play()
+		
 		torch_placed.emit()
 		
-		# Уведомляем цель (ворота)
 		var target = get_node(target_node_path) if target_node_path else null
 		if target and target.has_method("register_lit_torch"):
 			target.register_lit_torch()

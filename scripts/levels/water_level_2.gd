@@ -18,6 +18,8 @@ extends Node2D
 @onready var segment_title = $SegmentTitle
 @onready var hint_system = $HintSystem
 
+@onready var spawn_sound = $SpawnSound  
+
 # ----- Переменные -----
 var dialog_started = false
 var first_torch_placed = false
@@ -36,6 +38,10 @@ var soldier_scene = preload("res://scenes/characters/enemies/shadow_soldier.tscn
 # ==================== ГОЛОВНЫЕ ФУНКЦИИ ====================
 
 func _ready():
+	MusicManager.play_game_music(1.0)
+	
+	if spawn_sound:
+		spawn_sound.play()
 	# Сохраняем позиции врагов
 	archer_spawn_pos = enemy_archer.global_position
 	soldier1_spawn_pos = enemy_soldier1.global_position
@@ -168,7 +174,7 @@ func _start_battle():
 	add_child(new_soldier2)
 	enemy_soldier2 = new_soldier2
 	
-	GameManager.show_hint.emit("ЛКМ – атака, Пробел – уклонение", 5.0)
+	GameManager.show_hint.emit("ЛКМ – атака мечом", 5.0)
 	
 	# Подключаем сигналы смерти
 	if not enemy_archer.health_component.died.is_connected(_on_enemy_defeated):
@@ -214,27 +220,14 @@ func _on_gate_portal_activated():
 
 func _on_exit_zone_entered(body):
 	if body.is_in_group("player"):
-		transition_to_scene("res://scenes/levels/water_level_3.tscn")
-
-func transition_to_scene(target: String):
-	var black = ColorRect.new()
-	black.color = Color.BLACK
-	black.size = get_viewport().get_visible_rect().size
-	black.position = Vector2.ZERO
-	black.z_index = 100
-	add_child(black)
-	
-	var tween = create_tween()
-	tween.tween_property(black, "modulate:a", 1.0, 0.5)
-	await tween.finished
-	get_tree().change_scene_to_file(target)
+		get_tree().change_scene_to_file("res://scenes/levels/water_level_3.tscn")
 
 # ==================== ПАУЗА ====================
 
 var pause_menu_scene = preload("res://scenes/ui/PauseMenu.tscn")
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause") and not get_tree().paused:
+	if event.is_action_pressed("pause") and not get_tree().paused and not DialogueManager.is_active():
 		var menu = pause_menu_scene.instantiate()
 		add_child(menu)
 		get_tree().paused = true

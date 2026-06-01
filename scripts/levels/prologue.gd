@@ -12,6 +12,7 @@ extends Node2D
 
 func _ready():
 	GameManager.initial_player_health = player.health_component.current_health
+	MusicManager.stop_music(0.5)
 	$BackgroundMusic.play()
 	$BackgroundMusic2.play()
 	player.set_process_input(false)
@@ -40,10 +41,14 @@ func _ready():
 		await get_tree().create_timer(3.0).timeout
 		hint_label.visible = false
 	
-	portal.visible = true
-	portal.get_node("CollisionShape2D").disabled = false
-	player_ui.visible = true
+	# ПОКАЗЫВАЕМ ПОРТАЛ С МУЗЫКОЙ
+	if portal and portal.has_method("show_portal"):
+		portal.show_portal()
+	else:
+		portal.visible = true
+		portal.get_node("CollisionShape2D").disabled = false
 	
+	player_ui.visible = true
 
 func _show_history():
 	var lines = DialogueManager.get_dialogue_lines("prologue_text")
@@ -80,8 +85,11 @@ func _show_wakeup_dialogue():
 	await DialogueManager.dialogue_finished
 
 func _show_portal_animation():
+	# Просто делаем портал видимым (без музыки, музыка запустится позже)
 	portal.visible = true
 	portal.modulate = Color(1, 1, 1, 0)
 	var tween = create_tween()
 	tween.tween_property(portal, "modulate", Color(1, 1, 1, 1), 1.0)
 	await tween.finished
+	
+	portal.start_portal_music()

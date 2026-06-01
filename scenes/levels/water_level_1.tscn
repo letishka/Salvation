@@ -1,114 +1,23 @@
 [gd_scene format=4 uid="uid://dovcdmcrvnkl6"]
 
 [ext_resource type="Texture2D" uid="uid://bokqrmy7epi0s" path="res://assets/graphics/tilesets/TX Tileset Grass.png" id="1_53cdh"]
+[ext_resource type="Script" uid="uid://ct0ijwdbqwlun" path="res://scripts/levels/water_level_1.gd" id="1_80qve"]
 [ext_resource type="TileSet" uid="uid://dwjvyp3khye02" path="res://assets/graphics/tilesets/water.tres" id="2_3f1xv"]
 [ext_resource type="PackedScene" uid="uid://dpn0ri1h1ujip" path="res://scenes/objects/bridge.tscn" id="2_cmwfa"]
 [ext_resource type="PackedScene" uid="uid://diyfqbor4n64x" path="res://scenes/objects/lever.tscn" id="3_di77f"]
 [ext_resource type="PackedScene" uid="uid://cmggf021uxnuo" path="res://scenes/characters/player/player.tscn" id="6_v4o1i"]
 [ext_resource type="Script" uid="uid://cfwxjijbg2di6" path="res://scripts/characters/player/camera_2d.gd" id="8_iyosk"]
 [ext_resource type="PackedScene" uid="uid://dpfwvvbw05fyi" path="res://scenes/ui/ui.tscn" id="9_jjc6a"]
-[ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://scenes/audio/BackgroundMusic.tscn" id="10_15gi5"]
 [ext_resource type="PackedScene" uid="uid://ijii36s5huog" path="res://scenes/characters/enemies/shadow_soldier.tscn" id="10_v4o1i"]
-[ext_resource type="AudioStream" uid="uid://b2w2wtrf85iet" path="res://assets/audio/sounds/lake-water-breaks-on-a-rocky-shore.mp3" id="11_7uhrl"]
-[ext_resource type="AudioStream" uid="uid://46vix7juoscp" path="res://assets/audio/music/Флейта и Гуцинь - Флейта и Гуцинь.mp3" id="12_7uhrl"]
 [ext_resource type="PackedScene" uid="uid://d0b1tkcjo86ho" path="res://scenes/objects/memory_shard.tscn" id="14_53cdh"]
 [ext_resource type="PackedScene" uid="uid://divippgmak8bb" path="res://scenes/ui/DialogueUI.tscn" id="15_53cdh"]
 [ext_resource type="Script" uid="uid://cvtrl07kvmn1l" path="res://scripts/ui/hint_system.gd" id="15_66gb6"]
 [ext_resource type="PackedScene" uid="uid://bu2x6sdqg7mw6" path="res://scenes/ui/MemoryUI.tscn" id="17_66gb6"]
 [ext_resource type="Script" uid="uid://cgfeh84wyyt7k" path="res://scripts/ui/segment_title.gd" id="17_wwge0"]
+[ext_resource type="AudioStream" uid="uid://dpkfwp7ok1iks" path="res://assets/audio/sounds/the-sound-of-continuous-rain.mp3" id="18_80qve"]
 [ext_resource type="PackedScene" uid="uid://bpxfwnl8nd08t" path="res://scenes/ui/PauseMenu.tscn" id="18_dafcy"]
 [ext_resource type="Texture2D" uid="uid://dyj7767pdc242" path="res://assets/graphics/memories/eyes.jpg" id="18_wwge0"]
-
-[sub_resource type="GDScript" id="GDScript_66gb6"]
-script/source = "extends Node2D
-
-@onready var lever = $Lever
-@onready var bridge = $Bridge
-@onready var enemy = $ShadowSoldier
-@onready var memory = $MemoryShard
-@onready var start_zone = $StartZone
-@onready var exit_zone = $ExitZone
-@onready var segment_title = $SegmentTitle   # создайте отдельную сцену SegmentTitle
-@onready var hint_system = $HintSystem       # создайте отдельную сцену HintSystem
-
-var dialog_started = false
-
-func _ready():
-	if bridge.has_method(\"activate\"):
-		bridge.activate(false)
-	else:
-		print(\"Bridge error\")
-	
-	if enemy:
-		enemy.visible = false
-		enemy.set_physics_process(false)
-	
-	#if memory:
-		#memory.visible = false
-	
-	if exit_zone:
-		exit_zone.body_entered.connect(_on_exit_zone_entered)
-		exit_zone.monitoring = false
-	
-	if lever and lever.has_signal(\"interacted\"):
-		lever.interacted.connect(_on_lever_pulled)
-	else:
-		print(\"Lever error\")
-	
-	if start_zone:
-		start_zone.body_entered.connect(_on_start_zone_entered)
-
-func _on_start_zone_entered(body):
-	if not body.is_in_group(\"player\"): return
-	if dialog_started: return
-	dialog_started = true
-	start_zone.queue_free()
-	
-	if segment_title:
-		segment_title.show_title(\"Берег реки\")
-		await get_tree().create_timer(1.0).timeout
-	
-	DialogueManager.start_dialogue(\"segment1_bridge\")
-	await DialogueManager.dialogue_finished
-	GameManager.show_hint.emit(\"Нажмите E, чтобы взаимодействовать с рычагом\", 4.0)
-
-func _on_lever_pulled():
-	if bridge.has_method(\"activate\"):
-		bridge.activate(true)
-	if enemy:
-		enemy.visible = true
-		enemy.set_physics_process(true)
-		GameManager.show_hint.emit(\"ЛКМ – атака, Пробел – уклонение\", 5.0)
-		if enemy.has_node(\"HealthComponent\"):
-			enemy.health_component.died.connect(_on_enemy_defeated)
-
-func _on_enemy_defeated():
-	print(\"Enemy defeated, showing memory\")
-	if memory:
-		memory.visible = true
-		print(\"Memory position: \", memory.global_position)
-		print(\"Player position: \", get_tree().get_first_node_in_group(\"player\").global_position)
-		print(\"Memory visible set to true, position: \", memory.global_position, \", visible: \", memory.visible)
-		# Проверим, есть ли коллизия
-		if memory.has_node(\"CollisionShape2D\"):
-			var coll = memory.get_node(\"CollisionShape2D\")
-			print(\"CollisionShape2D disabled: \", coll.disabled)
-		GameManager.show_hint.emit(\"Нажмите E, чтобы взять осколок памяти\", 3.0)
-		memory.tree_exited.connect(_enable_exit)
-	else:
-		print(\"Memory is null!\")
-
-func _enable_exit():
-	if exit_zone:
-		exit_zone.monitoring = true
-
-func _on_exit_zone_entered(body):
-	if body.is_in_group(\"player\"):
-		call_deferred(\"_change_to_next_level\")
-
-func _change_to_next_level():
-	get_tree().change_scene_to_file(\"res://scenes/levels/water_level_2.tscn\")
-"
+[ext_resource type="AudioStream" uid="uid://dsqlifjxdh30j" path="res://assets/audio/sounds/rojdenie-iz-teni.mp3" id="19_dafcy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_53cdh"]
 texture = ExtResource("1_53cdh")
@@ -189,7 +98,7 @@ radius = 62.289646
 radius = 67.26812
 
 [node name="WaterLevel1" type="Node2D" unique_id=807494377]
-script = SubResource("GDScript_66gb6")
+script = ExtResource("1_80qve")
 
 [node name="TileMap" type="TileMap" parent="." unique_id=1154480787]
 tile_set = SubResource("TileSet_iyosk")
@@ -222,14 +131,6 @@ script = ExtResource("8_iyosk")
 
 [node name="ShadowSoldier" parent="." unique_id=1970334870 instance=ExtResource("10_v4o1i")]
 position = Vector2(1335, 172)
-
-[node name="BackgroundMusic" parent="." unique_id=489571506 instance=ExtResource("10_15gi5")]
-stream = ExtResource("11_7uhrl")
-volume_db = -13.0
-
-[node name="BackgroundMusic2" parent="." unique_id=562841666 instance=ExtResource("10_15gi5")]
-stream = ExtResource("12_7uhrl")
-volume_db = -21.353
 
 [node name="StartZone" type="Area2D" parent="." unique_id=1997128710]
 
@@ -283,3 +184,16 @@ color = Color(0.5744047, 0.51765215, 0.96510047, 1)
 [node name="MemoryUi" parent="." unique_id=1708988976 instance=ExtResource("17_66gb6")]
 
 [node name="PauseMenu" parent="." unique_id=2114518181 instance=ExtResource("18_dafcy")]
+
+[node name="SpawnSound" type="AudioStreamPlayer2D" parent="." unique_id=2140102839]
+stream = ExtResource("19_dafcy")
+volume_db = -15.0
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="." unique_id=1141294179]
+position = Vector2(773, 59)
+stream = ExtResource("18_80qve")
+volume_db = -15.0
+autoplay = true
+stream_paused = true
+max_distance = 500.0
+attenuation = 2.0000005

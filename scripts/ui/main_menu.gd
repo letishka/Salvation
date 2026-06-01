@@ -4,7 +4,8 @@ var options_menu_scene = preload("res://scenes/ui/OptionsMenu.tscn")
 
 func _ready() -> void:
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	$BackgroundMusic.play()
+	MusicManager.play_menu_music(1.0)
+	# $BackgroundMusic.play()
 
 func _on_play_button_pressed() -> void:
 	# Удаляем старое сохранение, чтобы начать с чистого листа

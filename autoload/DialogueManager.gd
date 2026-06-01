@@ -46,7 +46,7 @@ func start_dialogue(key: String):
 	_current_key = key
 	_current_line_index = 0
 	_is_active = true
-	get_tree().paused = true  # ← пауза игры
+	get_tree().paused = true
 	_show_current_line()
 
 func close_dialogue():
@@ -55,7 +55,7 @@ func close_dialogue():
 	_current_key = ""
 	_current_line_index = 0
 	GameManager.hide_dialogue.emit()
-	get_tree().paused = false  # ← снятие паузы
+	get_tree().paused = false
 	dialogue_finished.emit()
 
 func _show_current_line():

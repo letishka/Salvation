@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dw8hrb1s7rbf8" path="res://assets/graphics/objects/torch_holder_dontfire.png" id="1_kwpgp"]
 [ext_resource type="Texture2D" uid="uid://dqboebg778tdr" path="res://assets/graphics/objects/light.png" id="1_vtqfn"]
 [ext_resource type="Script" uid="uid://ij8balfr0b4v" path="res://scripts/objects/torch_holder.gd" id="1_yid5q"]
+[ext_resource type="AudioStream" uid="uid://bi84et3fqe3ys" path="res://assets/audio/sounds/zvuki-zvuk-ognya-fakela.mp3" id="5_5t0nx"]
+[ext_resource type="AudioStream" uid="uid://cgwfy0mesqevt" path="res://assets/audio/sounds/sound-effects-library-camp-fire-burning.mp3" id="5_foof4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kwpgp"]
 size = Vector2(4, 40)
@@ -38,7 +40,17 @@ range_z_max = 100
 texture = ExtResource("1_vtqfn")
 texture_scale = 0.01
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1891612394]
+[node name="AmbientSound" type="AudioStreamPlayer2D" parent="." unique_id=1891612394]
+stream = ExtResource("5_5t0nx")
+volume_db = -14.0
+max_distance = 100.0
+attenuation = 1.8025012
+
+[node name="AmbientSound2" type="AudioStreamPlayer2D" parent="." unique_id=1765538038]
+stream = ExtResource("5_foof4")
+volume_db = -14.0
+max_distance = 100.0
+attenuation = 1.8025013
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1641113736]
 collision_layer = 3

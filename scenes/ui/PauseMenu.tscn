@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bpxfwnl8nd08t"]
 
 [ext_resource type="Script" uid="uid://dh2cmxcsdyu02" path="res://scripts/ui/pause_menu.gd" id="1_n5dsq"]
-[ext_resource type="PackedScene" uid="uid://6nr574q1p7mq" path="res://scenes/audio/BackgroundMusic.tscn" id="2_v5pi0"]
 [ext_resource type="PackedScene" uid="uid://ghuwfsm0dqfq" path="res://scenes/audio/SoundButton.tscn" id="4_csaq8"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5twic"]
@@ -17,9 +16,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0.3019608)
-
-[node name="BackgroundMusic" parent="." unique_id=489571506 instance=ExtResource("2_v5pi0")]
-autoplay = true
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=817147960]
 anchors_preset = 8

@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b38xn7i0683tv" path="res://assets/graphics/objects/portal_water.png" id="1_l1is6"]
 [ext_resource type="Script" uid="uid://d0om7b4k5vvg6" path="res://scripts/objects/portal_water.gd" id="1_lnheu"]
+[ext_resource type="AudioStream" uid="uid://duchr6tu5204i" path="res://assets/audio/sounds/portail-du-nether.mp3" id="3_xroiv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h5gno"]
 atlas = ExtResource("1_l1is6")
@@ -82,3 +83,7 @@ sprite_frames = SubResource("SpriteFrames_bswwo")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1298820769]
 position = Vector2(1, 2)
 shape = SubResource("CapsuleShape2D_gd70c")
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1558280836]
+stream = ExtResource("3_xroiv")
+volume_db = -20.0
