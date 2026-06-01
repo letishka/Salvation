@@ -23,7 +23,7 @@ func play_menu_music(fade_in: float = 1.0):
 	current_music = "menu"
 	music_player.stream = preload("res://assets/audio/music/Josh Cohen - Daydreaming ( Radiohead cover)_(x-minusovka.com).mp3")
 	
-	music_player.play()
+	music_player.play(9.0)
 	
 	if fade_in > 0:
 		music_player.volume_db = -80

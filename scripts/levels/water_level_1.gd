@@ -15,6 +15,7 @@ extends Node2D
 var lever_used = false
 var dialog_started = false
 var end_screen_scene = preload("res://scenes/ui/end_screen.tscn")
+var pause_menu_scene = preload("res://scenes/ui/PauseMenu.tscn")
 
 func _ready():
 	MusicManager.play_game_music(1.0)
@@ -111,8 +112,6 @@ func _on_exit_zone_entered(body):
 
 func _on_player_died():
 	add_child(end_screen_scene.instantiate())
-
-var pause_menu_scene = preload("res://scenes/ui/PauseMenu.tscn")
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not get_tree().paused and not DialogueManager.is_active():
