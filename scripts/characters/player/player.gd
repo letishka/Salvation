@@ -5,11 +5,12 @@ extends CharacterBody2D
 @onready var health_bar = $Ui/HeatlhBar
 @onready var attack_controller = $Player/AttackController
 @onready var animated_sprite: AnimatedSprite2D = $Player
-@onready var torch_light = $TorchLight    # PointLight2D (свет от факела)
-@onready var torch_pickup_sound = $TorchPickupSound   # AudioStreamPlayer2D
-@onready var torch_ignite_sound = $TorchIgniteSound   # AudioStreamPlayer2D
-@onready var torch_ambient_sound = $TorchAmbientSound # AudioStreamPlayer2D
-@onready var torch_ambient_sound2 = $TorchAmbientSound2 
+@onready var torch_light = $TorchLight
+@onready var torch_pickup_sound = $TorchPickupSound
+@onready var torch_ignite_sound = $TorchIgniteSound
+@onready var torch_ambient_sound = $TorchAmbientSound
+@onready var torch_ambient_sound2 = $TorchAmbientSound2
+@onready var footstep_player = $FootstepPlayer
 
 @export var speed: float = 200.0
 @export var sprint_speed: float = 350.0
@@ -23,13 +24,15 @@ var max_hp: int = 100
 
 var current_interactable = null
 
-# Переменные анимации и атаки
 var is_attacking: bool = false
 var last_direction: Vector2 = Vector2.DOWN
 
-# Инвентарь (факел)
 var has_torch: bool = false
 var torch_lit: bool = false
+
+var is_on_walk_zone: bool = true
+var footstep_timer: float = 0.0
+var footstep_interval: float = 0.4
 
 func _ready():
 	if health_component.current_health <= 0:
@@ -40,7 +43,6 @@ func _ready():
 	current_speed = speed
 	add_to_group("player")
 	
-	# Свет от факела изначально выключен
 	if torch_light:
 		torch_light.enabled = false
 
@@ -51,6 +53,18 @@ func _physics_process(delta):
 	if is_attacking:
 		return
 
+	is_on_walk_zone = _is_on_walk_zone()
+	
+	if not is_on_walk_zone:
+		var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		var direction = input_dir.normalized()
+
+		if not _is_moving_towards_zone(direction):
+			velocity = Vector2.ZERO
+			move_and_slide()
+			footstep_timer = 0.0
+			return
+
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var direction = input_dir.normalized()
 	if direction != Vector2.ZERO:
@@ -60,6 +74,79 @@ func _physics_process(delta):
 	velocity = velocity.lerp(target_velocity, acceleration)
 	move_and_slide()
 	update_animation(direction)
+	
+	is_on_walk_zone = _is_on_walk_zone()
+	
+	var is_moving = velocity.length() > 30
+	if is_moving and not is_attacking and is_on_walk_zone:
+		footstep_timer += delta
+		if footstep_timer >= footstep_interval:
+			footstep_timer = 0.0
+			_play_footstep_sound()
+	else:
+		footstep_timer = 0.0
+
+# --------- ЗОНА ХОДЬБЫ ----------
+func _is_on_walk_zone() -> bool:
+	var bodies = $InteractArea.get_overlapping_bodies()
+	for body in bodies:
+		if body.is_in_group("walk_zone"):
+			return true
+	
+	var areas = $InteractArea.get_overlapping_areas()
+	for area in areas:
+		if area.is_in_group("walk_zone"):
+			return true
+	
+	return false
+
+func _is_moving_towards_zone(direction: Vector2) -> bool:
+	var player_pos = global_position
+	var walk_zones = get_tree().get_nodes_in_group("walk_zone")
+	
+	for zone in walk_zones:
+		var zone_rect = _get_zone_bounds(zone)
+		if zone_rect == Rect2():
+			continue
+		
+		var closest_x = clamp(player_pos.x, zone_rect.position.x, zone_rect.end.x)
+		var closest_y = clamp(player_pos.y, zone_rect.position.y, zone_rect.end.y)
+		var closest_point = Vector2(closest_x, closest_y)
+		
+		var to_zone = closest_point - player_pos
+		if to_zone.length() < 150 and to_zone.normalized().dot(direction) > 0:
+			return true
+	
+	return false
+
+func _get_zone_bounds(zone: Node) -> Rect2:
+	for child in zone.get_children():
+		if child is CollisionShape2D and child.shape is RectangleShape2D:
+			var shape = child.shape
+			var pos = child.global_position
+			var half_size = shape.size / 2
+			return Rect2(pos - half_size, shape.size)
+	
+	if zone is StaticBody2D:
+		for child in zone.get_children():
+			if child is CollisionShape2D and child.shape is RectangleShape2D:
+				var shape = child.shape
+				var pos = child.global_position
+				var half_size = shape.size / 2
+				return Rect2(pos - half_size, shape.size)
+	
+	for child in zone.get_children():
+		if child is CollisionShape2D and child.shape is RectangleShape2D:
+			var shape = child.shape
+			var pos = child.global_position
+			var half_size = shape.size / 2
+			return Rect2(pos - half_size, shape.size)
+	
+	return Rect2()
+
+func _play_footstep_sound():
+	if footstep_player and footstep_player.stream:
+		footstep_player.play()
 
 # --------- АНИМАЦИИ ----------
 func update_animation(move_input: Vector2):
@@ -175,7 +262,6 @@ func pickup_torch():
 	if torch_light:
 		torch_light.enabled = false
 	
-	# Звук подбора факела
 	if torch_pickup_sound:
 		torch_pickup_sound.play()
 	
@@ -194,11 +280,9 @@ func light_torch():
 	if torch_light:
 		torch_light.enabled = true
 	
-	# Звук зажигания факела
 	if torch_ignite_sound:
 		torch_ignite_sound.play()
 	
-	# Звук горения (зацикленный)
 	if torch_ambient_sound:
 		torch_ambient_sound.play()
 	
@@ -213,7 +297,6 @@ func place_torch() -> bool:
 		GameManager.show_hint.emit("Факел не зажжён! Подойди к костру.", 2.0)
 		return false
 	
-	# Останавливаем звук горения
 	if torch_ambient_sound:
 		torch_ambient_sound.stop()
 	
@@ -225,5 +308,3 @@ func place_torch() -> bool:
 	GameManager.update_inventory(has_torch, torch_lit)
 	GameManager.show_hint.emit("Факел установлен в подставку!", 2.0)
 	return true
-	
-	

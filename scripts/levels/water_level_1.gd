@@ -62,12 +62,12 @@ func _on_start_zone_entered(body):
 	
 	if segment_title:
 		segment_title.show_title("Берег реки")
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(3).timeout
 	
 	DialogueManager.start_dialogue("segment1_bridge")
 	await DialogueManager.dialogue_finished
 	
-	GameManager.show_hint.emit("Нажмите E, чтобы взаимодействовать с объектами", 4.0)
+	GameManager.show_hint.emit("Нажмите E, чтобы взаимодействовать с объектами", 6)
 
 func _on_lever_pulled():
 	if lever_used: return
@@ -79,7 +79,7 @@ func _on_lever_pulled():
 	if enemy:
 		enemy.visible = true
 		enemy.set_physics_process(true)
-		GameManager.show_hint.emit("ЛКМ – атака мечом", 5.0)
+		GameManager.show_hint.emit("ЛКМ – атака мечом", 6)
 		if enemy.has_node("HealthComponent"):
 			if not enemy.health_component.died.is_connected(_on_enemy_defeated):
 				enemy.health_component.died.connect(_on_enemy_defeated)
@@ -97,7 +97,7 @@ func _on_enemy_defeated():
 		if memory.has_node("CollisionShape2D"):
 			memory.get_node("CollisionShape2D").disabled = false
 		
-		GameManager.show_hint.emit("Нажмите E, чтобы взять осколок памяти", 3.0)
+		GameManager.show_hint.emit("Нажмите E, чтобы взять осколок памяти", 6)
 		_enable_exit()
 	else:
 		_enable_exit()
@@ -108,7 +108,10 @@ func _enable_exit():
 
 func _on_exit_zone_entered(body):
 	if body.is_in_group("player"):
-		get_tree().change_scene_to_file("res://scenes/levels/water_level_2.tscn")
+		call_deferred("_change_to_next_level")
+
+func _change_to_next_level():
+	get_tree().change_scene_to_file("res://scenes/levels/water_level_2.tscn")
 
 func _on_player_died():
 	add_child(end_screen_scene.instantiate())

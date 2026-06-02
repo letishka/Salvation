@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dl6js3ua4yy8l" path="res://scripts/objects/memory_shard.gd" id="1_cae2k"]
 [ext_resource type="Texture2D" uid="uid://cpwq56t8o8hm7" path="res://assets/graphics/objects/crystal_dark_64x64_12f_20d_normal.png" id="1_xicpa"]
 [ext_resource type="Texture2D" uid="uid://dqboebg778tdr" path="res://assets/graphics/objects/light.png" id="3_6dv5p"]
+[ext_resource type="AudioStream" uid="uid://dsqlifjxdh30j" path="res://assets/audio/sounds/rojdenie-iz-teni.mp3" id="4_aeghb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cae2k"]
 radius = 42.0
@@ -115,3 +116,7 @@ sprite_frames = SubResource("SpriteFrames_pq40a")
 position = Vector2(0, 2.3841858e-07)
 scale = Vector2(0.14489795, 0.13214286)
 texture = ExtResource("3_6dv5p")
+
+[node name="PickupSound" type="AudioStreamPlayer2D" parent="." unique_id=2057156111]
+stream = ExtResource("4_aeghb")
+volume_db = -15.0

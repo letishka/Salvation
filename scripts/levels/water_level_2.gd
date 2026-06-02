@@ -86,7 +86,7 @@ func _on_start_zone_entered(body):
 	
 	if segment_title:
 		segment_title.show_title("Поляна с факелами")
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(3).timeout
 	
 	await memory_flashback.tree_exited
 	
@@ -97,7 +97,7 @@ func _on_start_zone_entered(body):
 	if player and player.has_method("heal_player"):
 		player.heal_player(30)
 	
-	GameManager.show_hint.emit("Рядом с костром лежит факел. Нажмите E, чтобы подобрать", 4.0)
+	GameManager.show_hint.emit("Рядом с костром лежит факел. Нажмите E, чтобы подобрать", 7)
 
 func _on_torch_placed():
 	if not first_torch_placed:
@@ -136,7 +136,7 @@ func _start_battle():
 	add_child(new_soldier2)
 	enemy_soldier2 = new_soldier2
 	
-	GameManager.show_hint.emit("ЛКМ – атака мечом", 5.0)
+	GameManager.show_hint.emit("ЛКМ – атака мечом", 6)
 
 	if not enemy_archer.health_component.died.is_connected(_on_enemy_defeated):
 		enemy_archer.health_component.died.connect(_on_enemy_defeated)
@@ -160,14 +160,14 @@ func _after_battle():
 	enemy_soldier2 = null
 	
 	memory_after_battle.visible = true
-	GameManager.show_hint.emit("Осколок памяти появился. Подойдите и нажмите E", 3.0)
+	GameManager.show_hint.emit("Осколок памяти появился. Подойдите и нажмите E", 6)
 	
 	await memory_after_battle.tree_exited
 
 func _on_gate_portal_activated():
 	if exit_zone:
 		exit_zone.monitoring = true
-		GameManager.show_hint.emit("Портал открыт! Войди в ворота.", 3.0)
+		GameManager.show_hint.emit("Портал открыт! Войди в ворота.", 6)
 
 func _on_exit_zone_entered(body):
 	if body.is_in_group("player"):

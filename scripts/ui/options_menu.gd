@@ -5,7 +5,6 @@ extends CanvasLayer
 @onready var music_slider: HSlider = %MusicSlider
 
 func _ready() -> void:
-	# Загружаем текущую громкость из MusicManager
 	music_slider.value = MusicManager.get_volume_linear()
 	music_slider.value_changed.connect(_on_music_volume_changed)
 	
@@ -17,7 +16,6 @@ func update_options():
 	else:
 		window_mode_button.text = "Fullscreen"
 	
-	# SFX громкость (оставляем через AudioServer)
 	sfx_slider.value = get_volume_percent(2)
 
 func get_volume_percent(bus_index: int):

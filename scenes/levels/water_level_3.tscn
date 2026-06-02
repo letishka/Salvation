@@ -14,7 +14,6 @@
 [ext_resource type="AudioStream" uid="uid://dpkfwp7ok1iks" path="res://assets/audio/sounds/the-sound-of-continuous-rain.mp3" id="16_u2aym"]
 [ext_resource type="PackedScene" uid="uid://ckh5ryoug0plw" path="res://scenes/characters/enemies/water_soul.tscn" id="17_5n1wg"]
 [ext_resource type="PackedScene" uid="uid://d0b1tkcjo86ho" path="res://scenes/objects/memory_shard.tscn" id="17_h4tyd"]
-[ext_resource type="PackedScene" uid="uid://bpxfwnl8nd08t" path="res://scenes/ui/PauseMenu.tscn" id="17_jh1u8"]
 [ext_resource type="AudioStream" uid="uid://dsqlifjxdh30j" path="res://assets/audio/sounds/rojdenie-iz-teni.mp3" id="18_1as7i"]
 [ext_resource type="PackedScene" uid="uid://dy6kc1bc3je1" path="res://scenes/objects/portal_water.tscn" id="18_5n1wg"]
 
@@ -191,6 +190,9 @@ radius = 62.289646
 [sub_resource type="CircleShape2D" id="CircleShape2D_66gb6"]
 radius = 67.26812
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2aym"]
+size = Vector2(2309, 1242)
+
 [node name="WaterLevel3" type="Node2D" unique_id=807494377]
 script = ExtResource("1_5n1wg")
 
@@ -251,24 +253,9 @@ color = Color(0.5744047, 0.51765215, 0.96510047, 1)
 
 [node name="MemoryUi" parent="." unique_id=1708988976 instance=ExtResource("13_5n1wg")]
 
-[node name="HintSystem" type="CanvasLayer" parent="." unique_id=1774204342]
-script = ExtResource("14_jeey4")
-
-[node name="Label" type="Label" parent="HintSystem" unique_id=481948091]
-anchors_preset = -1
-anchor_top = -0.0015432099
-anchor_right = 0.13802083
-offset_left = 11.0
-offset_top = 41.0
-offset_right = 51.0
-offset_bottom = 54.0
-metadata/_edit_use_anchors_ = true
-
 [node name="Boss" parent="." unique_id=1312783105 instance=ExtResource("16_1as7i")]
 position = Vector2(744, 413)
 max_health = 10.0
-
-[node name="PauseMenu" parent="." unique_id=2114518181 instance=ExtResource("17_jh1u8")]
 
 [node name="WaterSoul1" parent="." unique_id=1886436151 instance=ExtResource("17_5n1wg")]
 position = Vector2(176, 487)
@@ -278,6 +265,7 @@ position = Vector2(199, 357)
 
 [node name="Portal" parent="." unique_id=35049290 instance=ExtResource("18_5n1wg")]
 position = Vector2(850, 362)
+script = null
 
 [node name="SpawnSound" type="AudioStreamPlayer2D" parent="." unique_id=494213974]
 stream = ExtResource("18_1as7i")
@@ -289,3 +277,27 @@ volume_db = -15.0
 autoplay = true
 max_distance = 500.0
 attenuation = 2.0000005
+
+[node name="GrassZone" type="Area2D" parent="." unique_id=1094406318 groups=["walk_zone"]]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrassZone" unique_id=1606775396]
+position = Vector2(743.5, 437)
+shape = SubResource("RectangleShape2D_u2aym")
+
+[node name="HintSystem" type="CanvasLayer" parent="." unique_id=1308288700]
+script = ExtResource("14_jeey4")
+
+[node name="Label" type="Label" parent="HintSystem" unique_id=583906917]
+anchors_preset = -1
+anchor_left = 0.00086805556
+anchor_top = -0.0015432099
+anchor_right = 0.28125
+anchor_bottom = 0.015432099
+offset_left = 13.0
+offset_top = 43.0
+offset_right = 53.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 24
+metadata/_edit_use_anchors_ = true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bvfetpgmoduru"
+path="res://.godot/imported/Звук ветра на высоком мосту (скрип конструкций).mp3-42e20646bbbae768aa110d918908fc46.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/sounds/Звук ветра на высоком мосту (скрип конструкций).mp3"
+dest_files=["res://.godot/imported/Звук ветра на высоком мосту (скрип конструкций).mp3-42e20646bbbae768aa110d918908fc46.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

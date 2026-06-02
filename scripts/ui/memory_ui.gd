@@ -12,23 +12,7 @@ var current_memory_image: Texture = null
 var waiting_for_input: bool = false
 var on_close_callback: Callable
 
-func _ready():
-	if not black_rect:
-		print("MemoryUI ошибка: BlackRect не найден")
-		return
-	if not flash_rect:
-		print("MemoryUI ошибка: FlashRect не найден")
-		return
-	if not content_container:
-		print("MemoryUI ошибка: ContentContainer не найден")
-		return
-	if not picture_rect:
-		print("MemoryUI ошибка: PictureRect не найден")
-		return
-	if not text_label:
-		print("MemoryUI ошибка: TextLabel не найден")
-		return
-	
+func _ready():	
 	black_rect.visible = false
 	black_rect.modulate.a = 0.0
 	flash_rect.visible = false
@@ -69,7 +53,7 @@ func show_memory(text: String, image: Texture = null, on_closed: Callable = Call
 		pic_tween.tween_property(picture_rect, "modulate:a", 0.0, 0.3)
 		await pic_tween.finished
 		picture_rect.visible = false
-		picture_rect.modulate.a = 1.0  # сброс для следующего раза
+		picture_rect.modulate.a = 1.0
 
 	text_label.text = current_memory_text
 	text_label.visible = true
@@ -83,7 +67,6 @@ func _input(event):
 	if not waiting_for_input:
 		return
 	
-	# Нажатие пробела, Enter или ЛКМ
 	if event.is_action_pressed("ui_accept") or \
 	   (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed):
 		waiting_for_input = false

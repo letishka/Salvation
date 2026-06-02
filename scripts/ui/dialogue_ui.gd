@@ -9,6 +9,10 @@ extends CanvasLayer
 var is_typing = false
 var typing_timer: Timer
 
+var typing_sound = preload("res://assets/audio/sounds/water_ball.mp3")
+var typing_sound_player: AudioStreamPlayer2D
+var char_counter = 0
+
 func _ready():
 	process_mode = PROCESS_MODE_ALWAYS
 	print("GameManager = ", GameManager)
@@ -35,6 +39,7 @@ func _on_hide_dialogue():
 	panel.hide()
 
 func _start_typing():
+	char_counter = 0
 	if is_typing:
 		_stop_typing()
 	is_typing = true
@@ -49,9 +54,12 @@ func _start_typing():
 func _on_typing_timer():
 	if text_label.visible_characters < text_label.text.length():
 		text_label.visible_characters += 1
+		char_counter += 1
+		if char_counter >= 3 and typing_sound_player:
+			typing_sound_player.play()
+			char_counter = 0
 	else:
 		_stop_typing()
-		next_button.disabled = false
 
 func _stop_typing():
 	if typing_timer:

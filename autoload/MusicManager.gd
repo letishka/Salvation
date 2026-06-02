@@ -1,7 +1,7 @@
 extends Node
 
 var music_player: AudioStreamPlayer
-var current_volume: float = -15.0
+var current_volume: float = -25.0
 var current_music: String = ""  # "menu", "game", или "" (тишина)
 
 func _ready():

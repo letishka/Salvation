@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://dqboebg778tdr" path="res://assets/graphics/objects/light.png" id="18_svuau"]
 [ext_resource type="AudioStream" uid="uid://bi84et3fqe3ys" path="res://assets/audio/sounds/zvuki-zvuk-ognya-fakela.mp3" id="19_tebod"]
 [ext_resource type="AudioStream" uid="uid://cgwfy0mesqevt" path="res://assets/audio/sounds/sound-effects-library-camp-fire-burning.mp3" id="20_6nfx3"]
+[ext_resource type="AudioStream" uid="uid://dblq6ofjfgspp" path="res://assets/audio/sounds/шаги/a-short-close-step-on-a-wooden-floor.mp3" id="21_tebod"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dyp2m"]
 bg_color = Color(0.2, 0.2, 0.2, 1)
@@ -809,6 +810,10 @@ stream = ExtResource("20_6nfx3")
 volume_db = -15.0
 max_distance = 300.0
 attenuation = 1.6817931
+
+[node name="FootstepPlayer" type="AudioStreamPlayer2D" parent="." unique_id=272101288]
+stream = ExtResource("21_tebod")
+volume_db = -20.0
 
 [connection signal="timeout" from="GracePeriod" to="." method="_on_grace_period_timeout"]
 [connection signal="area_entered" from="InteractArea" to="." method="_on_interactable_area_entered"]

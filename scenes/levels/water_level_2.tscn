@@ -18,7 +18,6 @@
 [ext_resource type="PackedScene" uid="uid://v7g51cursc0m" path="res://scenes/objects/torch_holder.tscn" id="18_wub3r"]
 [ext_resource type="PackedScene" uid="uid://3d5ipwn05vus" path="res://scenes/ui/InventoryUI.tscn" id="20_acobx"]
 [ext_resource type="AudioStream" uid="uid://dpkfwp7ok1iks" path="res://assets/audio/sounds/the-sound-of-continuous-rain.mp3" id="20_vyuh1"]
-[ext_resource type="PackedScene" uid="uid://bpxfwnl8nd08t" path="res://scenes/ui/PauseMenu.tscn" id="21_vyuh1"]
 [ext_resource type="AudioStream" uid="uid://dsqlifjxdh30j" path="res://assets/audio/sounds/rojdenie-iz-teni.mp3" id="22_l32b0"]
 [ext_resource type="PackedScene" uid="uid://de4nvbom8l85a" path="res://scenes/characters/enemies/archer.tscn" id="22_wub3r"]
 
@@ -195,6 +194,9 @@ radius = 62.289646
 [sub_resource type="CircleShape2D" id="CircleShape2D_66gb6"]
 radius = 67.26812
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_acobx"]
+size = Vector2(2019, 1315)
+
 [node name="WaterLevel2" type="Node2D" unique_id=807494377]
 script = ExtResource("1_hmu51")
 
@@ -294,21 +296,6 @@ position = Vector2(1335, 172)
 [node name="ShadowSoldier2" parent="." unique_id=761181149 instance=ExtResource("10_0gqtm")]
 position = Vector2(403, -70)
 
-[node name="HintSystem" type="CanvasLayer" parent="." unique_id=1572378946]
-script = ExtResource("14_ekucx")
-
-[node name="Label" type="Label" parent="HintSystem" unique_id=1949138094]
-anchors_preset = -1
-anchor_top = -0.0015432099
-anchor_right = 0.13802083
-offset_left = 11.0
-offset_top = 41.0
-offset_right = 51.0
-offset_bottom = 54.0
-metadata/_edit_use_anchors_ = true
-
-[node name="PauseMenu" parent="." unique_id=2114518181 instance=ExtResource("21_vyuh1")]
-
 [node name="EnemyArcher" parent="." unique_id=1457921354 instance=ExtResource("22_wub3r")]
 position = Vector2(840, 438)
 scale = Vector2(0.7, 0.7)
@@ -323,3 +310,27 @@ volume_db = -15.0
 autoplay = true
 max_distance = 500.0
 attenuation = 2.0000005
+
+[node name="GrassZone" type="Area2D" parent="." unique_id=1315175997 groups=["walk_zone"]]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrassZone" unique_id=589264686]
+position = Vector2(784.5, 428.5)
+shape = SubResource("RectangleShape2D_acobx")
+
+[node name="HintSystem" type="CanvasLayer" parent="." unique_id=1953933020]
+script = ExtResource("14_ekucx")
+
+[node name="Label" type="Label" parent="HintSystem" unique_id=821776579]
+anchors_preset = -1
+anchor_left = 0.00086805556
+anchor_top = -0.0015432099
+anchor_right = 0.28125
+anchor_bottom = 0.015432099
+offset_left = 13.0
+offset_top = 43.0
+offset_right = 53.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 24
+metadata/_edit_use_anchors_ = true

@@ -2,16 +2,16 @@ extends CharacterBody2D
 
 enum State { IDLE, WALK, ATTACK, HIT, DEATH }
 
-@export var max_health: float = 150.0
+@export var max_health: float = 15.0
 @export var max_speed: float = 50.0
-@export var attack_damage: float = 14.0
+@export var attack_damage: float = 1 
 @export var attack_duration: float = 0.1
 @export var attack_cooldown: float = 0.9
 @export var flip_offset_x: float = -5.0
 @export var collision_offset_x: float = -30.0
 @export var hit_delay: float = 0.1
 @export var combo_pause: float = 0.01
-@export var attack_abort_delay: float = 0.3   # >>> задержка перед отменой атаки
+@export var attack_abort_delay: float = 0.3
 
 @export var attack_swoosh_sound: AudioStream
 @export var footstep_sounds: Dictionary[String, AudioStream] = {}

@@ -28,6 +28,8 @@ size = Vector2(11, 4)
 scale = Vector2(2, 2)
 collision_layer = 2
 script = ExtResource("1_donkj")
+target_node_path = null
+active = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=354392336]
 position = Vector2(0, 1.4305115e-06)
@@ -43,3 +45,5 @@ shape = SubResource("CircleShape2D_q11tp")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1476716902]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_1gg2o")
+
+[node name="LeverSound" type="AudioStreamPlayer2D" parent="." unique_id=359114041]
