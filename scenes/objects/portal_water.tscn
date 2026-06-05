@@ -86,4 +86,5 @@ shape = SubResource("CapsuleShape2D_gd70c")
 
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1558280836]
 stream = ExtResource("3_xroiv")
-volume_db = -20.0
+volume_db = -30.0
+max_distance = 100.0

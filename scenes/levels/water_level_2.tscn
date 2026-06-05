@@ -232,6 +232,8 @@ shape = SubResource("CircleShape2D_3f1xv")
 position = Vector2(859, -80)
 shape = SubResource("CircleShape2D_66gb6")
 
+[node name="InventoryUi" parent="." unique_id=208670129 instance=ExtResource("20_acobx")]
+
 [node name="DialogueUi" parent="." unique_id=1432111096 instance=ExtResource("15_ta505")]
 
 [node name="SegmentTitle" type="CanvasLayer" parent="." unique_id=496223211]
@@ -287,8 +289,6 @@ position = Vector2(604, 396)
 
 [node name="TorchPickup3" parent="." unique_id=1701704862 instance=ExtResource("5_wub3r")]
 position = Vector2(298, 134)
-
-[node name="InventoryUi" parent="." unique_id=208670129 instance=ExtResource("20_acobx")]
 
 [node name="ShadowSoldier1" parent="." unique_id=1886436151 instance=ExtResource("10_0gqtm")]
 position = Vector2(1335, 172)

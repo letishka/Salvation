@@ -30,25 +30,31 @@ var soldier2_spawn_pos: Vector2
 var archer_scene = preload("res://scenes/characters/enemies/archer.tscn")
 var soldier_scene = preload("res://scenes/characters/enemies/shadow_soldier.tscn")
 var pause_menu_scene = preload("res://scenes/ui/PauseMenu.tscn")
+var end_screen_scene = preload("res://scenes/ui/end_screen.tscn")
 
 func _ready():
 	MusicManager.play_game_music(1.0)
 	
 	if spawn_sound:
 		spawn_sound.play()
+	
 	archer_spawn_pos = enemy_archer.global_position
 	soldier1_spawn_pos = enemy_soldier1.global_position
 	soldier2_spawn_pos = enemy_soldier2.global_position
+	
 	if exit_zone:
 		exit_zone.body_entered.connect(_on_exit_zone_entered)
 		exit_zone.monitoring = false
+	
 	gate.portal_activated.connect(_on_gate_portal_activated)
 	_set_enemies_active(false)
 	memory_flashback.visible = true
 	memory_after_battle.visible = false
 	gate.required_torches = 3
+	
 	for holder in torch_holders:
 		holder.torch_placed.connect(_on_torch_placed)
+	
 	start_zone.body_entered.connect(_on_start_zone_entered)
 	
 	if $TorchHolder4:
@@ -57,6 +63,12 @@ func _ready():
 		$TorchHolder4.holder_lit.visible = true
 		$TorchHolder4.holder_light.enabled = true
 		$TorchHolder4.torch_placed.emit()
+	
+	# ===== ПОДКЛЮЧАЕМ СМЕРТЬ ИГРОКА =====
+	var player = get_tree().get_first_node_in_group("player")
+	if player and player.has_node("HealthComponent"):
+		if not player.health_component.died.is_connected(_on_player_died):
+			player.health_component.died.connect(_on_player_died)
 
 func _set_enemies_active(active: bool):
 	if is_instance_valid(enemy_archer):
@@ -97,7 +109,7 @@ func _on_start_zone_entered(body):
 	if player and player.has_method("heal_player"):
 		player.heal_player(30)
 	
-	GameManager.show_hint.emit("Рядом с костром лежит факел. Нажмите E, чтобы подобрать", 7)
+	GameManager.show_hint.emit("Рядом с костром лежит факел. Подойдите, чтобы подобрать", 7)
 
 func _on_torch_placed():
 	if not first_torch_placed:
@@ -172,6 +184,10 @@ func _on_gate_portal_activated():
 func _on_exit_zone_entered(body):
 	if body.is_in_group("player"):
 		get_tree().change_scene_to_file("res://scenes/levels/water_level_3.tscn")
+
+func _on_player_died():
+	var end_screen = end_screen_scene.instantiate()
+	add_child(end_screen)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and not get_tree().paused and not DialogueManager.is_active():

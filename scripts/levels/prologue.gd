@@ -15,6 +15,18 @@ func _ready():
 	MusicManager.stop_music(0.5)
 	$BackgroundMusic.play()
 	$BackgroundMusic2.play()
+	
+	var fade_timer = Timer.new()
+	fade_timer.wait_time = 20
+	fade_timer.one_shot = true
+	add_child(fade_timer)
+	fade_timer.timeout.connect(func():
+		var tween = create_tween()
+		tween.tween_property($BackgroundMusic2, "volume_db", -80, 3.0)
+		await tween.finished
+		$BackgroundMusic2.stop()
+	)
+	fade_timer.start()
 	player.set_process_input(false)
 	player.set_physics_process(false)
 	

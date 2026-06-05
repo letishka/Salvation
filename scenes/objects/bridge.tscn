@@ -1296,4 +1296,7 @@ tile_map_data = PackedByteArray("AAD6////AAANAA0AAAD6/wAAAAANAA4AAAD7////AAAMAA0
 tile_set = ExtResource("4_5r4xj")
 
 [node name="BridgeSound" type="AudioStreamPlayer2D" parent="." unique_id=2092417578]
+position = Vector2(0, -59.000004)
 stream = ExtResource("4_taq8y")
+max_distance = 500.0
+attenuation = 0.25000003
